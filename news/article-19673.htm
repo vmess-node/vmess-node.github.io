@@ -90,6 +90,7 @@
                                       				  				  				<div id="content_views" class="htmledit_views"> <p>Logback日志系统是SLF4J的原生实现。同时，Logback也是Log4j的继任者，补全了Log4j的不足。</p> <p>1.&nbsp;Logback的模块组成</p> <ul> <li>logback-core，其他模块的功能基础</li> <li>logback-classic</li> </ul> <p>可以看作Log4j的增强版实现。<br /> 实现了SLF4J API，能够在部署的时候提供给应用日志功能。</p> <ul> <li>logback-access</li> </ul> <p>集成了Servlet容器（Tomcat,Jetty），提供以HTTP方式访问日志的功能。</p> <p>2. Logback在Maven项目中的应用</p> <p>在应用中使用兼容SLF4J的日志系统，无需在构建时依赖任何具体的日志系统，而只需要依赖SLF4J API，POM配置示例如下：</p> <pre class="has"><code>&lt;dependency&gt;   &lt;groupId&gt;org.slf4j&lt;/groupId&gt;   &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;   &lt;version&gt;1.7.9&lt;/version&gt; &lt;/dependency&gt;</code></pre> <p>而对于实际部署时使用的日志系统，无需在POM中配置，只需将日志系统的jar文件置于应用部署环境的classpath中即可。</p> <p>但是为了部署方便，可以直接在POM中给出对日志系统的依赖。例如，应用中使用Logback日志系统，配置POM如下即可：</p> <pre class="has"><code>&lt;dependency&gt;   &lt;groupId&gt;org.slf4j&lt;/groupId&gt;   &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;   &lt;version&gt;1.7.9&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt;   &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;   &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;   &lt;version&gt;1.2.3&lt;/version&gt; &lt;/dependency&gt;</code></pre> <p>3.&nbsp;Logback的MDC功能概述</p> <p>Logback的设计目标就是审计、调试复杂的分布式应用。</p> <p>在分布式应用中，为了区分不同客户端的日志输出，往往为每个客户端实例化一个单独的logger。但是这样将导致大量日志的产生，而且增加了日志管理的负担。</p> <p>为此，Logback采用了更轻量级的技术，为一个客户端的每一个日志请求打上唯一识别的时间戳，而这是通过SLF4J的MDC实现的。为了给每个日志请求打上唯一识别的时间戳，必须利用请求的上下文信息，即将请求的上下文信息装入MDC，并在需要的时候被Logback的日志组件提取。</p> <p>4.&nbsp;Logback的MDC功能实现</p> <p>Logback是在logback-classic模块中实现了SLF4J的MDC功能。</p> <p>MDC中管理的数据（简称MDC数据）是以单个线程为单位进行访问的，即对MDC数据的操作（如put, get）只对当前线程有效，所以也永远是线程安全的。<br /> 在服务端，为每个请求分配一个线程进行处理，所以每个服务端线程处理的请求，都具有唯一的MDC上下文数据。</p> <p>子线程不会自动继承父线程的MDC数据。所以在创建子线程时，可以先调用MDC的getCopyOfContextMap()方法以返回一个Map&lt;String, String&gt;对象，从而获取父线程的MDC数据，然后再在子线程的开始处，最先调用MDC的setContextMap()方法为子线程设置父线程的MDC数据。从而能够在子线程中访问父线程的MDC数据。</p> <p>在使用java.util.concurrent.Executors管理线程时，使用同样的方法让子线程继承主线程的MDC数据。</p> <p>但是，在Web应用中，一个请求可能在不同的阶段被多个线程处理。这时，只是在服务端的处理线程中设置MDC数据，并不能保证请求的某些信息（如用户的认证信息等）总是能够被处理线程访问到。为了在处理一个请求时能够保证某些信息总是可访问，建议使用Servlet Filter，在请求到来时就将信息装入到MDC中，在完成所有的后续处理后，再次通过过滤器时将MDC数据移除。</p> <pre class="has"><code>		public class MyFilter implements Filter { 			public void doFilter(ServletRequest request, ServletResponse response, 				FilterChain chain) throws IOException, ServletException { 				... 				MDC.put(MY_KEY, myValue); 				... 			    try { 				  chain.doFilter(request, response); 				} finally { 				  if (MDC.contains(MY_KEY)) { 					MDC.remove(MY_KEY); 				  } 				}</code></pre> <p> Logback自带的ch.qos.logback.classic.helpers.MDCInsertingServletFilter能够将HTTP请求的hostname, request URI, user-agent等信息装入MDC，只需在web.xml中设置（建议MDCInsertingServletFilter作为第一个Filter配置，原因请读者思考），后续处理过程就可以直接访问如下请求参数的值：</p> <ul> <li>req.remoteHost</li> <li>req.xForwardedFor</li> <li>req.method</li> <li>req.requestURI</li> <li>req.requestURL</li> <li>req.queryString</li> <li>req.userAgent</li> </ul> <p>参考链接：</p> <p>&nbsp;&nbsp; &nbsp;https://logback.qos.ch/index.html<br /> &nbsp;&nbsp; &nbsp;http://logback.qos.ch/manual/mdc.html</p> </div> 			                <div class="clearfix"></div>
                 <div class="col-md-12 mt-5">
                                         <p>上一个：<a href="/news/article-19672.htm">数据结构（初阶）—— C语言实现双向带头循环链表</a></p>
+                                        <p>下一个：<a href="/news/article-20130.htm">开宠物医院需要多少钱投资成本（开宠物医院需要多少钱投资成本呢）</a></p>
                                     </div>
                                 </div>
                 <div class="col-md-3">
@@ -99,16 +100,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/free-nodes/2024-9-4-free-node-subscribe-links.htm" title="9月4日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接">9月4日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-10-today-vmess-node.htm" title="10月10日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接">10月10日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-29-free-node-subscribe.htm" title="10月29日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">10月29日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-1-free-node-subscribe-links.htm" title="11月1日 | Vmess节点订阅每天更新22M/S免费节点订阅链接">11月1日 | Vmess节点订阅每天更新22M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-2-latest-vmess-node.htm" title="10月2日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接">10月2日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-17-vmess-node-share.htm" title="9月17日 | Vmess节点订阅每天更新18.6M/S免费节点订阅链接">9月17日 | Vmess节点订阅每天更新18.6M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-8-17-vmess-node-github.htm" title="8月17日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接">8月17日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-20-node-share.htm" title="10月20日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">10月20日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
                         <li class="py-2"><a href="/free-nodes/2024-10-25-vmess-windows.htm" title="10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接">10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-11-free-vmess-node.htm" title="9月11日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接">9月11日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-30-vmess-node-github.htm" title="11月30日 | Vmess节点订阅每天更新20M/S免费节点订阅链接">11月30日 | Vmess节点订阅每天更新20M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-8-28-today-vmess-node.htm" title="8月28日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接">8月28日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-8-24-today-vmess-node.htm" title="8月24日 | Vmess节点订阅每天更新19.3M/S免费节点订阅链接">8月24日 | Vmess节点订阅每天更新19.3M/S免费节点订阅链接</a></li>
                         <li class="py-2"><a href="/free-nodes/2024-9-12-free-node-subscribe.htm" title="9月12日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接">9月12日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-29-vmess-node-share.htm" title="8月29日 | Vmess节点订阅每天更新20.1M/S免费节点订阅链接">8月29日 | Vmess节点订阅每天更新20.1M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-9-10-latest-vmess-node.htm" title="9月10日 | Vmess节点订阅每天更新19.6M/S免费节点订阅链接">9月10日 | Vmess节点订阅每天更新19.6M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-5-vmess-node-github.htm" title="8月5日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接">8月5日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-21-free-vmess-node.htm" title="10月21日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接">10月21日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接</a></li>
                     </ul>
     </div>
 </div>
@@ -120,7 +121,7 @@
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">3</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+                <h4><span class="badge" style="float: right;">6</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
