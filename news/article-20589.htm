@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>PyTorch查看CUDA支持情况</title>
         <meta name="description" content="import torch import torchvision print(torch.cuda.is_available())  上面的命令只是检测CUDA是否安装正确并能被Pytorch检测到，并" />
-        <link rel="icon" href="__ADDON__/img/vmess_node/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Template CSS -->
@@ -87,7 +87,8 @@
         <div class="container py-lg-3">
             <div class="row">
                 <div class="col-md-9">
-                                      				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <pre><code class="prism language-python"><span class="token keyword">import</span> torch <span class="token keyword">import</span> torchvision <span class="token keyword">print</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </code></pre> <p>上面的命令只是检测CUDA是否安装正确并能被Pytorch检测到，并没有说明是否能正常使用，要想看Pytorch能不能调用cuda加速，还需要简单的测试一下：</p> <pre><code class="prism language-python">a <span class="token operator">=</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> a <span class="token operator">=</span> a<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> </code></pre> <blockquote> <p><strong>Cuda runtime error (48) : no kernel image is available for execution</strong></p> <p><strong>处理办法：</strong><br /> 一般来讲，CUDA的48号错误，是在于硬件的支持情况。对于算力3.0的显卡来说，如果安装了9.0的CUDA就会出现这个问题，解决的办法是退回CUDA8.0，或者更换更加高端的显卡，或者直接从源码编译，并在源码中做相应设置（修改setup.py文件里的TORCH_CUDA_ARCH_LIST，将这个值改成你当前使用的GPU对应算力！）</p> </blockquote></div> 			                <div class="clearfix"></div>
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <pre><code class="prism language-python"><span class="token keyword">import</span> torch <span class="token keyword">import</span> torchvision <span class="token keyword">print</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </code></pre> <p>上面的命令只是检测CUDA是否安装正确并能被Pytorch检测到，并没有说明是否能正常使用，要想看Pytorch能不能调用cuda加速，还需要简单的测试一下：</p> <pre><code class="prism language-python">a <span class="token operator">=</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> a <span class="token operator">=</span> a<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> </code></pre> <blockquote> <p><strong>Cuda runtime error (48) : no kernel image is available for execution</strong></p> <p><strong>处理办法：</strong><br /> 一般来讲，CUDA的48号错误，是在于硬件的支持情况。对于算力3.0的显卡来说，如果安装了9.0的CUDA就会出现这个问题，解决的办法是退回CUDA8.0，或者更换更加高端的显卡，或者直接从源码编译，并在源码中做相应设置（修改setup.py文件里的TORCH_CUDA_ARCH_LIST，将这个值改成你当前使用的GPU对应算力！）</p> </blockquote></div> 			                <div class="clearfix"></div>
                 <div class="col-md-12 mt-5">
                                         <p>上一个：<a href="/news/article-20131.htm">动物医院的英语怎么写单词 动物医院的英语怎么写单词怎么读</a></p>
                                         <p>下一个：<a href="/news/article-20590.htm">宠物医生资格（宠物医生资格证怎么考取）</a></p>
@@ -100,16 +101,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/free-nodes/2024-8-17-vmess-node-github.htm" title="8月17日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接">8月17日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-9-18-vmess-windows.htm" title="9月18日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接">9月18日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-5-vmess-node-github.htm" title="8月5日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接">8月5日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-21502.htm" title="兽药厂家排名前十强在山东哪里有卖（山东最大的兽药经销商）">兽药厂家排名前十强在山东哪里有卖（山东最大的兽药经销商）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-28-vmess-node-github.htm" title="10月28日 | Vmess节点订阅每天更新18.2M/S免费节点订阅链接">10月28日 | Vmess节点订阅每天更新18.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-17-latest-vmess-node.htm" title="10月17日 | Vmess节点订阅每天更新20.7M/S免费节点订阅链接">10月17日 | Vmess节点订阅每天更新20.7M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-27-free-node-subscribe.htm" title="8月27日 | Vmess节点订阅每天更新19.5M/S免费节点订阅链接">8月27日 | Vmess节点订阅每天更新19.5M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-25-vmess-node.htm" title="11月25日 | Vmess节点订阅每天更新22.7M/S免费节点订阅链接">11月25日 | Vmess节点订阅每天更新22.7M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-26-vmess-github.htm" title="11月26日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接">11月26日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-14-free-vmess-node.htm" title="11月14日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接">11月14日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-17-vmess-node-share.htm" title="9月17日 | Vmess节点订阅每天更新18.6M/S免费节点订阅链接">9月17日 | Vmess节点订阅每天更新18.6M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-19215.htm" title="使用 vscode 插件可视化制作和管理脚手架及原理解析">使用 vscode 插件可视化制作和管理脚手架及原理解析</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-29-vmess-github.htm" title="9月29日 | Vmess节点订阅每天更新21.5M/S免费节点订阅链接">9月29日 | Vmess节点订阅每天更新21.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-25-vmess-windows.htm" title="10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接">10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-27048.htm" title="python常见漏洞总结_在线工具">python常见漏洞总结_在线工具</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-15-vmess-node.htm" title="12月15日 | Vmess节点订阅每天更新22.5M/S免费节点订阅链接">12月15日 | Vmess节点订阅每天更新22.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-19673.htm" title="Logback及其MDC功能详解">Logback及其MDC功能详解</a></li>
+                        <li class="py-2"><a href="/news/article-25196.htm" title="前端开发中需要搞懂的字符编码知识_在线工具">前端开发中需要搞懂的字符编码知识_在线工具</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-8-vmess-github.htm" title="9月8日 | Vmess节点订阅每天更新21.1M/S免费节点订阅链接">9月8日 | Vmess节点订阅每天更新21.1M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-5-vmess-node.htm" title="9月5日 | Vmess节点订阅每天更新18.5M/S免费节点订阅链接">9月5日 | Vmess节点订阅每天更新18.5M/S免费节点订阅链接</a></li>
                     </ul>
     </div>
 </div>
@@ -121,7 +122,7 @@
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">15</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+                <h4><span class="badge" style="float: right;">57</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
@@ -245,6 +246,15 @@
                 <div class="container">
                     <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
                         <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
                             <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
                             </p>
                         </div>
