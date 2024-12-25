@@ -2,12 +2,13 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://vmess-node.github.io/news/article-30332.htm" />
+        <link rel="canonical" href="https://vmess-node.github.io/free-nodes/2024-12-25-vmess-node.htm" />
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Redis 主从同步原理解析</title>
-        <meta name="description" content="文章目录    前言 增量同步 快照同步 无盘复制 Wait 指令     前言 Redis 同步支持主从同步和从从同步，从从同步功能是Redis 后续版本增加的功能，为了减轻主库的同步负担。这里我们" />
+    <title>12月25日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享</title>
+        <meta name="keywords" content="12月25日Clash订阅链接, SSR订阅, Shadowrocket订阅链接Vmess Node免费节点订阅官网" />
+        <meta name="description" content="12月25日节点订阅更新,SSR/Clash/Shadowrocket/V2ray免费节点订阅链接,我们专注免费节点每天更新,这一次的节点更新覆盖了韩国、日本、香港、加拿大、美国、欧洲、新加坡等地区,最高速度可达20.9 M/S。只需复制下方的Clash/v2ray订阅链接,在客户端添加后即可正常使用。" />
         <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -75,8 +76,8 @@
     <section class="w3l-deal-breadcrum">
         <div class="breadcrum py-5">
             <div class="container">
-                <h1>Redis 主从同步原理解析</h1>
-                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+                <h1>12月25日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/free-nodes/">免费节点</a>  &nbsp; / &nbsp; 正文</p>
             </div>
         </div>
     </section>
@@ -87,11 +88,41 @@
             <div class="row">
                 <div class="col-md-9">
                                     <input type="hidden" id="share-website-info" data-name="" data-url="">
-                  				  				  				<div id="content_views" class="markdown_views prism-github-gist"> <div class="toc"> <h3>文章目录</h3> <ul> <li> <ul> <li><a href="#_1" rel="nofollow">前言</a></li> <li><a href="#_4" rel="nofollow">增量同步</a></li> <li><a href="#_9" rel="nofollow">快照同步</a></li> <li><a href="#_15" rel="nofollow">无盘复制</a></li> <li><a href="#Wait__18" rel="nofollow">Wait 指令</a></li> </ul> </li> </ul> </div> <h2><a id="_1" rel="nofollow"></a>前言</h2> <p>Redis 同步支持主从同步和从从同步，从从同步功能是Redis 后续版本增加的功能，为了减轻主库的同步负担。这里我们主要讨论主从同步。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220821/421c824bb4e9b9379c82dc769c279c04.jpg" alt="Redis 主从同步原理解析"></p> <h2><a id="_4" rel="nofollow"></a>增量同步</h2> <p>Redis 同步的是指令流，主节点会将那些对自己的状态产生修改性影响的指令记录在本地的内存 buffer 中，然后异步将 buffer 中的指令同步到从节点，从节点一边执行同步的指令流来达到和主节点一样的状态，一遍向主节点反馈自己同步到哪里了(偏移量)。<br /> 因为内存的 buffer 是有限的，所以 Redis 主库不能将所有的指令都记录在内存 buffer 中。Redis 的复制内存 buffer 是一个定长的环形数组，如果数组内容满了，就会从头开始覆盖前面的内容。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220821/9c1b59d59134480250c58a7a5c540e45.jpg" alt="Redis 主从同步原理解析"><br /> 如果因为网络状况不好，从节点在短时间内无法和主节点进行同步，那么当网络状况恢复时，Redis 的主节点中那些没有同步的指令在 buffer 中有可能已经被后续的指令覆盖掉了，从节点将无法直接通过指令流来进行同步，这个时候就需要用到更加复杂的同步机制——快照同步。</p> <h2><a id="_9" rel="nofollow"></a>快照同步</h2> <p>快照同步是一个非常耗费资源的操作，它首先需要在主库上进行一次 bgsave 将当前内存的数据全部快照到磁盘文件中，然后再将快照文件的内容全部传送到从节点。从节点将快照文件接受完毕后，立即执行一次全量加载，加载之前先要将当前内存的数据清空。加载完毕后通知主节点继续进行增量同步。<br /> 在整个快照同步进行的过程中，主节点的复制 buffer 还在不停的往前移动，如果快照同步的时间过长或者复制 buffer 太小，都会导致同步期间的增量指令在复制 buffer 中被覆盖，这样就会导致快照同步完成后无法进行增量复制，然后会再次发起快照同步，如此极有可能会陷入快照同步的死循环。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220821/d8fbf4abb8a09c5f678a57d15d26d1f2.jpg" alt="Redis 主从同步原理解析"><br /> 所以务必配置一个合适的复制 buffer 大小参数，避免快照复制的死循环。<br /> 当从节点刚刚加入到集群时，它必须先要进行一次快照同步，同步完成后再继续进行增量同步。</p> <h2><a id="_15" rel="nofollow"></a>无盘复制</h2> <p>主节点在进行快照同步时，会进行很重的文件 IO 操作，特别是对于非 SSD 磁盘存储时，快照会对系统的负载产生较大影响。特别是当系统正在进行 AOF 的 fsync 操作时如果发生快照，fsync 将会被推迟执行，这就会严重影响主节点的服务效率。<br /> 所以从 Redis 2.8.18 版开始支持无盘复制。所谓无盘复制是指主服务器直接通过 SOCKET 将快照内容发送到从节点，生成快照是一个遍历的过程，主节点会一边遍历内存，一遍将序列化的内容发送到从节点，从节点还是跟之前一样，先将接收到的内容存储到磁盘文件中，再进行一次性加载。</p> <h2><a id="Wait__18" rel="nofollow"></a>Wait 指令</h2> <p>Redis 的复制是异步进行的，wait 指令可以让异步复制变身同步复制，确保系统的强一致性(不严格)。wait 指令是Redis3.0 版本以后才出现的。<br /> wait 提供两个参数，第一个参数是从库的数量 N，第二个参数是时间 t，以毫秒为单位。它表示等待 wait 指令之前的所有写操作同步到 N 个从库(也就是确保 N 个从库的同步没有滞后)，最多等待时间 t。如果时间 t=0，表示无限等待直到 N 个从库同步完成达成一致。<br /> 假设此时出现了网络分区，wait 指令第二个参数时间 t=0，主从同步无法继续进行，wait 指令会永远阻塞，Redis 服务器将丧失可用性。</p> </div> 			                <div class="clearfix"></div>
+                <p>这次的更新跨足了韩国、日本、香港、加拿大、美国、欧洲、新加坡等多个地区，节点覆盖广泛，最高速度可达20.9 M/S。这意味着，无论您身处何处，都能享受到更快、更稳定的网络连接。这些新节点的加入，不仅为您提供了更广泛的网络覆盖，还能让您轻松解锁全球各地的网络内容，尽情畅游互联网。无论是日本的动漫、美国的影视、还是欧洲的新闻，都能够一手掌握。只需复制下方提供的v2ray/Clash订阅链接，添加到您的客户端，就能立即体验到新节点带来的畅快感受。这次更新的目的就是为了让您拥有更畅快、更愉悦的网络体验，享受高速流畅的网络连接。随着全球互联网的发展，网络已经成为我们生活中不可或缺的一部分，而这次更新就是为了让您更好地融入这个数字化的世界。</p><p>&nbsp;</p><h3>高速机场推荐1【<a href="javascript:;" class="js_to" data-url="https://ivoyec0.dg7.top/#/register?code=" data-type="Gougou" data-code="TEAyo1QK" rel="nofollow noopener" style="color:red;">狗狗加速</a>】</h3><p>狗狗加速作为第一家上线Hysteria1协议的机场，目前已经全面上线Hysteria2协议；不同于hy1，hy2全面优化了链接速度(0-RTT)，进一步降低延迟；同时使用全新的带宽控制方式；能发挥您带宽的最大潜能！全天4K秒开，机房遍布全球，IP多多益善，99%流媒体解锁，油管、葫芦、奈菲，小电影丝般顺滑！ IPLC、IEPL中转，点对点专线连接。高速冲浪，科学上网不二选择，现在注册即可免费试用！</p>
+<p>网站注册地址：【<a href="javascript:;" class="js_to" data-url="https://ivoyec0.dg7.top/#/register?code=" data-type="Gougou" data-code="TEAyo1QK" rel="nofollow noopener" style="color:red">狗狗加速（点击注册）</a>】<br></p>
+<p style="margin-bottom:3rem;color:#999;font-style:italic;">注：跳转链接可能会 <b style="color:red;">被墙</b> ，如多次打开失败，请先使用下面不稳定免费订阅后，再尝试点击链接</p><h3>高速机场推荐2【<a href="javascript:;" class="js_to" data-url="https://goudan.site/#/register?code=" data-type="Xiyou" data-code="7WiPAwPs" rel="nofollow noopener" style="color:red;">西游云</a>】</h3><p style="margin-bottom: 20px; padding: 0px; line-height: 1.8; overflow-wrap: break-word; font-size: 15px; color: rgb(96, 98, 102); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, STHeiti, &quot;WenQuanYi Micro Hei&quot;, Helvetica, Arial, sans-serif;">无视高峰，全天4K秒开，机房遍布全球，IP多多益善，99%流媒体解锁，油管、葫芦、奈菲，小电影丝般顺滑！
+IPLC、IEPL中转，点对点专线连接。高速冲浪，科学上网不二选择，现在注册即可免费试用！</p>
+
+
+
+<p style="margin-bottom: 20px; padding: 0px; line-height: 1.8; overflow-wrap: break-word; font-size: 15px; color: rgb(96, 98, 102); font-family: &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, STHeiti, &quot;WenQuanYi Micro Hei&quot;, Helvetica, Arial, sans-serif;">网站注册地址：【<a href="javascript:;" class="js_to" data-url="https://goudan.site/#/register?code=" data-type="Xiyou" data-code="7WiPAwPs" rel="nofollow noopener" style="margin: 0px; padding: 0px; color: #ff0000;">西游云（点击注册）</a>】</p>
+
+<h3>高速机场推荐3【<a href="javascript:;" class="js_to" data-url="https://www.fastconnectcloud.net/#/register?code=" data-type="FCCloud" data-code="x1m5Kg8R" rel="nofollow noopener" style="color:red;">FCCloud</a>】</h3><p>新用户 8 折优惠 8 折优惠券代码: <font color="#ff0000"><b>new</b></font> 下单时在验证优惠券处填写 new 验证即可获得优惠 不限套餐/时长 , 每位用户仅可用一次(老用户没用过也可以用） 只要没用过就可以用，没有时间限制，费用低至<font color="#ff0000">0.33元/天</font>,无视高峰，<font color="#ff0000">不限制设备数量</font>，全天4K秒开，机房遍布全球，IP多多益善，99%流媒体解锁，油管、葫芦、奈菲，小电影丝般顺滑！ IPLC、IEPL中转，点对点专线连接。高速冲浪，科学上网不二选择，现在注册即可免费试用！</p>
+
+<p>网站注册地址：【<a href="javascript:;" class="js_to" data-url="https://www.fastconnectcloud.net/#/register?code=" data-type="FCCloud" data-code="x1m5Kg8R" rel="nofollow noopener"><font color="#ff0000">FCCloud（点击注册）</font></a>】</p>
+<p style="margin-bottom:3rem;color:#999;font-style:italic;">注：跳转链接可能会 <b style="color:red;">被墙</b> ，如多次打开失败，请先使用下面不稳定免费订阅后，再尝试点击链接</p><p>&nbsp;</p><p></p><h2>订阅链接</h2><p>&nbsp;</p><p><strong>clash订阅链接</strong></p><p>https://vmess-node.github.io/uploads/2024/12/0-20241225.yaml</p><p>https://vmess-node.github.io/uploads/2024/12/1-20241225.yaml</p><p>https://vmess-node.github.io/uploads/2024/12/2-20241225.yaml</p><p>https://vmess-node.github.io/uploads/2024/12/3-20241225.yaml</p><p>https://vmess-node.github.io/uploads/2024/12/4-20241225.yaml</p><p>&nbsp;</p><p><strong>v2ray订阅链接:</strong></p><p>https://vmess-node.github.io/uploads/2024/12/0-20241225.txt</p><p>https://vmess-node.github.io/uploads/2024/12/1-20241225.txt</p><p>https://vmess-node.github.io/uploads/2024/12/2-20241225.txt</p><p>https://vmess-node.github.io/uploads/2024/12/3-20241225.txt</p><p>https://vmess-node.github.io/uploads/2024/12/4-20241225.txt</p><p><strong>sing-box订阅链接</strong></p><p>https://vmess-node.github.io/uploads/2024/12/20241225.json</p><p>&nbsp;</p><p>如果您需要高质量的付费服务,我们强烈推荐您试试「<a href="javascript:;" class="js_to" data-url="https://t2.9999911.xyz/#/register?code=" data-type="Xingchen" data-code="6KO4Fpse" rel="nofollow noopener" style="color:#c00;">星辰机场</a> 」。提供全球范围内快速稳定的高速节点,轻松处理8K高清视频流量,并可解锁流媒体网站和chatGPT。其服务器性能出色,确保您享受到高品质的体验。</p>                <div class="clearfix"></div>
                 <div class="col-md-12 mt-5">
-                                        <p>上一个：<a href="/news/article-29852.htm">上海宠物医院哪家最好最便宜（上海宠物医院排名）</a></p>
-                                        <p>下一个：<a href="/news/article-30334.htm">动物疫苗属于疫苗的分类吗为什么不能用（动物疫苗是什么单位）</a></p>
+                                        <p>上一个：<a href="/free-nodes/2024-12-24-free-high-speed-nodes.htm">12月24日 | Vmess节点订阅每天更新19.9M/S免费订阅链接地址分享</a></p>
                                     </div>
+                                <div class="panel panel-default mt-5">
+                    <div class="panel-heading">
+                        <h3 class="m-0">推荐文章</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="p-0 x-0">
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-24-free-high-speed-nodes.htm">12月24日 | Vmess节点订阅每天更新19.9M/S免费订阅链接地址分享</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-23-vmess-github.htm">12月23日 | Vmess节点订阅每天更新22M/S免费订阅链接地址分享</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-22-free-high-speed-nodes.htm">12月22日 | Vmess节点订阅每天更新21.7M/S免费订阅链接地址分享</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-21-vmess-node-github.htm">12月21日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-20-free-subscribe-node.htm">12月20日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-19-free-subscribe-node.htm">12月19日 | Vmess节点订阅每天更新22.6M/S免费节点订阅链接</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-18-vmess-github.htm">12月18日 | Vmess节点订阅每天更新21.7M/S免费节点订阅链接</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-17-node-share.htm">12月17日 | Vmess节点订阅每天更新20.6M/S免费节点订阅链接</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-16-vmess-node-share.htm">12月16日 | Vmess节点订阅每天更新20.8M/S免费节点订阅链接</a></li>
+                                                        <li class="py-2"><a href="/free-nodes/2024-12-15-vmess-node.htm">12月15日 | Vmess节点订阅每天更新22.5M/S免费节点订阅链接</a></li>
+                                                    </ul>
+                    </div>
+                </div>
                                 </div>
                 <div class="col-md-3">
                     <div class="panel panel-default">
@@ -100,16 +131,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/free-nodes/2024-11-15-latest-vmess-node.htm" title="11月15日 | Vmess节点订阅每天更新18M/S免费节点订阅链接">11月15日 | Vmess节点订阅每天更新18M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-16-free-high-speed-nodes.htm" title="8月16日 | Vmess节点订阅每天更新22.2M/S免费节点订阅链接">8月16日 | Vmess节点订阅每天更新22.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-27980.htm" title="中国兽药厂家排行榜（中国兽药厂家前十强排行榜）">中国兽药厂家排行榜（中国兽药厂家前十强排行榜）</a></li>
-                        <li class="py-2"><a href="/news/article-29851.htm" title="我宠我爱宠物医院电话（我宠我爱宠物医院电话大庆）">我宠我爱宠物医院电话（我宠我爱宠物医院电话大庆）</a></li>
-                        <li class="py-2"><a href="/news/article-28445.htm" title="猫批发福州（福州哪里卖猫）">猫批发福州（福州哪里卖猫）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-1-free-node-subscribe-links.htm" title="11月1日 | Vmess节点订阅每天更新22M/S免费节点订阅链接">11月1日 | Vmess节点订阅每天更新22M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-26099.htm" title="广州宠物救助中心电话24小时（动物救援中心）">广州宠物救助中心电话24小时（动物救援中心）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-29-vmess-node-share.htm" title="8月29日 | Vmess节点订阅每天更新20.1M/S免费节点订阅链接">8月29日 | Vmess节点订阅每天更新20.1M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-6-free-high-speed-nodes.htm" title="8月6日 | Vmess节点订阅每天更新19.8M/S免费节点订阅链接">8月6日 | Vmess节点订阅每天更新19.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-21-vmess-windows.htm" title="8月21日 | Vmess节点订阅每天更新22.1M/S免费节点订阅链接">8月21日 | Vmess节点订阅每天更新22.1M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-29-vmess-github.htm" title="9月29日 | Vmess节点订阅每天更新21.5M/S免费节点订阅链接">9月29日 | Vmess节点订阅每天更新21.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-22418.htm" title="Java 轻松实现二维数组与稀疏数组互转_java">Java 轻松实现二维数组与稀疏数组互转_java</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-25-vmess-windows.htm" title="10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接">10月25日 | Vmess节点订阅每天更新20.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-9-free-vmess-node.htm" title="9月9日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接">9月9日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-9-node-share-links.htm" title="11月9日 | Vmess节点订阅每天更新18.9M/S免费节点订阅链接">11月9日 | Vmess节点订阅每天更新18.9M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-21963.htm" title="被“智能”蒙蔽双眼的智能制造">被“智能”蒙蔽双眼的智能制造</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-10-free-high-speed-nodes.htm" title="11月10日 | Vmess节点订阅每天更新19.3M/S免费节点订阅链接">11月10日 | Vmess节点订阅每天更新19.3M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-8-7-node-share-links.htm" title="8月7日 | Vmess节点订阅每天更新22.6M/S免费节点订阅链接">8月7日 | Vmess节点订阅每天更新22.6M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-24-free-high-speed-nodes.htm" title="12月24日 | Vmess节点订阅每天更新19.9M/S免费订阅链接地址分享">12月24日 | Vmess节点订阅每天更新19.9M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-30-node-share.htm" title="10月30日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">10月30日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
                     </ul>
     </div>
 </div>
