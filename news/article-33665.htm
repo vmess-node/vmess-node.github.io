@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-33665.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spark SQL底层执行流程详解</title>
+        <meta name="description" content="本文目录 一、Apache Spark 二、Spark SQL发展历程 三、Spark SQL底层执行原理 四、Catalyst 的两大优化 一、Apache Spark Apache Spark是用" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                                        <a class="navbar-brand" href="/">
+                        Vmess Node
+                    </a>
+                                        <!-- if logo is image enable this   
+      <a class="navbar-brand" href="#index.html">
+          <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+      </a> -->
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="#">关于</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">联系</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Spark SQL底层执行流程详解</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<section id="nice" data-tool="mdnice编辑器" data-website="https://www.mdnice.com" style="padding: 0 10px; word-wrap: break-word; text-align: left; font-size: 15px; color: rgba(62, 62, 62, 1); line-height: 1.8; word-spacing: 2px; letter-spacing: 2px; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, &quot;PingFang SC&quot;, Cambria, Cochin, Georgia, Times, &quot;Times New Roman&quot;, serif"> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">本文目录<br /> 一、Apache Spark<br /> 二、Spark SQL发展历程<br /> 三、Spark SQL底层执行原理<br /> 四、Catalyst 的两大优化</p> <h3 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px; margin-top: 1.2em"><span style="background-image: url(&quot;https://files.mdnice.com/koala-3.png&quot;); background-size: 100% 100%; background-repeat: no-repeat; display: inline-block; width: 16px; height: 15px; line-height: 15px; margin-bottom: -1px"></span><span class="prefix" style="display: none"></span><span class="content" style="font-size: 17px; font-weight: bold; display: inline-block; margin-left: 8px; color: rgba(72, 179, 120, 1)">一、Apache Spark</span><span class="suffix" style="display: none"></span></h3> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Apache Spark是用于<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">大规模数据处理</strong>的统一分析引擎，基于<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">内存计算</strong>，提高了在大数据环境下数据处理的实时性，同时保证了<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">高容错性</strong>和<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">高可伸缩性</strong>，允许用户将Spark部署在大量硬件之上，形成集群。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Spark源码从1.x的40w行发展到现在的超过100w行，有1400多位大牛贡献了代码。整个Spark框架源码是一个巨大的工程。</p> <h3 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px; margin-top: 1.2em"><span style="background-image: url(&quot;https://files.mdnice.com/koala-3.png&quot;); background-size: 100% 100%; background-repeat: no-repeat; display: inline-block; width: 16px; height: 15px; line-height: 15px; margin-bottom: -1px"></span><span class="prefix" style="display: none"></span><span class="content" style="font-size: 17px; font-weight: bold; display: inline-block; margin-left: 8px; color: rgba(72, 179, 120, 1)">二、Spark SQL发展历程</span><span class="suffix" style="display: none"></span></h3> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://files.mdnice.com/user/11459/ff268ad0-81ad-4c88-91b6-95cf01bd153c.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">我们知道Hive实现了SQL on Hadoop，简化了MapReduce任务，只需写SQL就能进行大规模数据处理，但是Hive也有致命缺点，因为底层使用MapReduce做计算，查询延迟较高。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">1. Shark的诞生</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">所以Spark在早期版本（1.0之前）推出了<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Shark</strong>，这是什么东西呢，Shark与Hive实际上还是紧密关联的，Shark底层很多东西还是依赖于Hive，但是修改了内存管理、物理计划、执行三个模块，底层使用Spark的基于内存的计算模型，从而让性能比Hive提升了数倍到上百倍。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">产生了问题：</strong></p> <ol data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: decimal"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">因为 Shark 执行计划的生成严重依赖 Hive，想要增加新的优化非常困难；</section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">Hive 是进程级别的并行，Spark 是线程级别的并行，所以 Hive 中很多线程不安全的代码不适用于 Spark；</section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">由于以上问题，Shark 维护了 Hive 的一个分支，并且无法合并进主线，难以为继；</section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500">在 2014 年 7 月 1 日的 Spark Summit 上，Databricks 宣布终止对 Shark 的开发，将重点放到 Spark SQL 上。</section> </li> </ol> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">2. SparkSQL-DataFrame诞生</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">解决问题：</strong></p> <ol data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: decimal"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Spark SQL 执行计划和优化交给优化器 Catalyst；</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">内建了一套简单的 SQL 解析器，可以不使用 HQL；</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">还引入和 DataFrame 这样的 DSL API，完全可以不依赖任何 Hive 的组件。</p> </section> </li> </ol> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">新的问题</strong>：</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">对于初期版本的 SparkSQL，依然有挺多问题，例如只能支持 SQL 的使用，不能很好的兼容命令式，入口不够统一等。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">3. SparkSQL-Dataset诞生</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">SparkSQL 在 1.6 时代，增加了一个新的 API，叫做 Dataset，Dataset 统一和结合了 SQL 的访问和命令式 API 的使用，这是一个划时代的进步。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">在 Dataset 中可以轻易的做到使用 SQL 查询并且筛选数据，然后使用命令式 API 进行探索式分析。</p> <h3 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px; margin-top: 1.2em"><span style="background-image: url(&quot;https://files.mdnice.com/koala-3.png&quot;); background-size: 100% 100%; background-repeat: no-repeat; display: inline-block; width: 16px; height: 15px; line-height: 15px; margin-bottom: -1px"></span><span class="prefix" style="display: none"></span><span class="content" style="font-size: 17px; font-weight: bold; display: inline-block; margin-left: 8px; color: rgba(72, 179, 120, 1)">三、Spark SQL底层执行原理</span><span class="suffix" style="display: none"></span></h3> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Spark SQL 底层架构大致如下：</p> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://cdn.jsdelivr.net/gh/yuan-more/cdn/220419_2.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">可以看到，我们写的SQL语句，经过一个<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">优化器（Catalyst）</strong>，转化为RDD，交给集群执行。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">SQL到RDD中间经过了一个Catalyst，它就是Spark SQL的核心，是针对Spark SQL语句执行过程中的查询优化框架，基于Scala函数式编程结构。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">我们要了解Spark SQL的执行流程，那么理解Catalyst的工作流程是非常有必要的。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">一条SQL语句生成执行引擎可识别的程序，就离不开<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">解析（Parser）、优化（Optimizer）、执行（Execution）</strong> 这三大过程。而Catalyst优化器在执行<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">计划生成</strong>和<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">优化</strong>的工作时候，它离不开自己内部的五大组件，如下所示：</p> <ol data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: decimal"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Parser模块</strong>：将SparkSql字符串解析为一个抽象语法树/AST。</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Analyzer模块</strong>：该模块会遍历整个AST，并对AST上的每个节点进行数据类型的绑定以及函数绑定，然后根据元数据信息Catalog对数据表中的字段进行解析。</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Optimizer模块</strong>：该模块是Catalyst的核心，主要分为RBO和CBO两种优化策略，其中<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">RBO是基于规则优化，CBO是基于代价优化</strong>。</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">SparkPlanner模块</strong>：优化后的逻辑执行计划OptimizedLogicalPlan依然是逻辑的，并不能被Spark系统理解，此时需要将OptimizedLogicalPlan转换成<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">physical plan（物理计划）</strong> 。</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">CostModel模块</strong>：主要根据过去的性能统计数据，选择最佳的物理执行计划。这个过程的优化就是CBO（基于代价优化）。</p> </section> </li> </ol> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">为了更好的对整个过程进行理解，下面通过简单的实例进行解释。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">步骤1. Parser阶段：未解析的逻辑计划</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Parser简单说就是将SQL字符串切分成一个一个的Token，再根据一定语义规则解析成一颗语法树。Parser模块目前都是使用第三方类库<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">ANTLR</strong>进行实现的，包括我们熟悉的Hive、Presto、SparkSQL等都是由<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">ANTLR</strong>实现的。</p> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://cdn.jsdelivr.net/gh/yuan-more/cdn/220419_3.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">在这个过程中，会判断SQL语句是否符合规范，比如select from where 等这些关键字是否写对。当然此阶段不会对表名，表字段进行检查。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">步骤2. Analyzer阶段：解析后的逻辑计划</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">通过解析后的逻辑计划基本有了骨架，此时需要基本的元数据信息来表达这些词素，最重要的元数据信息主要包括两部分：<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">表的Scheme</strong>和<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">基本函数信息</strong>，表的Scheme主要包括表的基本定义（列名、数据类型）、表的数据格式（Json、Text）、表的物理位置等，基本函数主要指类信息。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Analyzer会再次遍历整个语法树，对树上的每个节点进行数据类型绑定及函数绑定，比如people词素会根据元数据表信息解析为包含<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">age</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">id</code>以及<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">name</code>三列的表，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">people.age</code>会被解析为数据类型的<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">int</code>的变量，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">sum</code>被解析为特定的聚合函数。</p> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://cdn.jsdelivr.net/gh/yuan-more/cdn/220419_4.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">此过程就会判断SQL语句的表名，字段名是否真的在元数据库里存在。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">步骤3. Optimizer模块：优化过的逻辑计划</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">Optimizer优化模块是整个Catalyst的核心，上面提到优化器分为基于规则的优化（RBO）和基于代价优化（CBO）两种。基于规则的优化策略实际上就是对语法树进行一次遍历，模式匹配能够满足特定规则的节点，在进行相应的等价转换。下面介绍三种常见的规则：<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">谓词下推(Predicate Pushdown)</strong> 、<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">常量累加(Constant Folding)</strong> 、<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">列值裁剪(Column Pruning)</strong> 。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">谓词下推(Predicate Pushdown)</strong></section> </li> </ul> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://files.mdnice.com/user/11459/d88b1016-a164-4f26-b6f0-14230736d85f.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">上图左边是经过解析后的语法树，语法树中两个表先做<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">join</code>，之后在使用<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">age&gt;10</code>进行filter。join算子是一个非常耗时的算子，耗时多少一般取决于参与join的两个表的大小，如果能够减少参与join两表的大小，就可以大大降低join算子所需的时间。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">谓词下推就是将过滤操作下推到join之前进行</strong>，之后再进行join的时候，数据量将会得到显著的减少，join耗时必然降低。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">常量累加(Constant Folding)</strong></section> </li> </ul> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://files.mdnice.com/user/11459/f8f19484-eb35-4df7-82b6-73eb81332b74.png" alt="Spark SQL底层执行流程详解"></figure> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">常量累加就是比如计算<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">x+(100+80)-&gt;x+180</code>，虽然是一个很小的改动，但是意义巨大。如果没有进行优化的话，每一条结果都需要执行一次<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">100+80</code>的操作，然后再与结果相加。优化后就不需要再次执行<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">100+80</code>操作。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">列值裁剪(Column Pruning)</strong></section> </li> </ul> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">列值裁剪是当用到一个表时，不需要扫描它的所有列值，而是扫描只需要的id，不需要的裁剪掉。这一优化一方面大幅度减少了网络、内存数据量消耗，另一方面对于列式存储数据库来说大大提高了扫描效率。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">步骤4. SparkPlanner模块：转化为物理执行计划</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">根据上面的步骤，逻辑执行计划已经得到了比较完善的优化，然而，逻辑执行计划依然没办法真正执行，他们只是逻辑上可行，实际上Spark并不知道如何去执行这个东西。比如join是一个抽象概念，代表两个表根据相同的id进行合并，然而具体怎么实现合并，逻辑执行计划并没有说明。</p> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">此时就需要将逻辑执行计划转化为物理执行计划，也就是将逻辑上可行的执行计划变为Spark可以真正执行的计划。比如join算子，Spark根据不同场景为该算子制定了不同的算法策略，有<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">BroadcastHashJoin</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">ShuffleHashJoin</code>以及<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">SortMergejoin</code>等，物理执行计划实际上就是在这些具体实现中挑选一个耗时最小的算法实现，怎么挑选，下面简单说下：</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">实际上SparkPlanner对优化后的逻辑计划进行转换，是生成了<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">多个可以执行的物理计划Physical Plan</strong>；</p> </section> </li> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"> <p style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">接着<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">CBO（基于代价优化）</strong>优化策略会根据<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Cost Model</strong>算出每个Physical Plan的代价，并选取代价最小的 Physical Plan作为最终的Physical Plan。</p> </section> </li> </ul> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><em style="font-style: normal; color: rgba(57, 118, 242, 1)"><strong style="font-size: 15px; font-weight: bold; font-style: normal; color: rgba(248, 57, 41, 1); letter-spacing: 0.3em">以上2、3、4步骤合起来，就是Catalyst优化器！</strong></em></p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">步骤5. 执行物理计划</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">最后依据最优的物理执行计划，生成java字节码，将SQL转化为DAG，以RDD形式进行操作。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">总结：整体执行流程图</span><span class="suffix" style="display: none"></span></h4> <figure data-tool="mdnice编辑器" style="margin: 10px 0; display: flex; flex-direction: column; justify-content: center; align-items: center"><img decoding="async" src="https://cdn.jsdelivr.net/gh/yuan-more/cdn/220419_1.png" alt="Spark SQL底层执行流程详解"></figure> <h3 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px; margin-top: 1.2em"><span style="background-image: url(&quot;https://files.mdnice.com/koala-3.png&quot;); background-size: 100% 100%; background-repeat: no-repeat; display: inline-block; width: 16px; height: 15px; line-height: 15px; margin-bottom: -1px"></span><span class="prefix" style="display: none"></span><span class="content" style="font-size: 17px; font-weight: bold; display: inline-block; margin-left: 8px; color: rgba(72, 179, 120, 1)">四、Catalyst 的两大优化</span><span class="suffix" style="display: none"></span></h3> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">这里在总结下Catalyst优化器的两个重要的优化。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">1. RBO：基于规则的优化</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">优化的点比如：谓词下推、列裁剪、常量累加等。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">谓词下推案例</strong>：</section> </li> </ul> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><br/>*<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span><br/>table1&nbsp;a<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">join</span><br/>table2&nbsp;b<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">on</span>&nbsp;a.id=b.id<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;a.age&gt;<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">20</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">and</span>&nbsp;b.cid=<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span><br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">上面的语句会自动优化为如下所示：</p> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><br/>*<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span>&nbsp;*<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table1<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;age&gt;<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">20</span>)&nbsp;a<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">join</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span>&nbsp;*<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table2<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;cid=<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span>)&nbsp;b<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">on</span>&nbsp;a.id=b.id<br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">就是在子查询阶段就提前将数据进行过滤，后期join的shuffle数据量就大大减少。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">列裁剪案例</strong>：</section> </li> </ul> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><br/>a.name,&nbsp;a.age,&nbsp;b.cid<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span>&nbsp;*<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table1<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;age&gt;<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">20</span>)&nbsp;a<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">join</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span>&nbsp;*<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table2<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;cid=<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span>)&nbsp;b<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">on</span>&nbsp;a.id=b.id<br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">上面的语句会自动优化为如下所示：</p> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><br/>a.name,&nbsp;a.age,&nbsp;b.cid<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">name</span>,&nbsp;age,<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">id</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table1<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;age&gt;<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">20</span>)&nbsp;a<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">join</span><br/>(<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">id</span>,&nbsp;cid<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table2<span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">where</span>&nbsp;cid=<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span>)&nbsp;b<br/><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">on</span>&nbsp;a.id=b.id<br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">就是提前将需要的列查询出来，其他不需要的列裁剪掉。</p> <ul data-tool="mdnice编辑器" style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: rgba(0, 0, 0, 1); list-style-type: disc"> <li> <section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgba(1, 1, 1, 1); font-weight: 500"><strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">常量累加</strong>：</section> </li> </ul> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span>+<span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">1</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">as</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">id</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table1<br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">上面的语句会自动优化为如下所示：</p> <pre class="custom" data-tool="mdnice编辑器" style="margin-top: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55)"><span style="display: block; background: url(&quot;https://files.mdnice.com/user/3441/876cad08-0422-409d-bb5a-08afec5da8ee.svg&quot;) 10px 10px / 40px no-repeat rgba(30, 30, 30, 1); height: 30px; width: 100%; margin-bottom: -7px; border-radius: 5px"></span><code class="hljs" style="overflow-x: auto; padding: 15px 16px 16px; color: rgba(220, 220, 220, 1); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; font-size: 12px; -webkit-overflow-scrolling: touch; background: rgba(30, 30, 30, 1); border-radius: 5px"><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">select</span><span class="hljs-number" style="color: rgba(184, 215, 163, 1); line-height: 26px">2</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">as</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">id</span><span class="hljs-keyword" style="color: rgba(86, 156, 214, 1); line-height: 26px">from</span>&nbsp;table1<br/></code></pre> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">就是会提前将<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">1+1</code>计算成<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">2</code>，再赋给id列的每行，不用每次都计算一次<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; background-color: rgba(27, 31, 35, 0.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all; color: rgba(40, 202, 113, 1)">1+1</code>。</p> <h4 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 18px; margin-top: 30px"><span class="prefix" style="display: none"></span><span class="content">2. CBO：基于代价的优化</span><span class="suffix" style="display: none"></span></h4> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em">就是在SparkPlanner对优化后的逻辑计划生成了多个可以执行的物理计划Physical Plan之后，多个物理执行计划基于<strong style="font-weight: bold; font-size: 15px; color: rgba(255, 127, 36, 1)">Cost Model</strong>选取最优的执行耗时最少的那个物理计划。</p> <h3 data-tool="mdnice编辑器" style="margin-bottom: 15px; padding: 0; font-weight: bold; color: rgba(0, 0, 0, 1); font-size: 20px; margin-top: 1.2em"><span style="background-image: url(&quot;https://files.mdnice.com/koala-3.png&quot;); background-size: 100% 100%; background-repeat: no-repeat; display: inline-block; width: 16px; height: 15px; line-height: 15px; margin-bottom: -1px"></span><span class="prefix" style="display: none"></span><span class="content" style="font-size: 17px; font-weight: bold; display: inline-block; margin-left: 8px; color: rgba(72, 179, 120, 1)">参考：</span><span class="suffix" style="display: none"></span></h3> <p data-tool="mdnice编辑器" style="font-size: 16px; padding-bottom: 8px; margin: 0; padding-top: 1em; color: rgba(74, 74, 74, 1); line-height: 1.75em"><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://mp.weixin.qq.com/s?__biz=Mzg2MzU2MDYzOA==&amp;mid=2247495662&amp;idx=1&amp;sn=ecfd61f8b907481ee263a64e07f8f608&amp;chksm=ce74193ff9039029cc4d80a7ebb877eb5c9efcff26de3f57f41b111dcf002b5c255925195631#rd"  style="word-wrap: break-word; font-weight: bold; color: rgba(72, 179, 120, 1); text-decoration: none; border-bottom: 1px solid rgba(72, 179, 120, 1); font-size: 15px" rel="nofollow">Spark知识体系保姆级总结，五万字好文！</a></p> </section> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-33187.htm">动物接种疫苗后多久产生特异性抗体呢正常（动物疫苗多长时间内打）</a></p>
+                                        <p>下一个：<a href="/news/article-33666.htm">上海宠物领养网点电话号码（上海地区宠物领养）</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2024-10-1-today-vmess-node.htm" title="10月1日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">10月1日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-27048.htm" title="python常见漏洞总结_在线工具">python常见漏洞总结_在线工具</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-5-vmess-windows.htm" title="10月5日 | Vmess节点订阅每天更新20.8M/S免费节点订阅链接">10月5日 | Vmess节点订阅每天更新20.8M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-19672.htm" title="数据结构（初阶）—— C语言实现双向带头循环链表">数据结构（初阶）—— C语言实现双向带头循环链表</a></li>
+                        <li class="py-2"><a href="/news/article-28908.htm" title="动物疫苗防疫站上班时间 动物疫苗防疫站上班时间表">动物疫苗防疫站上班时间 动物疫苗防疫站上班时间表</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-10-19-vmess-windows.htm" title="10月19日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">10月19日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-6-vmess-windows.htm" title="9月6日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接">9月6日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-32715.htm" title="中国动物疫苗市场现状（动物疫苗市场规模）">中国动物疫苗市场现状（动物疫苗市场规模）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-2-vmess-github.htm" title="11月2日 | Vmess节点订阅每天更新20.3M/S免费节点订阅链接">11月2日 | Vmess节点订阅每天更新20.3M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-9-19-free-node-subscribe-links.htm" title="9月19日 | Vmess节点订阅每天更新22.3M/S免费节点订阅链接">9月19日 | Vmess节点订阅每天更新22.3M/S免费节点订阅链接</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">31</span> <a href="/date/2024-10/" title="2024-10 归档">2024-10</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-09/" title="2024-09 归档">2024-09</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">28</span> <a href="/date/2024-08/" title="2024-08 归档">2024-08</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
