@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html xml:lang="zh-CN" lang="zh-CN">
 
 <head>
         <link rel="canonical" href="https://vmess-node.github.io/news/article-30812.htm" />
@@ -9,6 +9,34 @@
     <title>时间轮原理及其在框架中的应用</title>
         <meta name="description" content="1.1 为什么要使用时间轮 在平时开发中，经常会与定时任务打交道。下面举几个定时任务处理的例子。 1）心跳检测。在Dubbo中，需要有心跳机制来维持Consumer与Provider的长连接，默认的心" />
         <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-30812.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="时间轮原理及其在框架中的应用" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/56e051c5a29ec5569cd5f440eb3a89e4.webp" />
+        <meta property="og:release_date" content="2024-12-25T09:38:14" />
+    <meta property="og:updated_time" content="2024-12-25T09:38:14" />
+        <meta property="og:description" content="1.1 为什么要使用时间轮 在平时开发中，经常会与定时任务打交道。下面举几个定时任务处理的例子。 1）心跳检测。在Dubbo中，需要有心跳机制来维持Consumer与Provider的长连接，默认的心" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="时间轮原理及其在框架中的应用">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Template CSS -->
@@ -100,16 +128,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/news/article-22418.htm" title="Java 轻松实现二维数组与稀疏数组互转_java">Java 轻松实现二维数组与稀疏数组互转_java</a></li>
+                        <li class="py-2"><a href="/news/article-19672.htm" title="数据结构（初阶）—— C语言实现双向带头循环链表">数据结构（初阶）—— C语言实现双向带头循环链表</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-9-node-share-links.htm" title="11月9日 | Vmess节点订阅每天更新18.9M/S免费节点订阅链接">11月9日 | Vmess节点订阅每天更新18.9M/S免费节点订阅链接</a></li>
                         <li class="py-2"><a href="/news/article-26099.htm" title="广州宠物救助中心电话24小时（动物救援中心）">广州宠物救助中心电话24小时（动物救援中心）</a></li>
-                        <li class="py-2"><a href="/news/article-19215.htm" title="使用 vscode 插件可视化制作和管理脚手架及原理解析">使用 vscode 插件可视化制作和管理脚手架及原理解析</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-5-today-vmess-node.htm" title="11月5日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接">11月5日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-16-free-vmess-node.htm" title="10月16日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接">10月16日 | Vmess节点订阅每天更新19.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-8-22-node-share-links.htm" title="8月22日 | Vmess节点订阅每天更新20.3M/S免费节点订阅链接">8月22日 | Vmess节点订阅每天更新20.3M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-5-vmess-windows.htm" title="10月5日 | Vmess节点订阅每天更新20.8M/S免费节点订阅链接">10月5日 | Vmess节点订阅每天更新20.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-9-15-node-share.htm" title="9月15日 | Vmess节点订阅每天更新21M/S免费节点订阅链接">9月15日 | Vmess节点订阅每天更新21M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-21046.htm" title="动物疫苗的作用意义和价值有哪些 动物疫苗的作用意义和价值有哪些呢">动物疫苗的作用意义和价值有哪些 动物疫苗的作用意义和价值有哪些呢</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-26-vmess-github.htm" title="11月26日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接">11月26日 | Vmess节点订阅每天更新21.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-28445.htm" title="猫批发福州（福州哪里卖猫）">猫批发福州（福州哪里卖猫）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-29-vmess-windows.htm" title="1月29日 | Vmess节点订阅每天更新18M/S免费订阅链接地址分享">1月29日 | Vmess节点订阅每天更新18M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-21964.htm" title="动物医院属于什么行业类型（动物医院所属行业）">动物医院属于什么行业类型（动物医院所属行业）</a></li>
+                        <li class="py-2"><a href="/news/article-40476.htm" title="想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）">想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-18-free-node-subscribe-links.htm" title="11月18日 | Vmess节点订阅每天更新18.5M/S免费节点订阅链接">11月18日 | Vmess节点订阅每天更新18.5M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-27-node-share-links.htm" title="1月27日 | Vmess节点订阅每天更新20.2M/S免费订阅链接地址分享">1月27日 | Vmess节点订阅每天更新20.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-31221.htm" title="全国动物疫苗生产厂家有哪些公司上市（中国动物疫苗厂家排名）">全国动物疫苗生产厂家有哪些公司上市（中国动物疫苗厂家排名）</a></li>
                     </ul>
     </div>
 </div>
@@ -121,22 +149,16 @@
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">3</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+                <h4><span class="badge" style="float: right;">6</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
             </li>
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
-            </li>
-                        <li class="py-2">
-                <h4><span class="badge" style="float: right;">31</span> <a href="/date/2024-10/" title="2024-10 归档">2024-10</a></h4>
-            </li>
-                        <li class="py-2">
-                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-09/" title="2024-09 归档">2024-09</a></h4>
-            </li>
-                        <li class="py-2">
-                <h4><span class="badge" style="float: right;">28</span> <a href="/date/2024-08/" title="2024-08 归档">2024-08</a></h4>
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
             </li>
                     </ul>
     </div>

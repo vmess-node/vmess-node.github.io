@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html xml:lang="zh-CN" lang="zh-CN">
 
 <head>
         <link rel="canonical" href="https://vmess-node.github.io/news/article-37498.htm" />
@@ -9,6 +9,34 @@
     <title>探索 SocketChannel 的核心原理</title>
         <meta name="description" content="聊聊Socket  要想掌握 SocketChannel，我们就必须先了解什么是 Socket。要想解释清楚 Socket，就需要了解下 TCP/IP。 注：本文重点在 SocketChannel，所" />
         <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-37498.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="探索 SocketChannel 的核心原理" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/11bd935741dfefbeb4b96ba178d6af10.webp" />
+        <meta property="og:release_date" content="2025-01-08T10:01:15" />
+    <meta property="og:updated_time" content="2025-01-08T10:01:15" />
+        <meta property="og:description" content="聊聊Socket  要想掌握 SocketChannel，我们就必须先了解什么是 Socket。要想解释清楚 Socket，就需要了解下 TCP/IP。 注：本文重点在 SocketChannel，所" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="探索 SocketChannel 的核心原理">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Template CSS -->
@@ -100,16 +128,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/news/article-26581.htm" title="Linux安装gssapi、kafka-python实现Kerberos认证连接Kafka等中间件集群服务（最新版）">Linux安装gssapi、kafka-python实现Kerberos认证连接Kafka等中间件集群服务（最新版）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-7-today-vmess-node.htm" title="11月7日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接">11月7日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-17-free-node-subscribe.htm" title="11月17日 | Vmess节点订阅每天更新19.1M/S免费节点订阅链接">11月17日 | Vmess节点订阅每天更新19.1M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-36531.htm" title="SpringBoot获取数据库datetime类型数据在前端显示为时间戳问题及解决方案">SpringBoot获取数据库datetime类型数据在前端显示为时间戳问题及解决方案</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-13-free-subscribe-node.htm" title="10月13日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接">10月13日 | Vmess节点订阅每天更新21.9M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-23800.htm" title="宠物粮加工厂投资多少钱一个月（宠物粮代加工工厂哪哪里好点）">宠物粮加工厂投资多少钱一个月（宠物粮代加工工厂哪哪里好点）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-10-15-free-high-speed-nodes.htm" title="10月15日 | Vmess节点订阅每天更新22.8M/S免费节点订阅链接">10月15日 | Vmess节点订阅每天更新22.8M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/free-nodes/2025-1-1-today-vmess-node.htm" title="1月1日 | Vmess节点订阅每天更新18.8M/S免费订阅链接地址分享">1月1日 | Vmess节点订阅每天更新18.8M/S免费订阅链接地址分享</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-12-25-vmess-node.htm" title="12月25日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享">12月25日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享</a></li>
-                        <li class="py-2"><a href="/news/article-22418.htm" title="Java 轻松实现二维数组与稀疏数组互转_java">Java 轻松实现二维数组与稀疏数组互转_java</a></li>
+                        <li class="py-2"><a href="/news/article-47408.htm" title="宠物领养市场需求分析 宠物领养市场需求分析报告">宠物领养市场需求分析 宠物领养市场需求分析报告</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-20-node-share-links.htm" title="11月20日 | Vmess节点订阅每天更新21.7M/S免费节点订阅链接">11月20日 | Vmess节点订阅每天更新21.7M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-20130.htm" title="开宠物医院需要多少钱投资成本（开宠物医院需要多少钱投资成本呢）">开宠物医院需要多少钱投资成本（开宠物医院需要多少钱投资成本呢）</a></li>
+                        <li class="py-2"><a href="/news/article-21046.htm" title="动物疫苗的作用意义和价值有哪些 动物疫苗的作用意义和价值有哪些呢">动物疫苗的作用意义和价值有哪些 动物疫苗的作用意义和价值有哪些呢</a></li>
+                        <li class="py-2"><a href="/news/article-21963.htm" title="被“智能”蒙蔽双眼的智能制造">被“智能”蒙蔽双眼的智能制造</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-14-vmess-github.htm" title="1月14日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享">1月14日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-29374.htm" title="开宠物店利润高吗现在怎么样（开宠物店挣钱）">开宠物店利润高吗现在怎么样（开宠物店挣钱）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-5-today-vmess-node.htm" title="11月5日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接">11月5日 | Vmess节点订阅每天更新19.9M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-15-latest-vmess-node.htm" title="11月15日 | Vmess节点订阅每天更新18M/S免费节点订阅链接">11月15日 | Vmess节点订阅每天更新18M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-25-free-subscribe-node.htm" title="1月25日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享">1月25日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享</a></li>
                     </ul>
     </div>
 </div>
@@ -121,16 +149,16 @@
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+                <h4><span class="badge" style="float: right;">6</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
             </li>
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
-            </li>
-                        <li class="py-2">
-                <h4><span class="badge" style="float: right;">25</span> <a href="/date/2024-10/" title="2024-10 归档">2024-10</a></h4>
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
             </li>
                     </ul>
     </div>

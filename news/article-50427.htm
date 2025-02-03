@@ -1,0 +1,516 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-50427.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spring 5 中文解析数据存储篇-JDBC数据存储(下)</title>
+        <meta name="description" content="3.7 作为Java对象JDBC操作模型 org.springframework.jdbc.object包包含一些类，这些类使你以更加面向对象的方式访问数据库。例如，你可以运行查询并将结果作为包含业务" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-50427.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="Spring 5 中文解析数据存储篇-JDBC数据存储(下)" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/5887a4a24f09be83fb999218abc4be9f.webp" />
+        <meta property="og:release_date" content="2025-02-03T09:26:26" />
+    <meta property="og:updated_time" content="2025-02-03T09:26:26" />
+        <meta property="og:description" content="3.7 作为Java对象JDBC操作模型 org.springframework.jdbc.object包包含一些类，这些类使你以更加面向对象的方式访问数据库。例如，你可以运行查询并将结果作为包含业务" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Spring 5 中文解析数据存储篇-JDBC数据存储(下)">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                                        <a class="navbar-brand" href="/">
+                        Vmess Node
+                    </a>
+                                        <!-- if logo is image enable this   
+      <a class="navbar-brand" href="#index.html">
+          <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+      </a> -->
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="#">关于</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">联系</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Spring 5 中文解析数据存储篇-JDBC数据存储(下)</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <h5 id="37-作为java对象jdbc操作模型">3.7 作为Java对象JDBC操作模型</h5> <p>org.springframework.jdbc.object包包含一些类，这些类使你以更加面向对象的方式访问数据库。例如，你可以运行查询并将结果作为包含业务对象的列表返回，该业务对象的关联列数据映射到业务对象的属性。你还可以运行存储过程并运行update，delete和insert语句。</p> <blockquote> <p>许多Spring开发人员认为，下面描述的各种RDBMS操作类（StoredProcedure类除外）通常可以用直接的JdbcTemplate调用代替。通常，编写直接在JdbcTemplate上调用方法的DAO方法（与将查询封装为完整的类相对）更简单。但是，如果通过使用RDBMS操作类获得可测量的价值，则应继续使用这些类。</p> </blockquote> <h6 id="371-理解sqlquery">3.7.1 理解<code>SqlQuery</code><br /> </h6> <p>SqlQuery是可重用的、线程安全的类，它封装了SQL查询。子类必须实现newRowMapper(..)方法以提供RowMapper实例，该实例可以为遍历查询执行期间创建的ResultSet所获得的每一行创建一个对象。很少直接使用SqlQuery类，因为MappingSqlQuery子类为将行映射到Java类提供了更为方便的实现。扩展SqlQuery的其他实现是MappingSqlQueryWithParameters和UpdatableSqlQuery。</p> <h6 id="372-使用mappingsqlquery">3.7.2 使用<code>MappingSqlQuery</code><br /> </h6> <p>MappingSqlQuery是可重用的查询，其中具体的子类必须实现抽象的mapRow(..)方法，以将提供的ResultSet的每一行转换为指定类型的对象。以下示例显示了一个自定义查询，该查询将t_actor关系中的数据映射到Actor类的实例：</p> <pre><code class="language-java">public class ActorMappingQuery extends MappingSqlQuery&lt;Actor&gt; {      public ActorMappingQuery(DataSource ds) {         super(ds, "select id, first_name, last_name from t_actor where id = ?");         declareParameter(new SqlParameter("id", Types.INTEGER));         compile();     }      @Override     protected Actor mapRow(ResultSet rs, int rowNumber) throws SQLException {         Actor actor = new Actor();         actor.setId(rs.getLong("id"));         actor.setFirstName(rs.getString("first_name"));         actor.setLastName(rs.getString("last_name"));         return actor;     } }</code></pre> <p>该类扩展了使用Actor类型参数化的MappingSqlQuery。此自定义查询的构造函数将DataSource作为唯一参数。在此构造函数中，可以使用DataSource和运行的SQL调用超类上的构造函数，以检索该查询的行。该SQL用于创建PreparedStatement，因此它可以包含在执行期间要传递的任何参数的占位符。你必须使用传入SqlParameter的declareParameter方法声明每个参数。SqlParameter具有名称，并且具有java.sql.Types中定义的JDBC类型。定义所有参数之后，可以调用compile()方法，以便可以准备并稍后执行。此类在编译后是线程安全的，因此，只要在初始化DAO时创建这些实例，就可以将它们保留为实例变量并可以重用。下面的示例演示如何定义此类：</p> <pre><code class="language-java">private ActorMappingQuery actorMappingQuery;  @Autowired public void setDataSource(DataSource dataSource) {     this.actorMappingQuery = new ActorMappingQuery(dataSource); }  public Customer getCustomer(Long id) {     return actorMappingQuery.findObject(id); }</code></pre> <p>前面示例中的方法检索具有作为唯一参数传入的id的customer。由于只希望返回一个对象，因此我们以id为参数调用findObject便捷方法。相反，如果有一个查询返回一个对象列表并采用其他参数，则将使用其中一种执行方法，该方法采用以可以变参数形式传入的参数值数组。</p> <pre><code class="language-java">public List&lt;Actor&gt; searchForActors(int age, String namePattern) {     List&lt;Actor&gt; actors = actorSearchMappingQuery.execute(age, namePattern);     return actors; }</code></pre> <h6 id="373-使用sqlupdate">3.7.3 使用<code>SqlUpdate</code><br /> </h6> <p>SqlUpdate类封装了SQL更新。与查询一样，更新对象是可重用的，并且与所有RdbmsOperation类一样，更新可以具有参数并在SQL中定义。此类提供了许多类似于查询对象的execute(..)方法的update(..)方法。SQLUpdate类是具体的。可以将其子类化-例如，添加自定义更新方法。但是，你不必子类化SqlUpdate类，因为可以通过设置SQL和声明参数来轻松地对其进行参数化。以下示例创建一个名为execute的自定义更新方法：</p> <pre><code class="language-java">import java.sql.Types; import javax.sql.DataSource; import org.springframework.jdbc.core.SqlParameter; import org.springframework.jdbc.object.SqlUpdate;  public class UpdateCreditRating extends SqlUpdate {      public UpdateCreditRating(DataSource ds) {         setDataSource(ds);         setSql("update customer set credit_rating = ? where id = ?");         declareParameter(new SqlParameter("creditRating", Types.NUMERIC));         declareParameter(new SqlParameter("id", Types.NUMERIC));         compile();     }      /**      * @param id for the Customer to be updated      * @param rating the new value for credit rating      * @return number of rows updated      */     public int execute(int id, int rating) {         return update(rating, id);     } }</code></pre> <h6 id="374-使用storedprocedure">3.7.4 使用<code>StoredProcedure</code><br /> </h6> <p>StoredProcedure类是RDBMS存储过程的对象抽象的超类。此类是抽象的，并且其各种execute(..)方法均具有受保护的访问权限，除了通过提供更严格类型的子类之外，还可以防止使用。</p> <p>继承的sql属性是RDBMS中存储过程的名称。</p> <p>要为StoredProcedure类定义参数，可以使用SqlParameter或其子类之一。你必须在构造函数中指定参数名称和SQL类型，如以下代码片段所示：</p> <pre><code class="language-java">new SqlParameter("in_id", Types.NUMERIC), new SqlOutParameter("out_first_name", Types.VARCHAR),</code></pre> <p>SQL类型是使用java.sql.Types常量指定的。</p> <p>第一行（带有SqlParameter）声明一个IN参数。您可以将IN参数用于存储过程调用以及使用SqlQuery及其子类（<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-SqlQuery"  rel="nofollow">了解SqlQuery</a>中介绍）的查询。</p> <p>第二行（带有SqlOutParameter）声明将在存储过程调用中使用的out参数。还有一个用于InOut参数的SqlInOutParameter（为过程提供in值并返回值的参数）。</p> <p>对于in参数，除了名称和SQL类型外，还可以为数字数据指定精度，或者为自定义数据库类型指定类型名称。对于out参数，可以提供RowMapper来处理从REF游标返回的行的映射。另一个选择是指定一个SqlReturnType，它允许你定义返回值的自定义处理。</p> <p>下一个简单DAO示例使用StoredProcedure调用任何Oracle数据库附带的函数(sysdate())。要使用存储过程功能，你必须创建一个扩展StoredProcedure的类。在此示例中，StoredProcedure类是一个内部类。但是，如果需要重用StoredProcedure，则可以将其声明为顶级类。此示例没有输入参数，但是使用SqlOutParameter类将输出参数声明为日期类型。execute()方法将运行该过程，并从结果Map中提取返回的日期。通过使用参数名称作为键，结果Map为每个声明的输出参数（在这种情况下只有一个）都有一个条目。以下清单显示了我们的自定义StoredProcedure类：</p> <pre><code class="language-java">import java.sql.Types; import java.util.Date; import java.util.HashMap; import java.util.Map; import javax.sql.DataSource; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.jdbc.core.SqlOutParameter; import org.springframework.jdbc.object.StoredProcedure;  public class StoredProcedureDao {      private GetSysdateProcedure getSysdate;      @Autowired     public void init(DataSource dataSource) {         this.getSysdate = new GetSysdateProcedure(dataSource);     }      public Date getSysdate() {         return getSysdate.execute();     }      private class GetSysdateProcedure extends StoredProcedure {          private static final String SQL = "sysdate";          public GetSysdateProcedure(DataSource dataSource) {             setDataSource(dataSource);             setFunction(true);             setSql(SQL);             declareParameter(new SqlOutParameter("date", Types.DATE));             compile();         }          public Date execute() {             // the 'sysdate' sproc has no input parameters, so an empty Map is supplied...             Map&lt;String, Object&gt; results = execute(new HashMap&lt;String, Object&gt;());             Date sysdate = (Date) results.get("date");             return sysdate;         }     }  }</code></pre> <p>下面的StoredProcedure示例包含两个输出参数（在本例中为Oracle REF游标）：</p> <pre><code class="language-java">import java.util.HashMap; import java.util.Map; import javax.sql.DataSource; import oracle.jdbc.OracleTypes; import org.springframework.jdbc.core.SqlOutParameter; import org.springframework.jdbc.object.StoredProcedure;  public class TitlesAndGenresStoredProcedure extends StoredProcedure {      private static final String SPROC_NAME = "AllTitlesAndGenres";      public TitlesAndGenresStoredProcedure(DataSource dataSource) {         super(dataSource, SPROC_NAME);         declareParameter(new SqlOutParameter("titles", OracleTypes.CURSOR, new TitleMapper()));         declareParameter(new SqlOutParameter("genres", OracleTypes.CURSOR, new GenreMapper()));         compile();     }      public Map&lt;String, Object&gt; execute() {         // again, this sproc has no input parameters, so an empty Map is supplied         return super.execute(new HashMap&lt;String, Object&gt;());     } }</code></pre> <p>请注意如何在TitlesAndGenresStoredProcedure构造函数中使用的clarifyParameter(..)方法的重载变体传递给RowMapper实现实例。这是重用现有功能的非常方便且强大的方法。接下来的两个示例提供了两个RowMapper实现的代码。</p> <p>TitleMapper类将提供的ResultSet中每一行的ResultSet映射到Title域对象，如下所示：</p> <pre><code class="language-java">import java.sql.ResultSet; import java.sql.SQLException; import com.foo.domain.Title; import org.springframework.jdbc.core.RowMapper;  public final class TitleMapper implements RowMapper&lt;Title&gt; {      public Title mapRow(ResultSet rs, int rowNum) throws SQLException {         Title title = new Title();         title.setId(rs.getLong("id"));         title.setName(rs.getString("name"));         return title;     } }</code></pre> <p>GenreMapper类针对提供的ResultSet中的每一行将ResultSet映射到Genre域对象，如下所示：</p> <pre><code class="language-java">import java.sql.ResultSet; import java.sql.SQLException; import com.foo.domain.Genre; import org.springframework.jdbc.core.RowMapper;  public final class GenreMapper implements RowMapper&lt;Genre&gt; {      public Genre mapRow(ResultSet rs, int rowNum) throws SQLException {         return new Genre(rs.getString("name"));     } }</code></pre> <p>要将参数传递给在RDBMS中定义中具有一个或多个输入参数的存储过程，可以编写一个强类型化execute(..(方法的代码，该方法将委托给超类中的非类型execute(Map)方法，例如以下示例显示：</p> <pre><code class="language-java">import java.sql.Types; import java.util.Date; import java.util.HashMap; import java.util.Map; import javax.sql.DataSource; import oracle.jdbc.OracleTypes; import org.springframework.jdbc.core.SqlOutParameter; import org.springframework.jdbc.core.SqlParameter; import org.springframework.jdbc.object.StoredProcedure;  public class TitlesAfterDateStoredProcedure extends StoredProcedure {      private static final String SPROC_NAME = "TitlesAfterDate";     private static final String CUTOFF_DATE_PARAM = "cutoffDate";      public TitlesAfterDateStoredProcedure(DataSource dataSource) {         super(dataSource, SPROC_NAME);         declareParameter(new SqlParameter(CUTOFF_DATE_PARAM, Types.DATE);         declareParameter(new SqlOutParameter("titles", OracleTypes.CURSOR, new TitleMapper()));         compile();     }      public Map&lt;String, Object&gt; execute(Date cutoffDate) {         Map&lt;String, Object&gt; inputs = new HashMap&lt;String, Object&gt;();         inputs.put(CUTOFF_DATE_PARAM, cutoffDate);         return super.execute(inputs);     } }</code></pre> <h5 id="38-参数和数据值处理的常见问题">3.8 参数和数据值处理的常见问题</h5> <p>参数和数据值的常见问题存在于Spring框架的JDBC支持所提供的不同方法中。本节介绍如何解决它们。</p> <h6 id="381-提供参数的sql类型信息">3.8.1 提供参数的SQL类型信息</h6> <p>通常，Spring根据传入的参数类型确定参数的SQL类型。可以明确提供设置参数值时要使用的SQL类型。有时需要正确设置NULL值。</p> <p>你可以通过几种方式提供SQL类型信息：</p> <ul> <li>JdbcTemplate的许多更新和查询方法都采用int数组形式的附加参数。该数组用于通过使用java.sql.Types类中的常量值来指示相应参数的SQL类型。为每个参数提供一个条目。</li> <li>你可以使用SqlParameterValue类包装需要此附加信息的参数值。为此，请为每个值创建一个新实例，然后在构造函数中传入SQL类型和参数值。你还可以为数字值提供可选的精度参数。</li> <li>对于使用命名参数的方法，可以使用SqlParameterSource类，BeanPropertySqlParameterSource或MapSqlParameterSource。它们都具有用于为任何命名参数值注册SQL类型的方法。</li> </ul> <h6 id="382-处理blob和clob对象">3.8.2 处理BLOB和CLOB对象</h6> <p>你可以在数据库中存储图像，其他二进制数据和大块文本。这些大对象称为二进制数据的BLOB（二进制大型对象），而字符数据称为CLOB（字符大型对象）。在Spring中，可以直接使用JdbcTemplate来处理这些大对象，也可以使用RDBMS Objects和SimpleJdbc类提供的更高抽象来处理这些大对象。所有这些方法都使用LobHandler接口的实现来实际管理LOB（大对象）数据。LobHandler通过getLobCreator方法提供对LobCreator类的访问，该方法用于创建要插入的新LOB对象。</p> <p>LobCreator和LobHandler为LOB输入和输出提供以下支持：</p> <ul> <li>BLOB <ul> <li> <code>byte[]</code>: <code>getBlobAsBytes</code> and <code>setBlobAsBytes</code> </li> <li> <code>InputStream</code>: <code>getBlobAsBinaryStream</code> and <code>setBlobAsBinaryStream</code> </li> </ul> </li> <li>CLOB <ul> <li> <code>String</code>: <code>getClobAsString</code> and <code>setClobAsString</code> </li> <li> <code>InputStream</code>: <code>getClobAsAsciiStream</code> and <code>setClobAsAsciiStream</code> </li> <li> <code>Reader</code>: <code>getClobAsCharacterStream</code> and <code>setClobAsCharacterStream</code> </li> </ul> </li> </ul> <p>下一个示例显示了如何创建和插入BLOB。稍后我们展示如何从数据库中读取它。本示例使用JdbcTemplate和AbstractLobCreatingPreparedStatementCallback的实现。它实现了一种方法setValues。此方法提供了一个LobCreator，我们可以使用它来设置SQL插入语句中的LOB列的值。</p> <p>对于此示例，我们假设存在一个变量lobHandler，该变量已设置为DefaultLobHandler的实例。通常，你可以通过依赖注入来设置此值。</p> <p>以下示例显示如何创建和插入BLOB：</p> <pre><code class="language-java">final File blobIn = new File("spring2004.jpg"); final InputStream blobIs = new FileInputStream(blobIn); final File clobIn = new File("large.txt"); final InputStream clobIs = new FileInputStream(clobIn); final InputStreamReader clobReader = new InputStreamReader(clobIs);  jdbcTemplate.execute(     "INSERT INTO lob_table (id, a_clob, a_blob) VALUES (?, ?, ?)",     new AbstractLobCreatingPreparedStatementCallback(lobHandler) { //1          protected void setValues(PreparedStatement ps, LobCreator lobCreator) throws SQLException {             ps.setLong(1, 1L);             lobCreator.setClobAsCharacterStream(ps, 2, clobReader, (int)clobIn.length());  //2             lobCreator.setBlobAsBinaryStream(ps, 3, blobIs, (int)blobIn.length());  //3         }     } );  blobIs.close(); clobReader.close();</code></pre> <ol> <li>传入lobHandler（在此示例中）为普通的DefaultLobHandler。</li> <li>使用setClobAsCharacterStream方法传递CLOB内容。</li> <li>使用setBlobAsBinaryStream方法传递BLOB内容。</li> </ol> <blockquote> <p>如果在从DefaultLobHandler.getLobCreator()返回的LobCreator上调用setBlobAsBinaryStream、setClobAsAsciiStream或setClobAsCharacterStream方法，则可以选择为contentLength参数指定一个负值。如果指定的内容长度为负，则DefaultLobHandler将使用set-stream方法的JDBC 4.0变体，而不使用length参数。否则，它将指定的长度传递给驱动程序。</p> <p>请参阅有关JDBC驱动程序的文档，以用于验证它是否支持流式LOB，而不提供内容长度。</p> </blockquote> <p>现在是时候从数据库中读取LOB数据了。再次，你将JdbcTemplate与相同的实例变量lobHandler和对DefaultLobHandler的引用一起使用。以下示例显示了如何执行此操作：</p> <pre><code class="language-java">List&lt;Map&lt;String, Object&gt;&gt; l = jdbcTemplate.query("select id, a_clob, a_blob from lob_table",     new RowMapper&lt;Map&lt;String, Object&gt;&gt;() {         public Map&lt;String, Object&gt; mapRow(ResultSet rs, int i) throws SQLException {             Map&lt;String, Object&gt; results = new HashMap&lt;String, Object&gt;();             String clobText = lobHandler.getClobAsString(rs, "a_clob");//1               results.put("CLOB", clobText);             byte[] blobBytes = lobHandler.getBlobAsBytes(rs, "a_blob");  //2             results.put("BLOB", blobBytes);             return results;         }     });</code></pre> <ol> <li>使用方法getClobAsString检索CLOB的内容。</li> <li>使用getBlobAsBytes方法检索BLOB的内容。</li> </ol> <h6 id="383-传入in子句的值列表">3.8.3 传入IN子句的值列表</h6> <p>SQL标准允许基于包含变量值列表的表达式选择行。典型的例子<code>select * from T_ACTOR where id in (1, 2, 3)</code>。JDBC标准不直接为准备好的语句支持此变量列表。你不能声明可变数量的占位符。你需要准备好所需数目的占位符的多种变体，或者一旦知道需要多少个占位符，就需要动态生成SQL字符串。NamedParameterJdbcTemplate和JdbcTemplate中提供的命名参数支持采用后一种方法。你可以将值作为原始对象的java.util.List传入。该列表用于插入所需的占位符，并在语句执行期间传递值。</p> <blockquote> <p>传递许多值时要小心。JDBC标准不保证你可以为in表达式列表使用100个以上的值。各种数据库都超过了这个数目，但是它们通常对允许多少个值有硬性限制。例如，Oracle的限制为1000。</p> </blockquote> <p>除了值列表中的原始类型值外，还可以创建对象数组的java.util.List。该列表可以支持为in子句定义的多个表达式，例如，T_ACTOR的<code>select * from（（1，'Johnson'），（2，'Harrop'））</code>中的<code>（id，last_name）</code>。当然，这要求你的数据库支持此语法。</p> <h6 id="384-处理存储过程调用的复杂类型">3.8.4 处理存储过程调用的复杂类型</h6> <p>调用存储过程时，有时可以使用特定于数据库的复杂类型。为了容纳这些类型，Spring提供了一个SqlReturnType来处理从存储过程调用返回的这些类型，并提供SqlTypeValue作为参数作为参数传递给存储过程的情况。</p> <p>SqlReturnType接口具有必须实现的单个方法（名为getTypeValue）。此接口用作SqlOutParameter声明的一部分。以下示例显示了返回用户声明类型为ITEM_TYPE的Oracle STRUCT对象的值：</p> <pre><code class="language-java">public class TestItemStoredProcedure extends StoredProcedure {      public TestItemStoredProcedure(DataSource dataSource) {         // ...         declareParameter(new SqlOutParameter("item", OracleTypes.STRUCT, "ITEM_TYPE",             (CallableStatement cs, int colIndx, int sqlType, String typeName) -&gt; {                 STRUCT struct = (STRUCT) cs.getObject(colIndx);                 Object[] attr = struct.getAttributes();                 TestItem item = new TestItem();                 item.setId(((Number) attr[0]).longValue());                 item.setDescription((String) attr[1]);                 item.setExpirationDate((java.util.Date) attr[2]);                 return item;             }));         // ...     }</code></pre> <p>你可以使用SqlTypeValue将Java对象（例如TestItem）的值传递给存储过程。SqlTypeValue接口具有必须实现的单个方法（名为createTypeValue）。活动连接被传入，你可以使用它来创建特定于数据库的对象，例如StructDescriptor实例或ArrayDescriptor实例。下面的示例创建一个StructDescriptor实例：</p> <pre><code class="language-java">final TestItem testItem = new TestItem(123L, "A test item",         new SimpleDateFormat("yyyy-M-d").parse("2010-12-31"));  SqlTypeValue value = new AbstractSqlTypeValue() {     protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {         StructDescriptor itemDescriptor = new StructDescriptor(typeName, conn);         Struct item = new STRUCT(itemDescriptor, conn,         new Object[] {             testItem.getId(),             testItem.getDescription(),             new java.sql.Date(testItem.getExpirationDate().getTime())         });         return item;     } };</code></pre> <p>现在，你可以将此SqlTypeValue添加到包含用于存储过程的execute调用的输入参数的Map中。</p> <p>SqlTypeValue的另一个用途是将值数组传递给Oracle存储过程。在这种情况下，Oracle具有自己的内部ARRAY类，并且你可以使用SqlTypeValue创建Oracle ARRAY的实例，并使用Java ARRAY中的值填充它，如以下示例所示：</p> <pre><code class="language-java">final Long[] ids = new Long[] {1L, 2L};  SqlTypeValue value = new AbstractSqlTypeValue() {     protected Object createTypeValue(Connection conn, int sqlType, String typeName) throws SQLException {         ArrayDescriptor arrayDescriptor = new ArrayDescriptor(typeName, conn);         ARRAY idArray = new ARRAY(arrayDescriptor, conn, ids);         return idArray;     } };</code></pre> <h5 id="39-嵌入式数据库支持">3.9 嵌入式数据库支持</h5> <p>org.springframework.jdbc.datasource.embedded包为嵌入式Java数据库引擎提供支持。本地提供对<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=http://www.hsqldb.org/%E3%80%81%5BH2%5D%28https://www.h2database.com/%29%E5%92%8C%5BDerby%5D%28https://db.apache.org/derby"  rel="nofollow">HSQL</a>的支持。你还可以使用可扩展的API来插入新的嵌入式数据库类型和DataSource实现。</p> <h6 id="391-为什么要使用嵌入式数据库？">3.9.1 为什么要使用嵌入式数据库？</h6> <p>嵌入式数据库由于具有轻量级的特性，因此在项目的开发阶段可能会很有用。好处包括易于配置，启动时间短，可测试性以及在开发过程中快速演化SQL的能力。</p> <h6 id="392-使用spring-xml创建嵌入式数据库">3.9.2 使用Spring XML创建嵌入式数据库</h6> <p>如果要在Spring ApplicationContext中将嵌入式数据库实例作为Bean公开，则可以在spring-jdbc命名空间中使用Embedded-database标记：</p> <pre><code class="language-xml">&lt;jdbc:embedded-database id="dataSource" generate-name="true"&gt;     &lt;jdbc:script location="classpath:schema.sql"/&gt;     &lt;jdbc:script location="classpath:test-data.sql"/&gt; &lt;/jdbc:embedded-database&gt;</code></pre> <p>前面的配置创建了一个嵌入式HSQL数据库，该数据库由来自类路径根目录中的schema.sql和test-data.sql资源的SQL填充。另外，作为最佳实践，将为嵌入式数据库分配一个唯一生成的名称。嵌入式数据库作为javax.sql.DataSource类型的bean提供给Spring容器，然后可以根据需要将其注入到数据访问对象中。</p> <h6 id="393-以编程方式创建嵌入式数据库">3.9.3 以编程方式创建嵌入式数据库</h6> <p>EmbeddedDatabaseBuilder类提供了一种流畅的API，可用于以编程方式构造嵌入式数据库。当你需要在独立环境或独立集成测试中创建嵌入式数据库时，可以使用此方法，如以下示例所示：</p> <pre><code class="language-java">EmbeddedDatabase db = new EmbeddedDatabaseBuilder()         .generateUniqueName(true)         .setType(H2)         .setScriptEncoding("UTF-8")         .ignoreFailedDrops(true)         .addScript("schema.sql")         .addScripts("user_data.sql", "country_data.sql")         .build();  // perform actions against the db (EmbeddedDatabase extends javax.sql.DataSource)  db.shutdown()</code></pre> <p>有关所有支持的选项的更多详细信息，请参见<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring-framework/docs/5.2.8.RELEASE/javadoc-api/org/springframework/jdbc/datasource/embedded/EmbeddedDatabaseBuilder.html"  rel="nofollow">EmbeddedDatabaseBuilder</a>的javadoc。</p> <p>你还可以使用EmbeddedDatabaseBuilder通过Java配置创建嵌入式数据库，如以下示例所示：</p> <pre><code class="language-java">@Configuration public class DataSourceConfig {      @Bean     public DataSource dataSource() {         return new EmbeddedDatabaseBuilder()                 .generateUniqueName(true)                 .setType(H2)                 .setScriptEncoding("UTF-8")                 .ignoreFailedDrops(true)                 .addScript("schema.sql")                 .addScripts("user_data.sql", "country_data.sql")                 .build();     } }</code></pre> <h6 id="394-选择嵌入式数据库类型">3.9.4 选择嵌入式数据库类型</h6> <p>本节介绍如何选择Spring支持的三个嵌入式数据库之一。它包括以下主题：</p> <ul> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-embedded-database-using-HSQL"  rel="nofollow">使用 HSQL</a></li> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-embedded-database-using-H2"  rel="nofollow">使用 H2</a></li> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-embedded-database-using-Derby"  rel="nofollow">使用 Derby</a></li> </ul> <p><strong>使用HSQL</strong></p> <p>Spring支持HSQL 1.8.0及更高版本。如果未明确指定类型，则HSQL是默认的嵌入式数据库。要明确指定HSQL，请将嵌入式数据库标记的type属性设置为HSQL。如果使用构建器API，请使用EmbeddedDatabaseType.HSQL调用setType（EmbeddedDatabaseType）方法。</p> <p><strong>使用H2</strong></p> <p>Spring支持H2数据库。要启用H2，请将嵌入式数据库标记的type属性设置为H2。如果使用构建器API，请使用EmbeddedDatabaseType.H2调用setType（EmbeddedDatabaseType）方法。</p> <p><strong>使用Derby</strong></p> <p>Spring支持Apache Derby 10.5及更高版本。要启用Derby，请将嵌入式数据库标记的type属性设置为DERBY。如果使用构建器API，请使用EmbeddedDatabaseType.DERBY调用setType（EmbeddedDatabaseType）方法。</p> <h6 id="395-使用嵌入式数据库测试数据访问逻辑">3.9.5 使用嵌入式数据库测试数据访问逻辑</h6> <p>嵌入式数据库提供了一种轻量级的方法来测试数据访问代码。下一个示例是使用嵌入式数据库的数据访问集成测试模板。当嵌入式数据库不需要在测试类之间重用时，使用这种模板可以一次性使用。但是，如果您希望创建在测试套件中共享的嵌入式数据库，请考虑使用<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/testing.html#testcontext-framework"  rel="nofollow">Spring TestContext框架</a>并将嵌入式数据库配置为Spring ApplicationContext中的Bean，如使用<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-embedded-database-xml"  rel="nofollow">Spring XML创建嵌入式数据库</a>和以<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/data-access.html#jdbc-embedded-database-java"  rel="nofollow">编程方式嵌入数据库</a>。以下清单显示了测试模板：</p> <pre><code class="language-java">public class DataAccessIntegrationTestTemplate {      private EmbeddedDatabase db;      @BeforeEach     public void setUp() {         // creates an HSQL in-memory database populated from default scripts         // classpath:schema.sql and classpath:data.sql         db = new EmbeddedDatabaseBuilder()                 .generateUniqueName(true)                 .addDefaultScripts()                 .build();     }      @Test     public void testDataAccess() {         JdbcTemplate template = new JdbcTemplate(db);         template.query( /* ... */ );     }      @AfterEach     public void tearDown() {         db.shutdown();     }  }</code></pre> <h6 id="396-为嵌入式数据库生成唯一名称">3.9.6 为嵌入式数据库生成唯一名称</h6> <p>如果开发团队的测试套件无意间尝试重新创建同一数据库的其他实例，则开发团队经常会遇到错误。如果XML配置文件或@Configuration类负责创建嵌入式数据库，然后在同一测试套件（即同一JVM进程）中的多个测试场景中重用相应的配置，则这很容易发生。 集成测试针对其ApplicationContext配置仅在哪些bean定义配置文件处于活动状态方面有所不同的嵌入式数据库进行。</p> <p>造成此类错误的根本原因是，如果未另行指定，Spring的EmbeddedDatabaseFactory（由&lt;jdbc：embedded-database&gt; XML名称空间元素和EmbeddedDatabaseBuilder 为 Java配置在内部使用）会将嵌入式数据库的名称设置为testdb。对于&lt;jdbc：embedded-database&gt;的情况，通常为嵌入式数据库分配的名称等于Bean的ID（通常是类似于dataSource的名称）。因此，随后创建嵌入式数据库的尝试不会产生新的数据库。取而代之的是，相同的JDBC连接URL被重用，并且尝试创建新的嵌入式数据库实际上指向的是从相同配置创建的现有嵌入式数据库。</p> <p>为了解决这个常见问题，Spring框架4.2提供了对生成嵌入式数据库的唯一名称的支持。要启用生成名称的使用，请使用以下选项之一。</p> <ul> <li><code>EmbeddedDatabaseFactory.setGenerateUniqueDatabaseName()</code></li> <li><code>EmbeddedDatabaseBuilder.generateUniqueName()</code></li> <li><code>&lt;jdbc:embedded-database generate-name="true" … &gt;</code></li> </ul> <h6 id="397-扩展嵌入式数据库支持">3.9.7 扩展嵌入式数据库支持</h6> <p>你可以通过两种方式扩展Spring JDBC嵌入式数据库的支持：</p> <ul> <li>实现EmbeddedDatabaseConfigurer以支持新的嵌入式数据库类型。</li> <li>实现DataSourceFactory以支持新的DataSource实现，例如用于管理嵌入式数据库连接的连接池。</li> </ul> <h5 id="310-初始化datasource">3.10 初始化<code>DataSource</code><br /> </h5> <p>org.springframework.jdbc.datasource.init包提供了对初始化现有DataSource的支持。嵌入式数据库支持提供了一种为应用程序创建和初始化数据源的选项。但是，有时你可能需要初始化在某处的服务器上运行的实例。</p> <h6 id="3101-使用spring-xml初始化数据库">3.10.1 使用Spring XML初始化数据库</h6> <p>如果要初始化数据库，并且可以提供对DataSource bean的引用，则可以在spring-jdbc命名空间中使用initialize-database标签：</p> <pre><code class="language-xml">&lt;jdbc:initialize-database data-source="dataSource"&gt;     &lt;jdbc:script location="classpath:com/foo/sql/db-schema.sql"/&gt;     &lt;jdbc:script location="classpath:com/foo/sql/db-test-data.sql"/&gt; &lt;/jdbc:initialize-database&gt;</code></pre> <p>前面的示例对数据库运行两个指定的脚本。第一个脚本创建schema，第二个脚本用测试数据集填充表。脚本位置也可以是带有通配符的模式，该模式具有用于Spring中资源的常用Ant样式（例如，<code>classpath *:/com/foo/**/sql/*-data.sql</code>）。如果使用模式，则脚本以其URL或文件名的词法顺序运行。</p> <p>数据库初始化程序的默认行为是无条件运行所提供的脚本。这可能并不总是你想要的。例如，如果你对已经有测试数据的数据库运行脚本。通过遵循首先创建表然后插入数据的通用模式（如前所示），可以减少意外删除数据的可能性。如果表已经存在，则第一步失败。</p> <p>但是，为了更好地控制现有数据的创建和删除，XML名称空间提供了一些其他选项。第一个是用于打开和关闭初始化的标志。你可以根据环境进行设置（例如，从系统属性或环境Bean中获取布尔值）。以下示例从系统属性获取值：</p> <pre><code class="language-xml">&lt;jdbc:initialize-database data-source="dataSource"     enabled="#{systemProperties.INITIALIZE_DATABASE}"&gt; //1     &lt;jdbc:script location="..."/&gt; &lt;/jdbc:initialize-database&gt;</code></pre> <ol> <li>从名为INITIALIZE_DATABASE的系统属性中获取启用的值。</li> </ol> <p>控制现有数据会发生什么的第二种选择是更容忍故障。为此，你可以控制初始化程序忽略脚本运行的SQL中某些错误的能力，如以下示例所示：</p> <pre><code class="language-xml">&lt;jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"&gt;     &lt;jdbc:script location="..."/&gt; &lt;/jdbc:initialize-database&gt;</code></pre> <p>在前面的示例中，我们说我们期望有时脚本是针对空数据库运行的，并且脚本中有一些DROP语句可能因此失败。因此失败的SQL DROP语句将被忽略，但其他失败将导致异常。如果你的SQL方言不支持<code>DROP … IF EXISTS</code>（或类似），但你想要无条件地删除所有测试数据然后重新创建，则此功能非常有用。在那种情况下，第一个脚本通常是一组DROP语句，然后是一组CREATE语句。</p> <p>可以将ignore-failures选项设置为NONE（默认值），DROPS（忽略失败的丢弃）或ALL（忽略所有失败）。</p> <p>每个语句都应用<code>;</code>或如果换行<code>;</code>脚本中根本没有字符。你可以全局控制该脚本，也可以按脚本控制，如以下示例所示：</p> <pre><code class="language-xml">&lt;jdbc:initialize-database data-source="dataSource" separator="@@"&gt;//1      &lt;jdbc:script location="classpath:com/myapp/sql/db-schema.sql" separator=";"/&gt; //2     &lt;jdbc:script location="classpath:com/myapp/sql/db-test-data-1.sql"/&gt;     &lt;jdbc:script location="classpath:com/myapp/sql/db-test-data-2.sql"/&gt; &lt;/jdbc:initialize-database&gt;</code></pre> <ol> <li>将分隔符脚本设置为@@。</li> <li>将db-schema.sql的分隔符设置为<code>;</code>。</li> </ol> <p>在此示例中，两个测试数据脚本使用<code>@@</code>作为语句分隔符，而只有<code>db-schema.sql</code>使用<code>;</code>。此配置指定默认分隔符为<code>@@</code>，并覆盖db-schema脚本的默认分隔符。</p> <p>如果你需要比从XML名称空间获得更多控制权，则可以直接使用DataSourceInitializer并将其定义为应用程序中的组件。</p> <p><strong>初始化依赖于数据库的其他组件</strong></p> <p>大量应用程序（那些在Spring上下文启动之后才使用数据库的应用程序）可以使用数据库初始化程序，而不会带来更多麻烦。如果你的应用程序不是其中之一，则可能需要阅读本节的其余部分。</p> <p>数据库初始化程序依赖于DataSource实例，并运行其初始化回调中提供的脚本(类似于XML bean定义中的init方法，组件中的@PostConstruct方法或实现InitializingBean的组件中的afterPropertiesSet()方法 )。如果其他bean依赖于同一数据源并在初始化回调中使用该数据源，则可能存在问题，因为数据尚未初始化。一个常见的例子是一个高速缓存，它会在应用程序启动时急于初始化并从数据库加载数据。</p> <p>要解决此问题，你有两个选择：将高速缓存初始化策略更改为以后的阶段，或者确保首先初始化数据库初始化程序。</p> <p>如果应用程序在你的控制之下，则更改缓存初始化策略可能很容易，否则就不那么容易。有关如何实现这一点的一些建议包括：</p> <ul> <li>使高速缓存在首次使用时延迟初始化，从而缩短了应用程序的启动时间。</li> <li>让你的缓存或初始化缓存的单独组件实现Lifecycle或SmartLifecycle。当应用程序上下文启动时，你可以通过设置其SmartStartup标志来自动启动SmartLifecycle，并且可以通过在封闭上下文中调用ConfigurableApplicationContext.start()来手动启动Lifecycle。</li> <li>使用Spring ApplicationEvent或类似的自定义观察者机制来触发缓存初始化。 ContextRefreshedEvent在准备好使用时（在所有bean都初始化之后）总是由上下文发布，因此通常是一个有用的钩子（默认情况下，SmartLifecycle的工作方式）。</li> </ul> <p>确保首先初始化数据库初始化程序也很容易。关于如何实现这一点的一些建议包括：</p> <ul> <li>依靠Spring BeanFactory的默认行为，即按注册顺序初始化bean。通过采用XML配置中的一组<br />   元素（对应用程序模块进行排序）的通用做法，并确保首先列出数据库和数据库初始化，可以轻松地进行安排。</li> <li>将数据源和使用它的业务组件分开，并通过将它们放在单独的ApplicationContext实例中来控制启动顺序（例如，父上下文包含DataSource，子上下文包含业务组件）。这种结构在Spring Web应用程序中很常见，但可以更广泛地应用。</li> </ul> <h4 id="作者">作者</h4> <blockquote> <p>个人从事金融行业，就职过易极付、思建科技、某网约车平台等重庆一流技术团队，目前就职于某银行负责统一支付系统建设。自身对金融行业有强烈的爱好。同时也实践大数据、数据存储、自动化集成和部署、分布式微服务、响应式编程、人工智能等领域。同时也热衷于技术分享创立公众号和博客站点对知识体系进行分享。关注公众号：<strong>青年IT男</strong> 获取最新技术文章推送！</p> </blockquote> <p><strong>博客地址：</strong> <a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=http://youngitman.tech"  rel="nofollow">http://youngitman.tech</a></p> <p><strong>CSDN：</strong> <a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/liyong1028826685"  rel="nofollow">https://blog.csdn.net/liyong1028826685</a></p> <blockquote> <p>该系列文章请关注微信公众：青年IT男</p> </blockquote></div> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-49910.htm">猫三联两针之间必须间隔三周吗对吗（猫三联一针间隔多久）</a></p>
+                                        <p>下一个：<a href="/news/article-50428.htm">宠物粮食加工厂设备生产厂家排名前十的有哪些 宠物粮食加工厂好做吗</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/news/article-23351.htm" title="一劳永逸，解决.NET发布云服务器的时区问题_在线工具">一劳永逸，解决.NET发布云服务器的时区问题_在线工具</a></li>
+                        <li class="py-2"><a href="/news/article-28445.htm" title="猫批发福州（福州哪里卖猫）">猫批发福州（福州哪里卖猫）</a></li>
+                        <li class="py-2"><a href="/news/article-19216.htm" title="兽用疫苗批号查询系统 兽用疫苗批号查询系统官网">兽用疫苗批号查询系统 兽用疫苗批号查询系统官网</a></li>
+                        <li class="py-2"><a href="/news/article-32715.htm" title="中国动物疫苗市场现状（动物疫苗市场规模）">中国动物疫苗市场现状（动物疫苗市场规模）</a></li>
+                        <li class="py-2"><a href="/news/article-21502.htm" title="兽药厂家排名前十强在山东哪里有卖（山东最大的兽药经销商）">兽药厂家排名前十强在山东哪里有卖（山东最大的兽药经销商）</a></li>
+                        <li class="py-2"><a href="/news/article-26582.htm" title="Python，如何将元组中的元素作为参数传入函数">Python，如何将元组中的元素作为参数传入函数</a></li>
+                        <li class="py-2"><a href="/news/article-37499.htm" title="被猫抓伤怎样判断用不用打狂犬疫苗（被猫抓伤怎么确定有没有狂犬病）">被猫抓伤怎样判断用不用打狂犬疫苗（被猫抓伤怎么确定有没有狂犬病）</a></li>
+                        <li class="py-2"><a href="/news/article-42456.htm" title="春季开展给牲畜打疫苗简报（乡村牲畜疫苗注射工作简报）">春季开展给牲畜打疫苗简报（乡村牲畜疫苗注射工作简报）</a></li>
+                        <li class="py-2"><a href="/news/article-21963.htm" title="被“智能”蒙蔽双眼的智能制造">被“智能”蒙蔽双眼的智能制造</a></li>
+                        <li class="py-2"><a href="/news/article-35038.htm" title="猫疫苗去宠物店打还是宠物医院打好呢（猫疫苗去宠物店打还是宠物医院打好呢视频）">猫疫苗去宠物店打还是宠物医院打好呢（猫疫苗去宠物店打还是宠物医院打好呢视频）</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">9</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>

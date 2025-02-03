@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html xml:lang="zh-CN" lang="zh-CN">
 
 <head>
         <link rel="canonical" href="https://vmess-node.github.io/news/article-36044.htm" />
@@ -9,6 +9,34 @@
     <title>记一次MySQL数据迁移到SQLServer全过程</title>
         <meta name="description" content="为什么要做迁移？ 由于系统版本、数据库的升级，导致测试流程阻塞，为了保证数据及系统版本的一致性，我又迫切需要想用这套环境做性能测试，所以和领导、开发请示，得到批准后，便有了这次学习的机会，所以特此来记" />
         <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-36044.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="记一次MySQL数据迁移到SQLServer全过程" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/f9d5f55aaa88724320dc0dbc9f511f30.webp" />
+        <meta property="og:release_date" content="2025-01-05T09:44:40" />
+    <meta property="og:updated_time" content="2025-01-05T09:44:40" />
+        <meta property="og:description" content="为什么要做迁移？ 由于系统版本、数据库的升级，导致测试流程阻塞，为了保证数据及系统版本的一致性，我又迫切需要想用这套环境做性能测试，所以和领导、开发请示，得到批准后，便有了这次学习的机会，所以特此来记" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="记一次MySQL数据迁移到SQLServer全过程">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
     <!-- google fonts -->
     <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Template CSS -->
@@ -100,16 +128,16 @@
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/news/article-22880.htm" title="青岛宠物医院宁夏路（青岛宠物医院价格表）">青岛宠物医院宁夏路（青岛宠物医院价格表）</a></li>
-                        <li class="py-2"><a href="/news/article-35690.htm" title="人和宠物打的狂犬疫苗一样吗 人和宠物打的狂犬疫苗一样吗多少钱">人和宠物打的狂犬疫苗一样吗 人和宠物打的狂犬疫苗一样吗多少钱</a></li>
-                        <li class="py-2"><a href="/news/article-19672.htm" title="数据结构（初阶）—— C语言实现双向带头循环链表">数据结构（初阶）—— C语言实现双向带头循环链表</a></li>
-                        <li class="py-2"><a href="/free-nodes/2025-1-5-node-share.htm" title="1月5日 | Vmess节点订阅每天更新21.2M/S免费订阅链接地址分享">1月5日 | Vmess节点订阅每天更新21.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-46937.htm" title="动物疫苗多少钱打一次（动物疫苗多少钱打一次针）">动物疫苗多少钱打一次（动物疫苗多少钱打一次针）</a></li>
                         <li class="py-2"><a href="/news/article-23800.htm" title="宠物粮加工厂投资多少钱一个月（宠物粮代加工工厂哪哪里好点）">宠物粮加工厂投资多少钱一个月（宠物粮代加工工厂哪哪里好点）</a></li>
-                        <li class="py-2"><a href="/news/article-32715.htm" title="中国动物疫苗市场现状（动物疫苗市场规模）">中国动物疫苗市场现状（动物疫苗市场规模）</a></li>
-                        <li class="py-2"><a href="/news/article-28907.htm" title="动物疫苗需要冷藏吗多少度保存呢（动物疫苗运输与储存规范）">动物疫苗需要冷藏吗多少度保存呢（动物疫苗运输与储存规范）</a></li>
+                        <li class="py-2"><a href="/news/article-40980.htm" title="动物疫苗公司10强（动物疫苗上市公司排名）">动物疫苗公司10强（动物疫苗上市公司排名）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-28-vmess-github.htm" title="12月28日 | Vmess节点订阅每天更新20.5M/S免费订阅链接地址分享">12月28日 | Vmess节点订阅每天更新20.5M/S免费订阅链接地址分享</a></li>
                         <li class="py-2"><a href="/free-nodes/2024-11-16-vmess-windows.htm" title="11月16日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接">11月16日 | Vmess节点订阅每天更新20.2M/S免费节点订阅链接</a></li>
-                        <li class="py-2"><a href="/news/article-22420.htm" title="动物医院好评模板范文大全图片（动物医院美团好评）">动物医院好评模板范文大全图片（动物医院美团好评）</a></li>
-                        <li class="py-2"><a href="/free-nodes/2024-11-6-vmess-windows.htm" title="11月6日 | Vmess节点订阅每天更新20.7M/S免费节点订阅链接">11月6日 | Vmess节点订阅每天更新20.7M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-41970.htm" title="宠物领养证书怎么办理流程视频（正规领养宠物流程）">宠物领养证书怎么办理流程视频（正规领养宠物流程）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-20-free-subscribe-node.htm" title="12月20日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接">12月20日 | Vmess节点订阅每天更新18.8M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-23799.htm" title="动物疫苗注射部位图解 动物疫苗注射部位图解视频">动物疫苗注射部位图解 动物疫苗注射部位图解视频</a></li>
+                        <li class="py-2"><a href="/news/article-21964.htm" title="动物医院属于什么行业类型（动物医院所属行业）">动物医院属于什么行业类型（动物医院所属行业）</a></li>
+                        <li class="py-2"><a href="/news/article-21963.htm" title="被“智能”蒙蔽双眼的智能制造">被“智能”蒙蔽双眼的智能制造</a></li>
                     </ul>
     </div>
 </div>
@@ -121,16 +149,16 @@
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">21</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+                <h4><span class="badge" style="float: right;">6</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
             </li>
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">34</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
-            </li>
-                        <li class="py-2">
-                <h4><span class="badge" style="float: right;">25</span> <a href="/date/2024-10/" title="2024-10 归档">2024-10</a></h4>
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
             </li>
                     </ul>
     </div>
