@@ -1,0 +1,509 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-52529.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>分析fastcache和freecache(一)_在线工具</title>
+        <meta name="description" content="分析fastcache和freecache(一) fastcache和freecache是两个比较简单的缓存实现，下面分析一下各自的实现，并学习一下其实现中比较好的方式。 fastcache 概述 f" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-52529.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="分析fastcache和freecache(一)_在线工具" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/11a28ac1e28ad08952eafd8ea809d629.webp" />
+        <meta property="og:release_date" content="2025-02-07T07:19:03" />
+    <meta property="og:updated_time" content="2025-02-07T07:19:03" />
+        <meta property="og:description" content="分析fastcache和freecache(一) fastcache和freecache是两个比较简单的缓存实现，下面分析一下各自的实现，并学习一下其实现中比较好的方式。 fastcache 概述 f" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="分析fastcache和freecache(一)_在线工具">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>分析fastcache和freecache(一)_在线工具</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<h2 id="分析fastcache和freecache一">分析fastcache和freecache(一)</h2> <p>fastcache和freecache是两个比较简单的缓存实现，下面分析一下各自的实现，并学习一下其实现中比较好的方式。</p> <h3 id="fastcache"><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://github.com/VictoriaMetrics/fastcache"  target="_blank"  rel="nofollow">fastcache</a></h3> <h4 id="概述">概述</h4> <p>fastcache是一个简单库，核心文件也就两个：<code>fastcache.go</code>和<code>bigcache.go</code>。其中后者是对前者场景的扩展，其实就是将大于64KB 的数据分段存储。参见下面<code>Limitations</code>的第二条。</p> <blockquote> <h4 id="limitations">Limitations</h4> <ol> <li>Keys and values must be <strong>byte slices.</strong> Other types must be marshaled before storing them in the cache.</li> <li>Big entries with sizes exceeding <strong>64KB</strong> must be stored via <a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=http://godoc.org/github.com/VictoriaMetrics/fastcache#Cache.SetBig"  target="_blank"  rel="nofollow">distinct API</a>.</li> <li>There is <strong>no cache expiration</strong>. Entries are evicted from the cache only on cache size overflow. Entry deadline may be stored inside the value in order to implement cache expiration.</li> </ol> </blockquote> <p>根据官方的性能测试<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://github.com/VictoriaMetrics/fastcache#benchmarks"  target="_blank"  rel="nofollow">报告</a>，其读写性能比较均衡，远好于标准的Go map和<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://golang.org/pkg/sync/#Map"  target="_blank"  rel="nofollow">sync.Map</a>：</p> <pre><code>GOMAXPROCS=4 go test github.com/VictoriaMetrics/fastcache -bench='Set|Get' -benchtime=10s goos: linux goarch: amd64 pkg: github.com/VictoriaMetrics/fastcache BenchmarkBigCacheSet-4      	    2000	  10566656 ns/op	   6.20 MB/s	 4660369 B/op	       6 allocs/op BenchmarkBigCacheGet-4      	    2000	   6902694 ns/op	   9.49 MB/s	  684169 B/op	  131076 allocs/op BenchmarkBigCacheSetGet-4   	    1000	  17579118 ns/op	   7.46 MB/s	 5046744 B/op	  131083 allocs/op BenchmarkCacheSet-4         	    5000	   3808874 ns/op	  17.21 MB/s	    1142 B/op	       2 allocs/op BenchmarkCacheGet-4         	    5000	   3293849 ns/op	  19.90 MB/s	    1140 B/op	       2 allocs/op BenchmarkCacheSetGet-4      	    2000	   8456061 ns/op	  15.50 MB/s	    2857 B/op	       5 allocs/op BenchmarkStdMapSet-4        	    2000	  10559382 ns/op	   6.21 MB/s	  268413 B/op	   65537 allocs/op BenchmarkStdMapGet-4        	    5000	   2687404 ns/op	  24.39 MB/s	    2558 B/op	      13 allocs/op BenchmarkStdMapSetGet-4     	     100	 154641257 ns/op	   0.85 MB/s	  387405 B/op	   65558 allocs/op BenchmarkSyncMapSet-4       	     500	  24703219 ns/op	   2.65 MB/s	 3426543 B/op	  262411 allocs/op BenchmarkSyncMapGet-4       	    5000	   2265892 ns/op	  28.92 MB/s	    2545 B/op	      79 allocs/op BenchmarkSyncMapSetGet-4    	    1000	  14595535 ns/op	   8.98 MB/s	 3417190 B/op	  262277 allocs/op </code></pre> <h4 id="fastcachego分析">fastcache.go分析</h4> <p>fastcache的数据结构相对比较简单，主要内容如下(省去了统计相关的结构体成员)：</p> <pre><code class="language-go">type Cache struct { 	buckets [bucketsCount]bucket 	... }  type bucket struct { 	mu sync.RWMutex  	// chunks is a ring buffer with encoded (k, v) pairs. 	// It consists of 64KB chunks. 	chunks [][]byte  	// m maps hash(k) to idx of (k, v) pair in chunks. 	m map[uint64]uint64  	// idx points to chunks for writing the next (k, v) pair. 	idx uint64  	// gen is the generation of chunks. 	gen uint64 	... } </code></pre> <p><code>Cache</code>结构体中包含长度为512的<code>buckets</code>，<code>bucket</code>中包含存储数据的<code>chunks</code>数组。fastcache没有缓存超时机制，<code>chunks</code>为<code>ringbuffer</code>，当<code>chunks</code>满数据之后，新来的数据会放到<code>chunk1</code>中，以此类推。从这方面看，fastcache并没有什么神奇之处，但cache说白了也就2件事：</p> <ol> <li>快速检索数据，包括快速确定写入的内存以及快速查找所需的数据</li> <li>高效利用内存，不产生过多的内存碎片</li> </ol> <p>后面看下fastcache如何利用<code>bucket.m</code>、<code>bucket.idx</code>和<code>bucket.gen</code>这三个参数来实现快速检索数据，以及如何使用<code>freeChunks</code>来减少内存预分配。</p> <p><img decoding="async" src="https://img2022.cnblogs.com/blog/1334952/202204/1334952-20220429175047909-2058588532.png" alt="分析fastcache和freecache(一)_在线工具" style="zoom: 80%"></p> <h5 id="cache的初始化">Cache的初始化</h5> <p><code>Cache</code>中的<code>buckets</code>的长度以及<code>bucket</code>中单个<code>chunk</code>的大小是固定的，入参的<code>maxBytes</code>仅会影响<code>bucket.chunks</code>的长度，即<code>bucket</code>中的<code>chunk</code>数目。从<code>Cache</code>结构体中可以看到其<code>buckets</code>的长度为<code>bucketsCount</code>，即512个。</p> <pre><code class="language-go">func New(maxBytes int) *Cache { 	if maxBytes &lt;= 0 { 		panic(fmt.Errorf("maxBytes must be greater than 0; got %d", maxBytes)) 	} 	var c Cache 	maxBucketBytes := uint64((maxBytes + bucketsCount - 1) / bucketsCount) 	for i := range c.buckets[:] { 		c.buckets[i].Init(maxBucketBytes) 	} 	return &amp;c } </code></pre> <p>下面是<code>bucket</code>的初始化方法，需要注意的是其仅仅初始化了<code>b.chunks</code>的大小，并没有初始化单个<code>chunk</code>的内存空间(即<code>chunkSize</code>字节)。<code>chunk</code>的初始化是在实际使用时从<code>freeChunks</code>申请的，这样可以避免预先分配冗余内存。这种方式有点类似底层的虚拟内存的概念，只有在真正使用的时候才会分配内存。后面会看到<code>freeChunks</code>是如何申请内存的。</p> <pre><code class="language-go">func (b *bucket) Init(maxBytes uint64) { 	if maxBytes == 0 { 		panic(fmt.Errorf("maxBytes cannot be zero")) 	} 	if maxBytes &gt;= maxBucketSize { 		panic(fmt.Errorf("too big maxBytes=%d; should be smaller than %d", maxBytes, maxBucketSize)) 	} 	maxChunks := (maxBytes + chunkSize - 1) / chunkSize 	b.chunks = make([][]byte, maxChunks) 	b.m = make(map[uint64]uint64) 	b.Reset() } </code></pre> <h5 id="chunk内存的申请和释放">chunk内存的申请和释放</h5> <p>上面说了在<code>Cache</code>初始化时并没有为<code>chunk</code>申请内存，在实际使用<code>chunk</code>的时候(<code>Set</code>)才会申请内存。下面是<code>chunk</code>的内存初始化方式。可以看到fastcache中使用<code>unix.Mmap</code>来为<code>chunk</code>申请内存，这样作可以避免GC的影响(当前缺点是需要手动维护内存)。当需要为<code>chunk</code>申请内存时，会调用<code>unix.Mmap</code>来一次性申请<code>chunksPerAlloc</code>(即1024)个<code>chunk</code>，将其附加到<code>freeChunks</code>中，并从<code>freeChunks</code>中返回最后一个元素作为初始化后的<code>chunk</code>。当然<code>unix.Mmap</code>需要在unix系统下才能生效。</p> <p><code>freeChunks</code>是个全局<code>chunk</code>数组，便于为不同的<code>chunk</code>提供存储。</p> <pre><code class="language-go">func getChunk() []byte {    freeChunksLock.Lock()    if len(freeChunks) == 0 {       // Allocate offheap memory, so GOGC won't take into account cache size.       // This should reduce free memory waste.       data, err := unix.Mmap(-1, 0, chunkSize*chunksPerAlloc, unix.PROT_READ|unix.PROT_WRITE, unix.MAP_ANON|unix.MAP_PRIVATE)       if err != nil {          panic(fmt.Errorf("cannot allocate %d bytes via mmap: %s", chunkSize*chunksPerAlloc, err))       }       for len(data) &gt; 0 {          p := (*[chunkSize]byte)(unsafe.Pointer(&amp;data[0]))          freeChunks = append(freeChunks, p)          data = data[chunkSize:]       }    }    n := len(freeChunks) - 1    p := freeChunks[n]    freeChunks[n] = nil    freeChunks = freeChunks[:n]    freeChunksLock.Unlock()    return p[:] } </code></pre> <p>下面是trunk的回收方式，比较简单，即将需要回收的trunk附加到<code>freeChunks</code>即可。</p> <pre><code class="language-go">func putChunk(chunk []byte) { 	if chunk == nil { 		return 	} 	chunk = chunk[:chunkSize] 	p := (*[chunkSize]byte)(unsafe.Pointer(&amp;chunk[0]))  	freeChunksLock.Lock() 	freeChunks = append(freeChunks, p) 	freeChunksLock.Unlock() } </code></pre> <h5 id="添加kv数据">添加kv数据</h5> <p>fastcache使用<code>Set</code>来添加数据，但数据需要是<code>[]byte</code>类型。它首先会对<code>k</code>进行哈希，统一<code>k</code>的长度。并通过哈希的结果找出存放该数据的<code>bucket</code>索引。</p> <pre><code class="language-go">func (c *Cache) Set(k, v []byte) {    h := xxhash.Sum64(k)    idx := h % bucketsCount    c.buckets[idx].Set(k, v, h) } </code></pre> <p>通过索引找到对应的<code>bucket</code>之后，下一步就是将数据存储到<code>bucket</code>中的<code>chunk</code>中。</p> <p>该函数是fastcache的核心函数，</p> <ol> <li> <p>有效性校验，确保k、v的长度不超过16bit，即2个字节，在第2步中会保存k、v的长度信息，因此此处是强制限制。</p> </li> <li> <p><code>chunk</code>中保存的单个数据的格式如下，使用这种方式主要是为了方便快速检索k、v。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220501/639f4162b85e945876bfa7d9dc64eea3.jpg" alt="分析fastcache和freecache(一)_在线工具" style="zoom: 80%"></p> </li> <li> <p>获取该bucket中的<code>chunks</code>，注意一开始使用的时候<code>chunks</code>中的<code>chunk</code>是没有初始化的</p> </li> <li> <p><code>b.idx</code>表示当前<code>chunks</code>中的总数据偏移(但并不等于有效数据，如果某个chunk无法容纳下一个数据，则会产生一定的碎片)。<code>chunkIdx</code>为当前<code>chunk</code>的索引，<code>idxNew</code>为添加新数据之后的总数据偏移，<code>chunkIdxNew</code>为添加新数据之后的<code>chunk</code>索引<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220501/d2bea8c8465f15aac884b6083b139cad.jpg" alt="分析fastcache和freecache(一)_在线工具" style="zoom: 80%"></p> </li> <li> <p>如果<code>chunkIdxNew &gt; chunkIdx</code>说明当前chunk的剩余空间无法保存新数据，此时需要一个新的chunk来保存新数据(此时索引为<code>chunkIdx</code>的<code>chunk</code>中会产生内存碎片)。</p> </li> <li> <p>如果该<code>bucket</code>中的所有<code>chunk</code>都已经被占满，此时没有空余的chunk来保存新数据，此时会采用<code>ringbuffer</code>的方式，将新数据放到第一个chunk中</p> <p>6.1 更新数据偏移量，此时在第一个<code>chunk</code>中，因此偏移量为0。bucket有一个<code>b.gen</code>成员，保存了当前bucket中chunks的循环使用次数，即第<code>gen</code>代数据。由于<code>chunks</code>是ringbuf，存储空间会被循环利用，因此在查询数据时需要对比数据存储时的<code>gen</code>(存储在<code>b.m</code>中)和当前<code>gen</code>，如果不相同，则说明老的数据已经被后来的数据覆盖了。</p> <p>6.2 <code>b.gen</code>会保存到<code>b.m</code>的高24位，如果此时<code>b.gen&amp;((1&lt;&lt;genSizeBits)-1) == 0</code>，则说明<code>b.gen</code>发生了溢出，此时需要将<code>b.gen</code>置0，重新计数。</p> <p>6.3 当重新使用<code>chunks</code>时，需要清理<code>b.m</code>中无效的数据</p> </li> <li> <p>如果<code>chunks</code>中有空余的<code>chunk</code>，则更新<code>chunk</code>索引和总数据偏移量。</p> </li> <li> <p>清空<code>chunk</code>中的数据</p> </li> <li> <p>获取存储数据的<code>chunk</code>，如果该<code>chunk</code>没有初始化，则调用<code>getChunk</code>初始化<code>chunk</code>内存。</p> </li> <li> <p>在<code>chunk</code>中添加该数据，包括数据头(<code>kvLenBuf</code>)和k、v</p> </li> <li> <p><code>b.m</code>中保存了该元素(索引为k的哈希值)的相关信息，高24位保存了该数据所处的<code>gen</code>，低40位保存了该数据的起始位置(即保存该数据时的总数据偏移量，受限于<code>chunkSize</code>的大小，最多只会占用16bit)。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220501/587f8b04d04ab6b63d4f71e1db65b721.jpg" alt="分析fastcache和freecache(一)_在线工具" style="zoom: 80%"></p> </li> <li> <p>更新bucket中的总数据偏移量</p> </li> <li> <p><code>cleanLocked</code>会清理<code>b.m</code>中的无效数据。那么如何判断哪些数据是无效的呢？有效数据有如下两种情况：</p> <ol> <li>如果数据的偏移量(<code>idx</code>)大于当前bucket的偏移量(<code>bIdx</code>)，则说明该数据是上一代数据，则数据的<code>gen</code>和<code>bucket</code>的gen(<code>bGen</code>)有如下两种关系： <ol> <li><code>gen+1 == bGen</code></li> <li>gen == maxGen &amp;&amp; bGen == 1</li> </ol> </li> <li>如果数据的偏移量(<code>idx</code>)小于当前bucket的偏移量(<code>bIdx</code>)，，则说明该数据是本代数据，则要满足<code>gen == bGen</code> </li> </ol> <p>不满足上述两种场景的数据都是无效数据，需要清理。</p> <pre><code class="language-go">func (b *bucket) cleanLocked() { 	bGen := b.gen &amp; ((1 &lt;&lt; genSizeBits) - 1) 	bIdx := b.idx 	bm := b.m 	for k, v := range bm { 		gen := v &gt;&gt; bucketSizeBits 		idx := v &amp; ((1 &lt;&lt; bucketSizeBits) - 1) 		if (gen+1 == bGen || gen == maxGen &amp;&amp; bGen == 1) &amp;&amp; idx &gt;= bIdx || gen == bGen &amp;&amp; idx &lt; bIdx { 			continue 		} 		delete(bm, k) 	} } </code></pre> </li> </ol> <pre><code class="language-go">func (b *bucket) Set(k, v []byte, h uint64) { 	atomic.AddUint64(&amp;b.setCalls, 1) 	if len(k) &gt;= (1&lt;&lt;16) || len(v) &gt;= (1&lt;&lt;16) { //&lt;1&gt; 		return 	} 	var kvLenBuf [4]byte // &lt;2&gt; 	kvLenBuf[0] = byte(uint16(len(k)) &gt;&gt; 8) 	kvLenBuf[1] = byte(len(k)) 	kvLenBuf[2] = byte(uint16(len(v)) &gt;&gt; 8) 	kvLenBuf[3] = byte(len(v)) 	kvLen := uint64(len(kvLenBuf) + len(k) + len(v)) 	if kvLen &gt;= chunkSize { 		return 	}  	chunks := b.chunks // &lt;3&gt; 	needClean := false 	b.mu.Lock() 	idx := b.idx // &lt;4&gt; 	idxNew := idx + kvLen 	chunkIdx := idx / chunkSize  	chunkIdxNew := idxNew / chunkSize 	if chunkIdxNew &gt; chunkIdx { // &lt;5&gt; 		if chunkIdxNew &gt;= uint64(len(chunks)) { // &lt;6&gt; 			idx = 0  // &lt;6.1&gt; 			idxNew = kvLen 			chunkIdx = 0 			b.gen++ 			if b.gen&amp;((1&lt;&lt;genSizeBits)-1) == 0 { // &lt;6.2&gt; 				b.gen++ 			} 			needClean = true // &lt;6.3&gt; 		} else { 			idx = chunkIdxNew * chunkSize // &lt;7&gt; 			idxNew = idx + kvLen 			chunkIdx = chunkIdxNew 		} 		chunks[chunkIdx] = chunks[chunkIdx][:0] // &lt;8&gt; 	} 	chunk := chunks[chunkIdx] // &lt;9&gt; 	if chunk == nil { 		chunk = getChunk() 		chunk = chunk[:0] 	} 	chunk = append(chunk, kvLenBuf[:]...) // &lt;10&gt; 	chunk = append(chunk, k...) 	chunk = append(chunk, v...) 	chunks[chunkIdx] = chunk 	b.m[h] = idx | (b.gen &lt;&lt; bucketSizeBits) // &lt;11&gt; 	b.idx = idxNew //12 	if needClean { // &lt;13&gt; 		b.cleanLocked() 	} 	b.mu.Unlock() } </code></pre> <h5 id="获取kv数据">获取kv数据</h5> <p>有了<code>Set</code>的基础，<code>Get</code>就相对简单很多。</p> <ol> <li>首先从<code>b.m</code>中获取该<code>k</code>对应的元数据</li> <li>校验该数据是否合法，逻辑跟<code>cleanLocked</code>一样</li> <li>如果合法，则通过偏移量找到对应的<code>chunk</code> </li> <li>获取数据在其所在的<code>chunk</code>中的偏移量</li> <li>找到<code>kvLenBuf</code>中保存的k、v长度</li> <li>校验数据中的k是不是跟所需要的k一样，这么做的目的是防止哈希冲突的情况下获取到异常数值。如果合法则返回对应的v即可</li> </ol> <pre><code class="language-go">func (b *bucket) Get(dst, k []byte, h uint64, returnDst bool) ([]byte, bool) { 	atomic.AddUint64(&amp;b.getCalls, 1) 	found := false 	chunks := b.chunks 	b.mu.RLock() 	v := b.m[h] // &lt;1&gt; 	bGen := b.gen &amp; ((1 &lt;&lt; genSizeBits) - 1) 	if v &gt; 0 { 		gen := v &gt;&gt; bucketSizeBits 		idx := v &amp; ((1 &lt;&lt; bucketSizeBits) - 1) 		if gen == bGen &amp;&amp; idx &lt; b.idx || gen+1 == bGen &amp;&amp; idx &gt;= b.idx || gen == maxGen &amp;&amp; bGen == 1 &amp;&amp; idx &gt;= b.idx { // &lt;2&gt; 			chunkIdx := idx / chunkSize // &lt;3&gt; 			if chunkIdx &gt;= uint64(len(chunks)) { 				// Corrupted data during the load from file. Just skip it. 				atomic.AddUint64(&amp;b.corruptions, 1) 				goto end 			} 			chunk := chunks[chunkIdx] 			idx %= chunkSize // &lt;4&gt; 			if idx+4 &gt;= chunkSize { 				// Corrupted data during the load from file. Just skip it. 				atomic.AddUint64(&amp;b.corruptions, 1) 				goto end 			} 			kvLenBuf := chunk[idx : idx+4] // &lt;4&gt; 			keyLen := (uint64(kvLenBuf[0]) &lt;&lt; 8) | uint64(kvLenBuf[1]) 			valLen := (uint64(kvLenBuf[2]) &lt;&lt; 8) | uint64(kvLenBuf[3]) 			idx += 4 			if idx+keyLen+valLen &gt;= chunkSize { 				// Corrupted data during the load from file. Just skip it. 				atomic.AddUint64(&amp;b.corruptions, 1) 				goto end 			} 			if string(k) == string(chunk[idx:idx+keyLen]) { // &lt;5&gt; 				idx += keyLen 				if returnDst { 					dst = append(dst, chunk[idx:idx+valLen]...) 				} 				found = true 			} else { 				atomic.AddUint64(&amp;b.collisions, 1) 			} 		} 	} end: 	b.mu.RUnlock() 	if !found { 		atomic.AddUint64(&amp;b.misses, 1) 	} 	return dst, found } </code></pre> <h4 id="总结">总结</h4> <ul> <li>fastcache的chunk内存分配方式比较好，它没有预先分配大量内存，而是动态申请的方式。其次内存申请使用了手动申请的方式(<code>mmap</code>)，以此避免GC的影响。</li> <li>fastcache的数据存储时包含了一个元数据头，元数据里面保存了该数据的数据偏移量以及k、v长度等数据，通过这种方式可以快速定位数据所在的位置。像大部分存储的WAL存储方式也是采用的这种TLV或LV方式。</li> <li>fastcache的缓存采用的是ringbuffer的方式，并没有超时机制。数据的存储和查找都是通过哈希的方式进行的，因此检索速度很快。</li> <li>fastcache的代码比较少，可以直接移植</li> </ul> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-51999.htm">三种人不宜养猫6个月猫不吃不喝正常吗（三种人不宜养猫6个月猫不吃不喝正常吗）</a></p>
+                                        <p>下一个：<a href="/news/article-52530.htm">动物疫苗的种类有哪些名称图片及价格 动物疫苗的种类有哪些名称图片及价格表</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2025-1-8-vmess-windows.htm" title="1月8日 | Vmess节点订阅每天更新19M/S免费订阅链接地址分享">1月8日 | Vmess节点订阅每天更新19M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-13-free-node-subscribe.htm" title="11月13日 | Vmess节点订阅每天更新18.1M/S免费节点订阅链接">11月13日 | Vmess节点订阅每天更新18.1M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-52529.htm" title="分析fastcache和freecache(一)_在线工具">分析fastcache和freecache(一)_在线工具</a></li>
+                        <li class="py-2"><a href="/news/article-46419.htm" title="宠物粮食市场份额预测图 宠物粮食市场份额预测图表">宠物粮食市场份额预测图 宠物粮食市场份额预测图表</a></li>
+                        <li class="py-2"><a href="/news/article-26581.htm" title="Linux安装gssapi、kafka-python实现Kerberos认证连接Kafka等中间件集群服务（最新版）">Linux安装gssapi、kafka-python实现Kerberos认证连接Kafka等中间件集群服务（最新版）</a></li>
+                        <li class="py-2"><a href="/news/article-34144.htm" title="开宠物店盈利吗现在多少钱（开宠物店盈利吗现在多少钱啊）">开宠物店盈利吗现在多少钱（开宠物店盈利吗现在多少钱啊）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-19-free-subscribe-node.htm" title="12月19日 | Vmess节点订阅每天更新22.6M/S免费节点订阅链接">12月19日 | Vmess节点订阅每天更新22.6M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-26582.htm" title="Python，如何将元组中的元素作为参数传入函数">Python，如何将元组中的元素作为参数传入函数</a></li>
+                        <li class="py-2"><a href="/news/article-39471.htm" title="Springboot如何同时连接两个数据库">Springboot如何同时连接两个数据库</a></li>
+                        <li class="py-2"><a href="/news/article-47408.htm" title="宠物领养市场需求分析 宠物领养市场需求分析报告">宠物领养市场需求分析 宠物领养市场需求分析报告</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">27</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
