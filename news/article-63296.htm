@@ -1,0 +1,509 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-63296.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SpringBoot之把数据库导出到Excel表</title>
+        <meta name="description" content="SpringBoot之把数据库导出到Excel表 在上一篇的《SpringBoot之Excel表动态导入数据库》中我讲解了怎么样把我们本地的Excel文件中的数据导入到服务器端的数据库里面（当然这需要" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-63296.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="SpringBoot之把数据库导出到Excel表" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/7c23757186e3fe6ade8fb1fcb3c8ca7b.webp" />
+        <meta property="og:release_date" content="2025-02-26T08:34:11" />
+    <meta property="og:updated_time" content="2025-02-26T08:34:11" />
+        <meta property="og:description" content="SpringBoot之把数据库导出到Excel表 在上一篇的《SpringBoot之Excel表动态导入数据库》中我讲解了怎么样把我们本地的Excel文件中的数据导入到服务器端的数据库里面（当然这需要" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="SpringBoot之把数据库导出到Excel表">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>SpringBoot之把数据库导出到Excel表</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <h2> <a id="SpringBootExcel_0" rel="nofollow"></a>SpringBoot之把数据库导出到Excel表</h2> <p>在上一篇的<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/qq_41910568/article/details/91888443"  rel="nofollow">《SpringBoot之Excel表动态导入数据库》</a>中我讲解了怎么样把我们本地的Excel文件中的数据导入到服务器端的数据库里面（当然这需要Excel表中的的数据格式与数据表中的字段格式一样的前提之下才可完成），所以在这一篇文章中我要讲解的是如何动态的把数据库中的数据导出到本地的Excel文件中。好了废话咋就不多说了，直接上操作代码。（前面三步的操作和上一篇基本一样）</p> <ol> <li>用maven导入一些jar包</li> </ol> <pre><code>&lt;!--导出excel表的依赖--&gt; &lt;dependency&gt; 	&lt;groupId&gt;org.apache.poi&lt;/groupId&gt; 	&lt;artifactId&gt;poi&lt;/artifactId&gt; 	&lt;version&gt;3.11&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;org.apache.poi&lt;/groupId&gt; 	&lt;artifactId&gt;poi-ooxml&lt;/artifactId&gt; 	&lt;version&gt;3.9&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;commons-fileupload&lt;/groupId&gt; 	&lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt; 	&lt;version&gt;1.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;commons-io&lt;/groupId&gt; 	&lt;artifactId&gt;commons-io&lt;/artifactId&gt; 	&lt;version&gt;2.4&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 响应前端时转换json数据 --&gt; &lt;dependency&gt; 	&lt;groupId&gt;net.sf.json-lib&lt;/groupId&gt; 	&lt;artifactId&gt;json-lib&lt;/artifactId&gt; 	&lt;version&gt;2.4&lt;/version&gt; 	&lt;classifier&gt;jdk15&lt;/classifier&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt; 	&lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt; 	&lt;version&gt;1.9.11&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt; 	&lt;artifactId&gt;jackson-core-asl&lt;/artifactId&gt; 	&lt;version&gt;1.9.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 转换json用 --&gt; &lt;dependency&gt; 	&lt;groupId&gt;com.alibaba&lt;/groupId&gt; 	&lt;artifactId&gt;fastjson&lt;/artifactId&gt; 	&lt;version&gt;1.2.7&lt;/version&gt; &lt;/dependency&gt; &lt;!-- jackson转换json用 @ResponseBody默认调用jackson，将java对象转为json --&gt; &lt;dependency&gt; 	&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; 	&lt;artifactId&gt;jackson-core&lt;/artifactId&gt; 	&lt;version&gt;2.8.7&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; 	&lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt; 	&lt;version&gt;2.8.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; 	&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; 	&lt;artifactId&gt;jackson-databind&lt;/artifactId&gt; 	&lt;version&gt;2.8.7&lt;/version&gt; &lt;/dependency&gt; </code></pre> <ol start="2"> <li>前端代码（采用的是layui 框架，当然我是修改框架里面的源码的）</li> </ol> <pre><code>&lt;!-- 导入/导出到 Excel 操作 --&gt; &lt;div class="layui-btn-group" style="float: right; height: 55px; margin-top: 10px; margin-right: 35px;"&gt;   &lt;button class="layui-btn layui-btn-sm refresh" dw-url="/BirthdayRecord/exportExcel"&gt;        &lt;i class="layui-icon"&gt;&amp;#xe681;&lt;/i&gt;导出Excel    &lt;/button&gt;     &lt;button class="layui-btn layui-btn-sm operation-excel" id="operation-excel" dw-url="/BirthdayRecord/updateExcel"&gt;        &lt;i class="layui-icon"&gt;&amp;#xe601;&lt;/i&gt;Excel导入    &lt;/button&gt; &lt;/div&gt; </code></pre> <ol start="3"> <li>JavaScript前端页面逻辑操作</li> </ol> <pre><code>&lt;!-- 设置Excel文件上传 --&gt; &lt;script&gt;    layui.use('upload', function() {        var $ = layui.jquery            , upload = layui.upload;        //Excel文件上传        var uploadInst = upload.render({            elem: '#operation-excel',//触发元素            url: $('#operation-excel').attr("dw-url"),//上传服务器端的接收路径            auto: true,//可自动上传（选好文件后）            accept: 'file',//接收所有的文件类型            exts: 'xls|xlsx|excel',//校验上传文件的格式            before: function(){//文件上传前的钩子                if ($('#operation-excel').attr("dw-url") == undefined){                    layer.msg("请给button加上dw-url属性");                    return false;                }            },            done: function (res) {//文件上传成功后的钩子                if (res.code == 1) {                    layer.msg('上传成功',{icon:6});                }else {                    layer.msg('上传失败',{icon:6});                }             },            error: function () {//文件上传失败后的钩子                //演示失败状态，并实现重传                picText.html('&lt;span style="color: #FF5722;"&gt;上传失败&lt;/span&gt; &lt;a class="layui-btn layui-btn-xs demo-reload"&gt;重试&lt;/a&gt;');                picText.find('.demo-reload').on('click', function () {                    uploadInst.upload();                });            },        });     }); &lt;/script&gt; </code></pre> <ol start="4"> <li>Controller控制层</li> </ol> <pre><code>/**      * 需求功能：完成服务器端把数据库中的数据读出客户端Excel文件的功能      *      * @param response //把生成的Excel表响应到客户端      * @throws NoSuchMethodException //报错      * @throws IllegalAccessException   //报错      * @throws InvocationTargetException    //报错      * @throws InstantiationException   //报错      */     @GetMapping("/exportExcel")     public void exportExcel(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {         //先把数据库中的数据查询出来         List&lt;BirthdayRecord&gt; list1 = birthdayRecordService.selectList(null);         //一个设置Excel表标题信息的工具类，获取Excel表标题的字符串数组         String[] strings = ExcelTitlesHelperUtils.getBirthdayRecordTitles();         //一个能把对象集合转换成字符串数组集合的工具类，参数为对象集合，返回字符串数组集合         List&lt;Object[]&gt; list = ExcelValuesHelperUtils.exportExcel(list1);         try {             //一个能创建Excel表并完成发送客户端的工具类，第一个参数为字符串数组集合（Excel表内容），第二个参数为字符串数组（Excel表标题），第三个参数为响应器             ExportExcelUtils.createExcelUtils(list, strings, response);         } catch (Exception e){             //导表发生异常的时候             throw new MyException(ResultEnum.EXPORT_EXCEL_ERROR.getCode(),ResultEnum.EXPORT_EXCEL_ERROR.getMsg());         }      } </code></pre> <ol start="5"> <li><strong>实体类</strong></li> </ol> <pre><code>/**  * 生育纪录表  */ public class BirthdayRecord implements Serializable {      private static final long serialVersionUID = 4849616019539107195L;      /**      * 自增主键      */     @TableId(value = "bir_id", type = IdType.AUTO)     private Integer birId;     /**      * 头胎还是其他胎      */     private String birType;     /**      * 产检医院      */     private String birProdInspHos;     /**      * 分娩医院      */     private String birMaterHos;     /**      * 计生证号码      */     private String birNumber;     /**      * 手术日期      */     @DateTimeFormat(pattern = "yyyy-MM-dd")     private Date birOperationTime;     /**      * 员工外键      */     private Integer empId;      public BirthdayRecord() {     }      public BirthdayRecord(Integer birId, String birType, String birProdInspHos, String birMaterHos, String birNumber, Date birOperationTime, Integer empId) {         this.birId = birId;         this.birType = birType;         this.birProdInspHos = birProdInspHos;         this.birMaterHos = birMaterHos;         this.birNumber = birNumber;         this.birOperationTime = birOperationTime;         this.empId = empId;     }      public Integer getBirId() {         return birId;     }      public void setBirId(Integer birId) {         this.birId = birId;     }      public String getBirType() {         return birType;     }      public void setBirType(String birType) {         this.birType = birType;     }      public String getBirProdInspHos() {         return birProdInspHos;     }      public void setBirProdInspHos(String birProdInspHos) {         this.birProdInspHos = birProdInspHos;     }      public String getBirMaterHos() {         return birMaterHos;     }      public void setBirMaterHos(String birMaterHos) {         this.birMaterHos = birMaterHos;     }      public String getBirNumber() {         return birNumber;     }      public void setBirNumber(String birNumber) {         this.birNumber = birNumber;     }      public Date getBirOperationTime() {         return birOperationTime;     }      public void setBirOperationTime(Date birOperationTime) {         this.birOperationTime = birOperationTime;     }      public Integer getEmpId() {         return empId;     }      public void setEmpId(Integer empId) {         this.empId = empId;     }      @Override     public String toString() {         return "BirthdayRecord{" +         ", birId=" + birId +         ", birType=" + birType +         ", birProdInspHos=" + birProdInspHos +         ", birMaterHos=" + birMaterHos +         ", birNumber=" + birNumber +         ", birOperationTime=" + birOperationTime +         ", empId=" + empId +         "}";     } } </code></pre> <ol start="6"> <li><strong>一些辅助的工具方法</strong></li> </ol> <pre><code>/**      * 一个提供设置Excel表标题内容的字符串数组      * @return      */     public static String[] getBirthdayRecordTitles(){         String[] titles = {"ID","头胎/其他胎","产检医院","分娩医院","计生证号码","手术日期","员工外键"};         return titles;     }  ===============================================================================  /**      * 功能分析：把对象集合转换成数组集合      *      * @param list：需要操作的实体类集合      * @return      * @throws NoSuchMethodException      * @throws InvocationTargetException      * @throws IllegalAccessException      */     public static List&lt;Object[]&gt; exportExcel(List list) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {         //设置用到的变量参数         String name = null, type = null, m_name = null;         Object value = null;         //创建一个二维字符串数组存放数据         List&lt;Object[]&gt; list1 = new ArrayList&lt;&gt;();         //获取实体类方法操作对象         Method m = null;         //判断要提取实体类属性数据的集合是否为空         if (list != null){             //遍历集合中的实体类             for (int y=0; y&lt;list.size(); y++){                 //获取每一个实体类                 Object object = list.get(y);                 //获取实体类的所有属性，返回Field数组                 Field[] fields = object.getClass().getDeclaredFields();                 //创建一个数组存放实体类属性数据                 Object[] str = new Object[fields.length];                 //遍历实体类的所有属性                 for (int i=0; i&lt;fields.length; i++){                     name = fields[i].getName();//获取属性的名字                     m_name = name.substring(0,1).toUpperCase()+name.substring(1); //将属性的首字符大写，方便构造get，set方法                     type = fields[i].getGenericType().toString();    //获取属性的类型                     //判断属性的类型修改数据结构                     switch (type){                         case "class java.lang.String":                             m = object.getClass().getMethod("get"+m_name);  //组装getter方法                             value = (String) m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                                 /**                                  * 你可以进行附加操作                                  */                             }                             break;                         case "class java.lang.Double":                             m = object.getClass().getMethod("get"+m_name);                             value =  m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                             }                             break;                         case "class java.lang.Boolean":                             m = object.getClass().getMethod("get"+m_name);  //组装getter方法                             value = m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                             }                             break;                         case "class java.lang.Integer":                             m = object.getClass().getMethod("get"+m_name);                             value = m.invoke(object); //调用getter方法获取属性值                             if (value != null){                              }                             break;                         case "class java.util.Date":                             m = object.getClass().getMethod("get"+m_name);                             value = m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                                 value = new SimpleDateFormat("yyyy-MM-dd").format(value);//改变时间的格式                             }                             break;                         case "class java.lang.Float":                             m = object.getClass().getMethod("get"+m_name);                             value = m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                             }                             break;                         case "class java.lang.Long":                             m = object.getClass().getMethod("get"+m_name);                             value = m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                             }                             break;                         case "class java.lang.Byte":                             m = object.getClass().getMethod("get"+m_name);                             value = m.invoke(object);    //调用getter方法获取属性值                             if (value != null){                              }                             break;                     }                     //把实体类中的属性存放到一个字符串数组中                     str[i] = value;                 }                 //把字符串数组存放到集合中                 list1.add(str);             }         }         return list1;     }   =================================================================================  public static void createExcelUtils(List&lt;Object[]&gt; values, String[] titles, HttpServletResponse httpServletResponse) throws IllegalAccessException, InstantiationException {         // 第一步，创建一个webbook，对应一个Excel文件         HSSFWorkbook wb = new HSSFWorkbook();         // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet         HSSFSheet sheet = wb.createSheet("会议签到表");         // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short         HSSFRow row = sheet.createRow((int) 0);         // 第四步，创建单元格，并设置值表头 设置表头居中         HSSFCellStyle style = wb.createCellStyle();         style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式           //第五步，创建标题         for (int i =0 ; i &lt; titles.length ; i++){             HSSFCell cell = row.createCell((short) i);             cell.setCellValue(titles[i]);         }            //第六步，写入实体数据，遍历创建内容         for(int i=0;i&lt;values.size();i++){//总共多少行             Object[] str = values.get(i);             row = sheet.createRow(i + 1);//第几行             for(int j=1;j&lt;str.length;j++){                 //将内容按顺序赋给对应的列对象                 row.createCell(j-1).setCellValue(str[j].toString());//每行塞什么数据             }         }          //第六步，下载excel表格         OutputStream out = null;         try {             out = httpServletResponse.getOutputStream();             String fileName = UUID.randomUUID().toString()+".xls";// 文件名             httpServletResponse.setContentType("application/x-msdownload");//文件格式             httpServletResponse.setHeader("Content-Disposition", "attachment; filename="                     + URLEncoder.encode(fileName, "UTF-8"));//响应头以及文件名，编码格式             wb.write(out);         } catch (Exception e) {             e.printStackTrace();         } finally {             try {                 out.close();             } catch (IOException e) {                 e.printStackTrace();             }         }     }  </code></pre> <p>基本完成了，一些自定义的报错赋值类可查看上一篇<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/qq_41910568/article/details/91888443"  rel="nofollow">《SpringBoot之Excel表动态导入数据库》<br /></a></p> </p></div> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-62709.htm">动物疫苗佐剂类型（动物疫苗的种类和制备原理）</a></p>
+                                        <p>下一个：<a href="/news/article-63297.htm">家用小型饲料颗粒机500元（家用小型饲料颗粒机500元一台）</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/news/article-33666.htm" title="上海宠物领养网点电话号码（上海地区宠物领养）">上海宠物领养网点电话号码（上海地区宠物领养）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-13-vmess-windows.htm" title="2月13日 | Vmess节点订阅每天更新22.2M/S免费订阅链接地址分享">2月13日 | Vmess节点订阅每天更新22.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-18802.htm" title="上海宠物领养基地电话号码（上海宠物领养中心电话）">上海宠物领养基地电话号码（上海宠物领养中心电话）</a></li>
+                        <li class="py-2"><a href="/news/article-29371.htm" title="上海宠物领养中心真假鉴定电话（上海宠物领养救助站是真的吗）">上海宠物领养中心真假鉴定电话（上海宠物领养救助站是真的吗）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-11-11-vmess-node-share.htm" title="11月11日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接">11月11日 | Vmess节点订阅每天更新21.2M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-22-vmess-github.htm" title="2月22日 | Vmess节点订阅每天更新22.9M/S免费订阅链接地址分享">2月22日 | Vmess节点订阅每天更新22.9M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-11-free-high-speed-nodes.htm" title="2月11日 | Vmess节点订阅每天更新22.4M/S免费订阅链接地址分享">2月11日 | Vmess节点订阅每天更新22.4M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-15-free-vmess-node.htm" title="1月15日 | Vmess节点订阅每天更新19.2M/S免费订阅链接地址分享">1月15日 | Vmess节点订阅每天更新19.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2024-12-5-free-node-subscribe.htm" title="12月5日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接">12月5日 | Vmess节点订阅每天更新21.4M/S免费节点订阅链接</a></li>
+                        <li class="py-2"><a href="/news/article-47406.htm" title="自家宠物猫轻微抓伤有一点渗血怎么办（自家猫咪抓了一点点血）">自家宠物猫轻微抓伤有一点渗血怎么办（自家猫咪抓了一点点血）</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">78</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">93</span> <a href="/date/2024-12/" title="2024-12 归档">2024-12</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2024-11/" title="2024-11 归档">2024-11</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
