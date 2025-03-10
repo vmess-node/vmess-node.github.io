@@ -1,0 +1,506 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-69594.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Java-NIO之Channel（通道）</title>
+        <meta name="description" content="通道表示与实体的开放连接，例如硬件设备、文件、网络套接字或能够执行一个或多个不同 I/O 操作（例如读取或写入）的程序组件。 1.1：Channel与Stream的对比     Stream Chan" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-69594.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="Java-NIO之Channel（通道）" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/11bd935741dfefbeb4b96ba178d6af10.webp" />
+        <meta property="og:release_date" content="2025-03-08T05:06:02" />
+    <meta property="og:updated_time" content="2025-03-08T05:06:02" />
+        <meta property="og:description" content="通道表示与实体的开放连接，例如硬件设备、文件、网络套接字或能够执行一个或多个不同 I/O 操作（例如读取或写入）的程序组件。 1.1：Channel与Stream的对比     Stream Chan" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Java-NIO之Channel（通道）">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Java-NIO之Channel（通道）</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				</h1> <p><u>通道表示与实体的开放连接，例如硬件设备、文件、网络套接字或能够执行一个或多个不同 I/O 操作（例如读取或写入）的程序组件。</u></p> <h2 id="11channel与stream的对比">1.1：Channel与Stream的对比</h2> <table> <thead> <tr> <th></th> <th>Stream</th> <th>Channel</th> <th>为什么</th> </tr> </thead> <tbody> <tr> <td>是否支持异步</td> <td>否</td> <td>是</td> <td></td> </tr> <tr> <td>是否同时支持输入和输出</td> <td>否</td> <td>是</td> <td>Stream的输入、输出分别需要InputStream、OutputStream</td> </tr> <tr> <td>是否必须结合Buffer使用</td> <td>否</td> <td>是</td> <td>缓冲区是通道内部发送数据和接收数据的端点</td> </tr> <tr> <td>性能</td> <td>低</td> <td>高</td> <td>通道是访问IO服务的导管，通过通道，我们可以以最小的开销来访问操作系统的I/O服务</td> </tr> </tbody> </table> <h2 id="12channel的类型">1.2：Channel的类型</h2> <p><strong><font color="red" size="4">文件类：</font></strong></p> <ul> <li>FileChannel</li> </ul> <p>可通过 FileInputStream/FileOutputStream 的getChannel方法获取通道。</p> <hr/> <p><strong><font color="red" size="4">网络类：</font></strong></p> <p><strong>面向流模式的socket协议：</strong></p> <ul> <li>SocketChannel</li> <li>ServerSocketChannel</li> </ul> <p>可通过 Socket/SocketServer 的getChannel方法获取通道。</p> <p><strong>面向数据报模式的UDP协议：</strong></p> <ul> <li>DatagramChannel</li> </ul> <p>可通过 DatagramSocket 的getChannel方法获取通道。</p> <h2 id="13操作系统io演变史">1.3：操作系统IO演变史</h2> <p>早一代IO操作是由CPU负责IO接口：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/709216e05416ab5d8f7757f64703682f.jpg" alt="Java-NIO之Channel（通道）"></p> <p>新一代DMA授权处理IO接口：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/cdc6a964fb58ed59fe4d64a2253e6f28.jpg" alt="Java-NIO之Channel（通道）"></p> <p>通道（Channel）模式：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/1d882d127cb1a6e6278aa8503d5419c0.jpg" alt="Java-NIO之Channel（通道）"></p> <p>通道的产生是由于操作系统的升级而支持的。</p> </h1> <p><u>在操作系统中对IO设备的控制方式一共有四种，按时间线依次是<strong><font color="red">轮询、中断、DMA、和通道</font></strong> 方式。</u></p> <ul> <li>轮旋</li> </ul> <p>轮询就是进行IO时操作系统一直问控制器数据准备好了没有。</p> <ul> <li>中断</li> </ul> <p>中断就是异步的方式进行了，CPU向设备控制器发送一条IO指令后接着返回继续做原来的工作，而当设备控制器从设备中取出数据放到控制器的寄存器中后便向CPU发送中断信号，CPU在检查完数据后便向控制器发送取走数据的信号，将数据写入内存，但仍是以字节为单位的。</p> <ul> <li>DMA</li> </ul> <p>DMA则是CPU和设备控制器之间的引入的一层加快速度的手段，由DMA代替CPU进行数据传送，CPU将指令发送给DMA，DMA向控制器发送请求，设备控制器将数据从缓冲区将数据直接写入内存。完成后设备控制器发送一个信号给DMA，DMA重复检查数据是否传送完成，确认完成后中断让CPU知道。</p> <p>DMA比起中断方式已经显著减少了CPU的干预，但是CPU每发出一条IO指令，只能去读写一个连续的数据块，当要读多个数据块并存放到不同的内存区域中去，CPU需要发送多条IO指令及进行多次中断。</p> <ul> <li>通道</li> </ul> <p>IO通道方式是DMA方式的发展，把对一个数据块的干预减少为对一组数据块的干预。</p> <hr/> <p><font color="red" size="5">IO通道有三种：</font></p> <ul> <li>字节多路通道(Byte Multiplexor Channel)</li> <li>选择通道(Block Selector Channel)</li> <li>数组多路通道(Block Multiplexor Channel)</li> </ul> <blockquote> <blockquote> <p>根据通道的工作方式分类，通道可以分为<u><font color="red" size="4">字节多路通道、选择通道、数组多路通道</font></u>。<br /><u><font color="red" size="4">字节多路通道</font>是一种简单的共享通道，主要用于连接大量的低速设备。</u><br /> 由于外围设备的工作速度较慢，通道在传送两个字节之间有很多空闲的时间，利用这段空闲时间字节多路通道可以为其他外围设备服务。因此字节多路通道采用分时工作方式，依赖它与CPU之间的高速总线分时为多台外围设备服务。<br /><u><font color="red" size="4">数据选择通道</font>用于连接高速的外围设备。</u><br /> 高速外围设备需要很高的数据传输率，因此不能采用字节多路通道那样的控制方式。选择通道在物理上可以连接多台外围设备，但多台设备不能同事工作。也就是在同一段时间内，选择通道只能为一台外围设备服务，在不同的时间内可以选择不同的外围设备。一旦选中某一设备，通道就进入<font color="red">忙</font>状态，知道该设备数据传输工作结束，才能为其他设备服务。<br /><u><font color="red" size="4">数组多路通道</font>是字节多路通道和选择通道的结合。</u><br /> 其基本思想是：当某设备进行数据传输时，通道只为该设备服务；当设备在进行寻址等控制性操作时，通道暂时断开与设备的连接，挂起该设备的通道程序，去为其他设备服务，即执行其他设备的通道程序。有数数组多路通道既保持了选择通道的告诉传输数据的有点，又充分利用了控制性操作偶读时间间隔为其他设备服务，使得通道效率充分得到发挥，因此数据多路通道在实际计算机系统中应用最多，适合于高速设备的数据传输。</p> <p>（以上引用内容来源于<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://easylearn.baidu.com/edu-page/tiangong/questiondetail?id=1722687790698845246&amp;source=tikushiti&amp;source_id=856013ef7d1cfad6195f312b3169a4517723e5f3"  title="百度教育" target="_blank" rel="nofollow">百度教育</a>）</p> </blockquote> </blockquote> <p>至于JAVA的Channel和操作系统的的通道是如何选择通道类型、如何交互的就没法深入了，暂且理解JAVA的Channel是对操作系统的通道的一种抽象实现吧。</p> </h1> <p>上一篇已经介绍过Channel的文件内存映射（map）,就不做介绍了。</p> <p><u>所谓的分散读取、聚集写入就是用多个buffer来接收数据、传输数据。</u><br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/09b93d7d0088949ea4094fb6c1b2549e.jpg" alt="Java-NIO之Channel（通道）"></p> <p><font color="red" size="4">分散读取、聚集写入</font>代码示例：</p> <pre><code class="language-java">    @Test     public void gatherWrite() {         FileInputStream inputStream = null;         FileOutputStream outputStream = null;         FileChannel inChannel = null;         FileChannel outChannel = null;         try {             File file = new File("src/test/java/com/loper/mine/SQLParserTest.java");             inputStream = new FileInputStream(file);             inChannel = inputStream.getChannel();              ByteBuffer buffer1 = ByteBuffer.allocate(8);             ByteBuffer buffer2 = ByteBuffer.allocate(15);             ByteBuffer[] buffers = new ByteBuffer[]{buffer1, buffer2};              // 分散读取             inChannel.read(buffers);             for (ByteBuffer buffer : buffers) {                 buffer.flip();                 System.out.println(buffer.mark());             }              File outFile = new File("src/test/java/com/loper/mine/1.txt");             outputStream = new FileOutputStream(outFile);             outChannel = outputStream.getChannel();             // 聚集写入             outChannel.write(buffers);          } catch (Exception e) {             e.printStackTrace();         } finally {             try {                 if (inputStream != null)                     inputStream.close();                 if (outputStream != null)                     outputStream.close();                 if (inChannel != null)                     inChannel.close();                 if (outChannel != null)                     outChannel.close();             } catch (IOException e) {                 e.printStackTrace();             }         }     }</code></pre> </h1> <h2 id="41socket协议">4.1：socket协议</h2> <p>这部分代码比较复杂，可以翻看我的github代码，这里就不坐介绍了。<br /> 地址：<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://github.com/zgq7/devloper-mine/tree/master/src/main/java/com/loper/mine/core/socket/nio"  target="_blank" rel="nofollow">https://github.com/zgq7/devloper-mine/tree/master/src/main/java/com/loper/mine/core/socket/nio</a></p> <h2 id="42udp协议">4.2：UDP协议</h2> <p>UDP发送数据：</p> <pre><code class="language-java">    @Test     public void send() {         DatagramChannel channel = null;         try {             channel = DatagramChannel.open();             // 设置为非阻塞             channel.configureBlocking(false);              ByteBuffer buffer = ByteBuffer.allocate(1024);             Scanner scanner = new Scanner(System.in);             while (true) {                 String nextLine = scanner.nextLine();                 buffer.put(nextLine.getBytes());                 buffer.flip();                 channel.send(buffer, new InetSocketAddress("127.0.0.1", 8056));                 buffer.clear();                 if ("over".equals(nextLine))                     break;             }         } catch (IOException e) {             e.printStackTrace();         } finally {             if (channel != null) {                 try {                     channel.close();                 } catch (IOException e) {                     e.printStackTrace();                 }             }         }     }</code></pre> <p>UDP接收数据：</p> <pre><code class="language-java">    @Test     public void receive() {         DatagramChannel channel = null;         try {             channel = DatagramChannel.open();             // 设置为非阻塞             channel.configureBlocking(false);             channel.bind(new InetSocketAddress(8056));              Selector selector = Selector.open();             channel.register(selector, SelectionKey.OP_READ);              while (true) {                 int select = selector.select();                 boolean exit = false;                  Iterator&lt;SelectionKey&gt; iterator = selector.selectedKeys().iterator();                 while (iterator.hasNext()) {                     SelectionKey selectionKey = iterator.next();                      if (selectionKey.isReadable()) {                         ByteBuffer buffer = ByteBuffer.allocate(1024);                         channel.receive(buffer);                         buffer.flip();                         byte[] data = new byte[buffer.limit()];                         buffer.get(data);                         String str = new String(data);                         System.out.println("收到：" + str);                         if ("over".equals(str))                             exit = true;                     }                     iterator.remove();                 }                 if (exit)                     break;             }          } catch (IOException e) {             e.printStackTrace();         } finally {             if (channel != null) {                 try {                     channel.close();                 } catch (IOException e) {                     e.printStackTrace();                 }             }         }     }</code></pre> <p>接收端接收数据并退出：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/7e3e359cb07833f1dfa865145330b3b8.jpg" alt="Java-NIO之Channel（通道）"></p> <hr/> <p><u><font color="red">以上即为本文理论知识+代码实战全部内容。如有错误欢迎指正。</font></u></p> <p>本文参考文章：</p> <ul> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://www.cnblogs.com/yy3b2007com/p/7263033.html"  title="通道(Channel)的原理与获取" target="_blank" rel="nofollow">通道(Channel)的原理与获取</a></li> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://cloud.tencent.com/developer/article/1739347"  title="10分钟看懂 Java NIO 底层原理" target="_blank" rel="nofollow">10分钟看懂 Java NIO 底层原理</a></li> <li><a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/cool_flag/article/details/99618101"  title="java nio中channel和操作系统的关系" target="_blank" rel="nofollow">java nio中channel和操作系统的关系</a></li> </ul> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-68944.htm">小猫要和主人一起睡觉吗为什么（猫咪一定要和我一起睡）</a></p>
+                                        <p>下一个：<a href="/news/article-69597.htm">动物疫苗的意义和作用 动物疫苗的意义和作用是什么</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2025-2-11-free-high-speed-nodes.htm" title="2月11日 | Vmess节点订阅每天更新22.4M/S免费订阅链接地址分享">2月11日 | Vmess节点订阅每天更新22.4M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-40476.htm" title="想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）">想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）</a></li>
+                        <li class="py-2"><a href="/news/article-48906.htm" title="狗粮生产机器设备一套多少钱 狗粮生产设备价格">狗粮生产机器设备一套多少钱 狗粮生产设备价格</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-14-vmess-node-share.htm" title="2月14日 | Vmess节点订阅每天更新22.1M/S免费订阅链接地址分享">2月14日 | Vmess节点订阅每天更新22.1M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-41968.htm" title="DDT数据驱动性能测试(一)">DDT数据驱动性能测试(一)</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-26-vmess-node-github.htm" title="2月26日 | Vmess节点订阅每天更新22.3M/S免费订阅链接地址分享">2月26日 | Vmess节点订阅每天更新22.3M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-20-vmess-node-share.htm" title="1月20日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享">1月20日 | Vmess节点订阅每天更新18.4M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-51998.htm" title="疫苗采购报告范文（疫苗采购制度）">疫苗采购报告范文（疫苗采购制度）</a></li>
+                        <li class="py-2"><a href="/news/article-45434.htm" title="宠物医生资格证书怎么考的（宠物医生怎么考取）">宠物医生资格证书怎么考的（宠物医生怎么考取）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-4-free-node-subscribe.htm" title="2月4日 | Vmess节点订阅每天更新21.3M/S免费订阅链接地址分享">2月4日 | Vmess节点订阅每天更新21.3M/S免费订阅链接地址分享</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">30</span> <a href="/date/2025-03/" title="2025-03 归档">2025-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
