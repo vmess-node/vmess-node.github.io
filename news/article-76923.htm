@@ -1,0 +1,506 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-76923.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Java应用工程结构 &#8211; CN.programmer.Luxh</title>
+        <meta name="description" content="分层的本质是关注点分离，隔离对下层的变化，可以简化复杂性，使得层次结构更加清晰。  1. 主流分层结构介绍 目前业界存在两种主流的应用工程结构：一种是阿里推出的《Java开发手册》中推荐的，另外一种是" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-76923.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="Java应用工程结构 &#8211; CN.programmer.Luxh" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/afb4cbe8d27b9367224ce9dc83c504cb.webp" />
+        <meta property="og:release_date" content="2025-03-19T09:09:39" />
+    <meta property="og:updated_time" content="2025-03-19T09:09:39" />
+        <meta property="og:description" content="分层的本质是关注点分离，隔离对下层的变化，可以简化复杂性，使得层次结构更加清晰。  1. 主流分层结构介绍 目前业界存在两种主流的应用工程结构：一种是阿里推出的《Java开发手册》中推荐的，另外一种是" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Java应用工程结构 &#8211; CN.programmer.Luxh">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Java应用工程结构 &#8211; CN.programmer.Luxh</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<blockquote> <p>分层的本质是关注点分离，隔离对下层的变化，可以简化复杂性，使得层次结构更加清晰。</p> </blockquote> <h3 id="1-主流分层结构介绍">1. 主流分层结构介绍</h3> <p>目前业界存在两种主流的应用工程结构：一种是阿里推出的《Java开发手册》中推荐的，另外一种是基于DDD(领域驱动设计)推荐的。</p> <h4 id="11-基于阿里java开发手册的分层结构">1.1 基于阿里《Java开发手册》的分层结构</h4> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/81c2b27d5708adb1cc595c1161119123.jpg" alt="Java应用工程结构 - CN.programmer.Luxh "></p> <pre><code>• 开放 API 层：可直接封装 Service 接口暴露成 RPC 接口；通过 Web 封装成 http 接口；网关控制层等。 • 终端显示层：各个端的模板渲染并执行显示的层。当前主要是 velocity 渲染，JS 渲染，JSP 渲染，移 动端展示等。 • Web 层：主要是对访问控制进行转发，各类基本参数校验，或者不复用的业务简单处理等。  • Service 层：相对具体的业务逻辑服务层。  • Manager 层：通用业务处理层，它有如下特征： 1） 对第三方平台封装的层，预处理返回结果及转化异常信息，适配上层接口。 2） 对 Service 层通用能力的下沉，如缓存方案、中间件通用处理。 3） 与 DAO 层交互，对多个 DAO 的组合复用。  • DAO 层：数据访问层，与底层 MySQL、Oracle、Hbase、OB 等进行数据交互。  • 第三方服务：包括其它部门 RPC 服务接口，基础平台，其它公司的 HTTP 接口，如淘宝开放平台、支 付宝付款服务、高德地图服务等。 • 外部数据接口：外部（应用）数据存储服务提供的接口，多见于数据迁移场景中。</code></pre> <h4 id="12-基于ddd领域驱动设计的分层结构">1.2 基于DDD(领域驱动设计)的分层结构</h4> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/73f984d11276f25bb3a10b0998fa9877.jpg" alt="Java应用工程结构 - CN.programmer.Luxh "></p> <pre><code>• 领域层：体现业务逻辑。 • 应用层：依赖领域层，根据业务对下层领域进行聚合和编排。 • 基础设施层：为其他提供技术支持。 • 用户接口层：为外部用户访问底层系统提供交互界面和数据表示。</code></pre> <h3 id="2-自己的工程结构">2. 自己的工程结构</h3> <p>基于上述两种工程结构，设计一个适合自己的Java项目分层结构。</p> <pre><code>example └─src     ├─main     │  ├─java     │  │  └─com     │  │      └─example     │  │          ├─application                 --应用层（聚合多个领域）     │  │          ├─domain                      --领域层     │  │          │  ├─order                      --订单域     │  │          │  │  ├─bo                        --业务对象     │  │          │  │  ├─constant                  --领域内局部常量     │  │          │  │  ├─controller                --控制器     │  │          │  │  ├─dto                       --数据传输对象     │  │          │  │  ├─event                     --事件     │  │          │  │  │  ├─publish                  --发布     │  │          │  │  │  └─subscribe                --订阅     │  │          │  │  ├─manager                   --通用逻辑处理     │  │          │  │  ├─repository                --存储     │  │          │  │  │  ├─entity                   --实体,对应数据库中的字段     │  │          │  │  │  └─mapper                   --mybatis mapper     │  │          │  │  └─service                   --业务层处理     │  │          │  │      └─impl                    --业务接口实现     │  │          │  └─user                       --用户域     │  │          │      ├─bo     │  │          │      ├─constant     │  │          │      ├─controller     │  │          │      ├─dto     │  │          │      ├─event     │  │          │      │  ├─publish     │  │          │      │  └─subscribe     │  │          │      ├─manager     │  │          │      ├─repository     │  │          │      │  ├─entity     │  │          │      │  └─mapper     │  │          │      └─service     │  │          │          └─impl     │  │          └─infrastructure             --基础设施层     │  │              ├─config                   --配置     │  │              ├─constant                 --全局常量     │  │              ├─handler                  --处理器     │  │              ├─interceptor              --拦截器     │  │              ├─thirdparty               --第三方     │  │              └─utils                    --工具类     │  └─resources             │      ├─mapper     │      │  ├─order     │      │  └─user     │           │           │           └─test         └─java             └─com                 └─example</code></pre> <ul> <li>接收参数和响应报文，请求以Req为后缀，响应以Resp为后缀，代码写在dto包中，比如创建订单请求和响应</li> </ul> <pre><code>/**  * 创建订单请求  */ @Data public class OrderCreateReq {      /**      * 用户id      */     private String userId;      /**      * 订单金额      */     private BigDecimal amount;      /**      * 下单的商品集合      */     private List&lt;OrderDetailReq&gt; orderDetailReqList;      @Data     public static class OrderDetailReq {          /**          * 商品id          */         private Long goodsId;         /**          * 商品数量          */         private Integer goodsNum;      } }   /**  * 创建订单响应  */ @Data public class OrderCreateResp {      /**      * 订单id      */     private String orderId; }</code></pre> <ul> <li> <p>DAO层代码放在repository中<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/04f709becb32660620b1cf9ce862780d.jpg" alt="Java应用工程结构 - CN.programmer.Luxh "></p> </li> <li> <p>业务层代码放在service和manager中，比如创建订单因为涉及到订单表和订单明细表，需要在一个事务中，所以将事务代码下沉到manager。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/c2eb3dacacdfb92cabc521ac06543b61.jpg" alt="Java应用工程结构 - CN.programmer.Luxh "></p> </li> </ul> <pre><code>@Service public class OrderServiceImpl implements OrderService {      @Resource     private OrderManager orderManager;      @Override     public OrderCreateResp create(OrderCreateReq req) {          Order order = buildOrder(req);         List&lt;OrderDetail&gt; orderDetailList = buildOrderDetailList(order.getOrderId(), req);          orderManager.createOrder(order, orderDetailList);          OrderCreateResp resp = new OrderCreateResp();         resp.setOrderId(order.getOrderId());         return resp;     }       private Order buildOrder(OrderCreateReq req) {         Order order = new Order();         order.setOrderId(UUID.randomUUID().toString());         order.setUserId(req.getUserId());         order.setAmount(req.getAmount());         return order;     }       private List&lt;OrderDetail&gt; buildOrderDetailList(String orderId, OrderCreateReq req) {         List&lt;OrderDetail&gt; orderDetailList = new ArrayList&lt;&gt;();         for (OrderCreateReq.OrderDetailReq orderDetailReq : req.getOrderDetailReqList()) {             OrderDetail orderDetail = new OrderDetail();             orderDetail.setOrderId(orderId);             orderDetail.setGoodsId(orderDetailReq.getGoodsId());             orderDetail.setGoodsNum(orderDetailReq.getGoodsNum());             orderDetailList.add(orderDetail);         }         return orderDetailList;     } }</code></pre> <pre><code>@Component public class OrderManager {      @Resource     private OrderMapper orderMapper;      @Resource     private OrderDetailMapper orderDetailMapper;      @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)     public void createOrder(Order order, List&lt;OrderDetail&gt; orderDetailList) {         orderMapper.insert(order);         for (OrderDetail orderDetail : orderDetailList) {             orderDetailMapper.insert(orderDetail);         }     }   }</code></pre> <ul> <li>业务对象存放在bo包中，比如查询用户信息，不需要返回密码字段，则可以定义一个UserBO。<br /><img decoding="async" src="https://img2022.cnblogs.com/blog/408749/202204/408749-20220412162722864-240907768.jpg" alt="Java应用工程结构 - CN.programmer.Luxh "></li> </ul> <pre><code>@Data public class UserBO {          private String userId;          private String username;          private String nickname; }</code></pre> <ul> <li>application层做聚合编排，比如下单，既要保存订单信息，又要扣减库存，就需要对订单域和库存域进行聚合编排。</li> </ul> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-76248.htm">寓意八方来财的店名（寓意八方来财的店名大全）</a></p>
+                                        <p>下一个：<a href="/news/article-76924.htm">宠物店粮食一个月要多少吨粮 宠物店粮食一个月要多少吨粮食呢</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2025-2-13-vmess-windows.htm" title="2月13日 | Vmess节点订阅每天更新22.2M/S免费订阅链接地址分享">2月13日 | Vmess节点订阅每天更新22.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-45942.htm" title="可以自己给宠物打疫苗吗（可以自己给宠物***吗）">可以自己给宠物打疫苗吗（可以自己给宠物***吗）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-28-vmess-github.htm" title="1月28日 | Vmess节点订阅每天更新22.8M/S免费订阅链接地址分享">1月28日 | Vmess节点订阅每天更新22.8M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-26-vmess-node-github.htm" title="2月26日 | Vmess节点订阅每天更新22.3M/S免费订阅链接地址分享">2月26日 | Vmess节点订阅每天更新22.3M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-70236.htm" title="德信宠物医院（德信东望府宠物会所）">德信宠物医院（德信东望府宠物会所）</a></li>
+                        <li class="py-2"><a href="/news/article-40476.htm" title="想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）">想考宠物执业医师资格证（想考宠物执业医师资格证怎么办）</a></li>
+                        <li class="py-2"><a href="/news/article-62708.htm" title="学宠物医生的大专学校有哪些（学宠物医生的大专学校有哪些呢）">学宠物医生的大专学校有哪些（学宠物医生的大专学校有哪些呢）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-23-today-vmess-node.htm" title="2月23日 | Vmess节点订阅每天更新19.3M/S免费订阅链接地址分享">2月23日 | Vmess节点订阅每天更新19.3M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-19-free-vmess-node.htm" title="1月19日 | Vmess节点订阅每天更新21.2M/S免费订阅链接地址分享">1月19日 | Vmess节点订阅每天更新21.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-37499.htm" title="被猫抓伤怎样判断用不用打狂犬疫苗（被猫抓伤怎么确定有没有狂犬病）">被猫抓伤怎样判断用不用打狂犬疫苗（被猫抓伤怎么确定有没有狂犬病）</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">57</span> <a href="/date/2025-03/" title="2025-03 归档">2025-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
