@@ -1,0 +1,506 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-79661.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Java：封装与继承</title>
+        <meta name="description" content="封装  对象代表什么，就得封装对应的数据，并提供数据对应的行为   继承     Java中提供一个关键字extends，用这个关键字，我们可以让一个类和另一个类建立起继承关系。    Student" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-79661.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="Java：封装与继承" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/7c23757186e3fe6ade8fb1fcb3c8ca7b.webp" />
+        <meta property="og:release_date" content="2025-03-23T08:22:57" />
+    <meta property="og:updated_time" content="2025-03-23T08:22:57" />
+        <meta property="og:description" content="封装  对象代表什么，就得封装对应的数据，并提供数据对应的行为   继承     Java中提供一个关键字extends，用这个关键字，我们可以让一个类和另一个类建立起继承关系。    Student" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Java：封装与继承">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Java：封装与继承</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<div id="content_views" class="htmledit_views"> <ul> <li>封装 <ul> <li>对象代表什么，就得封装对应的数据，并提供数据对应的行为</li> </ul> </li> <li>继承 <ul> <li> <p class="img-center"><img decoding="async" alt="" src="http://img.555519.xyz/uploads/20230110/b7bf5391a81da7fea9bd06b37ef8772c.jpg"></p> </li> <li>Java中提供一个关键字extends，用这个关键字，我们可以让一个类和另一个类建立起继承关系。</li> <li> <p class="img-center"><img decoding="async" alt="" src="http://img.555519.xyz/uploads/20230110/8074f9090f4523f141fc289d24d7a3bc.jpg"></p> </li> <li>Student称为子类（派生类),Person称为父类(基类或超类)。</li> </ul> </li> <li>使用继承的好处 <ul> <li>可以把多个子类中重复的代码抽取到父类中了，提高代码的复用性。</li> <li>子类可以在父类的基础上，增加其他的功能，使子类更强大。</li> </ul> </li> <li>什么时候用继承? <ul> <li>当类与类之间，存在相同(共性)的内容，并满足子类是父类中的一种，就可以考虑使用继承，来优化代码</li> </ul> </li> <li>子类到底能继承父类中的哪些内容? <ul> <li> <p class="img-center"><img decoding="async" alt="" src="http://img.555519.xyz/uploads/20230110/2f5fe1a4f9ed3fd87f982126a1b58887.jpg"></p> </li> <li>成员方法是否可以被继承 <ul> <li> <p class="img-center"><img decoding="async" alt="" src="http://img.555519.xyz/uploads/20230110/c0a12aa198ae36867ee74c1acb875f74.jpg"></p> </li> </ul> </li> </ul> </li> <li>继承的特性 <ul> <li> <p>子类拥有父类非 private 的属性、方法。</p> </li> <li> <p>子类可以拥有自己的属性和方法，即子类可以对父类进行扩展。</p> </li> <li> <p>子类可以用自己的方式实现父类的方法。</p> </li> <li> <p>Java 的继承是单继承，但是可以多重继承，单继承就是一个子类只能继承一个父类，多重继承就是，例如 B 类继承 A 类，C 类继承 B 类，所以按照关系就是 B 类是 C 类的父类，A 类是 B 类的父类。</p> </li> <li> <p>提高了类之间的耦合性（继承的缺点，耦合度高就会造成代码之间的联系越紧密，代码独立性越差）</p> </li> </ul> </li> <li> <h3>implements关键字</h3> <p>使用 implements 关键字可以变相的使java具有多继承的特性，使用范围为类继承接口的情况，可以同时继承多个接口（接口跟接口之间采用逗号分隔）。</p> </li> <li> <h3>super 与 this 关键字</h3> <p>super关键字：我们可以通过super关键字来实现对父类成员的访问，用来引用当前对象的父类。</p> <p>this关键字：指向自己的引用。</p> </li> <li> <h3>final 关键字</h3> <p>final 可以用来修饰变量（包括类属性、对象属性、局部变量和形参）、方法（包括类方法和对象方法）和类。</p> <p>final 含义为 "最终的"。</p> <p>使用 final 关键字声明类，就是把类定义定义为最终类，不能被继承，或者用于修饰方法，该方法不能被子类重写。</p> </li> <li> <h2 id="java-inheritance-constructor">构造器</h2> <p>子类是不继承父类的构造器（构造方法或者构造函数）的，它只是调用（隐式或显式）。如果父类的构造器带有参数，则必须在子类的构造器中显式地通过&nbsp;super&nbsp;关键字调用父类的构造器并配以适当的参数列表。</p> <p>如果父类构造器没有参数，则在子类的构造器中不需要使用&nbsp;super&nbsp;关键字调用父类构造器，系统会自动调用父类的无参构造器。</p> </li> </ul> </div> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-78963.htm">农大动物医院怎么挂号（农大动物医院电话号码）</a></p>
+                                        <p>下一个：<a href="/news/article-79662.htm">宠物食品厂名字大全（宠物食品厂名字大全集）</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2025-2-5-vmess-node.htm" title="2月5日 | Vmess节点订阅每天更新20.5M/S免费订阅链接地址分享">2月5日 | Vmess节点订阅每天更新20.5M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-56908.htm" title="spring.profiles.active的使用">spring.profiles.active的使用</a></li>
+                        <li class="py-2"><a href="/news/article-50945.htm" title="为什么猫不能打狂犬疫苗的原因（猫咪为什么不能打狂犬疫苗）">为什么猫不能打狂犬疫苗的原因（猫咪为什么不能打狂犬疫苗）</a></li>
+                        <li class="py-2"><a href="/news/article-45434.htm" title="宠物医生资格证书怎么考的（宠物医生怎么考取）">宠物医生资格证书怎么考的（宠物医生怎么考取）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-3-25-free-high-speed-nodes.htm" title="3月25日 | Vmess节点订阅每天更新18.2M/S免费订阅链接地址分享">3月25日 | Vmess节点订阅每天更新18.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-38001.htm" title="浏览器禁用Cookie,基于Cookie的会话跟踪机制失效的解决的方法">浏览器禁用Cookie,基于Cookie的会话跟踪机制失效的解决的方法</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-1-16-free-node-subscribe-links.htm" title="1月16日 | Vmess节点订阅每天更新19M/S免费订阅链接地址分享">1月16日 | Vmess节点订阅每天更新19M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-49398.htm" title="沈阳卖狗网（沈阳卖狗地方）">沈阳卖狗网（沈阳卖狗地方）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-9-free-subscribe-node.htm" title="2月9日 | Vmess节点订阅每天更新18.1M/S免费订阅链接地址分享">2月9日 | Vmess节点订阅每天更新18.1M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-2-15-free-node-subscribe.htm" title="2月15日 | Vmess节点订阅每天更新22M/S免费订阅链接地址分享">2月15日 | Vmess节点订阅每天更新22M/S免费订阅链接地址分享</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">75</span> <a href="/date/2025-03/" title="2025-03 归档">2025-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-02/" title="2025-02 归档">2025-02</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">84</span> <a href="/date/2025-01/" title="2025-01 归档">2025-01</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                            <p>
+                                <a href="/">首页</a> | 
+                                <a href="/free-node/">免费节点</a> | 
+                                <a href="/news/">新闻资讯</a> |
+                                <a href="/about-us.htm">关于我们</a> |
+                                <a href="/disclaimer.htm">免责申明</a> |
+                                <a href="/privacy.htm">隐私申明</a> |
+                                <a href="/sitemap.xml">网站地图</a>
+                            </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
