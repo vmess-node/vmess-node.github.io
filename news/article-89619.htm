@@ -1,0 +1,505 @@
+<!doctype html>
+<html xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://vmess-node.github.io/news/article-89619.htm" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Linux搭建NFS服务器</title>
+        <meta name="description" content="文章目录  前言 NFS 的使用 搭建一个 NFS 服务器    NFS（Network File System，网络文件系统）是FreeBSD支持的文件系统中的一种，它允许网络中的计算机之间通过TC" />
+        <link rel="icon" href="/assets/website/img/vmess_node/favicon.ico" type="image/x-icon"/>
+
+    <meta name="author" content="Vmess Node免费节点订阅官网">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://vmess-node.github.io/news/article-89619.htm" />
+    <meta property="og:site_name" content="Vmess Node免费节点订阅官网" />
+    <meta property="og:title" content="Linux搭建NFS服务器" />
+    <meta property="og:image" content="https://vmess-node.github.io/uploads/20240804-1/f9d5f55aaa88724320dc0dbc9f511f30.webp" />
+        <meta property="og:release_date" content="2025-04-06T10:07:16" />
+    <meta property="og:updated_time" content="2025-04-06T10:07:16" />
+        <meta property="og:description" content="文章目录  前言 NFS 的使用 搭建一个 NFS 服务器    NFS（Network File System，网络文件系统）是FreeBSD支持的文件系统中的一种，它允许网络中的计算机之间通过TC" />
+        
+    <meta name="applicable-device" content="pc,mobile" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Linux搭建NFS服务器">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="dns-prefetch" href="https:/www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googleadservices.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://cm.g.doubleclick.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/website/css/vmess_node/style-starter.css">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9G1YCGHCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M9G1YCGHCT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body data-page="detail">
+        <!--header-->
+    <div class="w3l-top-header">
+        <header id="site-header" class="fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                    <a class="navbar-brand" href="/">
+                                        <span>Vmess Node</span>
+                                        </a>
+                    <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                        <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mx-auto">
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/">首页</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/free-nodes/">免费节点</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/paid-subscribe/">推荐机场</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/client.htm">客户端</a>
+                            </li>
+                                                        <li class="nav-item">
+                                <a class="nav-link" href="/news/">新闻资讯</a>
+                            </li>
+                                                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <!--/header-->
+    <!-- breadcrum -->
+    <section class="w3l-deal-breadcrum">
+        <div class="breadcrum py-5">
+            <div class="container">
+                <h1>Linux搭建NFS服务器</h1>
+                <p><a href="/">首页</a> &nbsp; / &nbsp; <a href="/news/">新闻资讯</a>  &nbsp; / &nbsp; 正文</p>
+            </div>
+        </div>
+    </section>
+    <!-- //breadcrum -->
+        <!-- //stats -->
+    <section class="w3l-index2 py-5" id="about">
+        <div class="container py-lg-3">
+            <div class="row">
+                <div class="col-md-9">
+                                    <input type="hidden" id="share-website-info" data-name="" data-url="">
+                  				  				  				<div id="content_views" class="markdown_views prism-tomorrow-night-eighties"> <div class="toc"> <h3>文章目录</h3> <ul> <li><a href="#_1" rel="nofollow">前言</a></li> <li><a href="#NFS__7" rel="nofollow">NFS 的使用</a></li> <li><a href="#_NFS__52" rel="nofollow">搭建一个 NFS 服务器</a></li> </ul> </div> </h1> <p><strong>NFS</strong>（Network File System，网络文件系统）是FreeBSD支持的文件系统中的一种，它允许网络中的计算机之间通过<strong>TCP/IP</strong> 网络共享资源，主要在<strong>unix</strong> 系列操作系统上使用。在NFS的应用中，<strong>本地NFS的客户端应用可以透明地读写位于远端NFS服务器上的文件，就像访问本地文件一样。</strong><br /> 由于 NFS 支持的功能比较多，而不同的功能都会使用不同的程序来启动，每启动一个功能就会启用一些端口来传输数据，因此 NFS 的功能所对应的<strong>端口并不固定</strong>，如此一来，客户端需要知道服务器端的相关端口才能够连接。这个时候需要介绍RPC。<br /><strong>RPC</strong>（Remote Procedure Call，远程过程调用）的服务。由于当服务器在启动 NFS 时会随机选取数个端口号，并主动向 RPC<strong>注册</strong>，所以 RPC 知道每个 NFS 功能所对应的端口号，RPC 将端口号通知给客户端，让客户端可以连接到正确的端口上去。RPC采用固定端口号<code>port 111</code> 来监听客户端的需求并向客户端响应正确的端口号。</p> <p><font color="#999AAA">在启动NFS之前，要先启动RPC，否则NFS会无法向RPC注册。另外，RPC若重新启动，原来注册的数据会消失不见，因此RPC重启后，它管理的所有服务都需要重新启动以重新向RPC注册。</font></p> </h1> <p>RPC 的主程序：<code>rpcbind</code><br /> NFS 的主程序：<code>nfs-utils</code><br /> 安装：</p> <pre><code class="prism language-shell">yum<span class="token function">install</span> rpcbind -y yum<span class="token function">install</span> nfs-utils -y</code></pre> <p><img decoding="async" src="http://img.555519.xyz/uploads/20221113/a68766f9f6295397caafd60e8085d39c.jpg" alt="Linux搭建NFS服务器"><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/c21f29896349ff43b3b7f5737b8dea10.jpg" alt="Linux搭建NFS服务器"><br /><code>nfs-utils</code> 的服务名叫<code>nfs-server</code><br /> 在低版本里需要先启动<code>rpcbind</code> 后启动<code>nfs-server</code>，在高版本里启动<code>nfs-server</code> 后<code>rpcbind</code> 自动被启动<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/4238da0637f838fba6942ec99f47d4b4.jpg" alt="Linux搭建NFS服务器"><br /> 他的主配置文件是<code>/etc/exports</code>（不一定存在，需自己添加）<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/88b0355db814c812c3adb7b3e818e5ed.jpg" alt="Linux搭建NFS服务器"><br /><code>/usr/sbin/exportfs</code> 是维护 NFS 共享资源的命令，可以使用该命令重新共享<code>/etc/exports</code> 更新的目录资源、将 NFS server 共享的目录卸载或重新共享等</p> <hr/> <p>我们先来做一个简单的只读共享<br /> 创建一个<code>/data</code> 目录：<code>mkdir /data</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/a2a0d49999ad0be77c1afd169420db9f.jpg" alt="Linux搭建NFS服务器"><br /> 编辑配置文件：<code>vim /etc/exports</code><br /> 语法：<code>文件名 客户端IP(权限)</code></p> <table> <thead> <tr> <th>参数值</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td><code>rw</code>、<code>ro</code></td> <td>该目录共享的权限是可读写还是只读，但最终能否读写，还是与文件系统的<code>rwx</code>有关</td> </tr> <tr> <td><code>sync</code>、<code>async</code></td> <td><code>sync</code>代表数据会同步写入到内存与硬盘中，<code>async</code>则代表数据会先暂存于内存当中，而非直接写入硬盘</td> </tr> <tr> <td><code>no_root_squash</code>、<code>root_squash</code></td> <td>若客户端在共享目录里创建的文件的所属者和所属组是 root 用户和 root 组，那么显示文件的属主和属组时有以下两种情况：<code>no_root_squash</code>表示，文件的所属者和所属组是 root 用户和 root 组；<code>root_squash</code>表示将 root 用户和组映射为匿名用户和组（默认设置）。</td> </tr> <tr> <td><code>all_squash</code>、<code>no_all_squash</code></td> <td><code>all_squash</code>：客户端所有用户创建文件时，客户端会将文件的用户和组映射为匿名用户和组；<code>no_all_squash</code>：客户端普通用户创建的文件的 UID 和 GID 是多少，服务端就显示为多少（默认设置）</td> </tr> <tr> <td><code>anonuid=</code>、<code>anongid=</code></td> <td>将文件的用户和组映射为指定的 UID 和 GID ，若不指定默认为 65534（nfsnobody）</td> </tr> </tbody> </table> <p><img decoding="async" src="http://img.555519.xyz/uploads/20221113/99f63dc9fc06b6e869f9e4b493cf0a18.jpg" alt="Linux搭建NFS服务器"><br /> 在该目录中写入内容：<code>echo this is chi &gt; /data/file</code><br /> 重启服务：<code>systemctl restart nfs-server</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/1af177944122f094f4ae53b84af68645.jpg" alt="Linux搭建NFS服务器"><br /> NFS 服务器关闭防火墙：<code>systemstl stop firewalld</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/3b4862eebbe6068f4d3a491f0d960c8e.jpg" alt="Linux搭建NFS服务器"><br /> 用另一台主机查看一下该 NFS 服务器：<code>showmount -e 192.168.32.128</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/d3d6ac14e13b5bc92fd8455778fbf09c.jpg" alt="Linux搭建NFS服务器"><br /> 在客户端创建挂在点：<code>mkdir -p /client/data1</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/d5254afc90d33b979b8536cc64a5b6c8.jpg" alt="Linux搭建NFS服务器"><br /> 挂在：<code>mount 192.168.32.128:/data data1</code> /<code>df -h</code>查看<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/f7138e2ef855da733e62733577c0ff3b.jpg" alt="Linux搭建NFS服务器"><br /> 挂载成功<br /> 由于这是一个只读的共享，所有只能读取，不能创建或编辑<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/275d3be4f1f27e2907b83d3e65a87cb4.jpg" alt="Linux搭建NFS服务器"></p> </h1> <p>接下来我们搭建一个 NFS 服务器：</p> <ol> <li>开放<code>/nfs/shared</code> 目录，供所有用户查询资料；</li> <li>开放<code>/nfs/upload</code> 目录，该目录为<code>172.24.8.0/24</code> 网段的主机的数据上传目录，并将所有该网段主机上传文件的所属者和所属组映射为<code>nfs-upload</code> ，其 UID 和 GID 为 2001</li> </ol> <hr/> <ol start="3"> <li> <p>创建目录<br /><code>/nfs/shared</code> 目录只供查询，故不需要其他权限<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/b16bc1b51fda197a976a9197817e911c.jpg" alt="Linux搭建NFS服务器"></p> </li> <li> <p>创建<code>nfs-upload</code> 用户：<code>useradd nfs-upload</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/0b2eaa33920e69bb1ad4eaf80fafdd00.jpg" alt="Linux搭建NFS服务器"></p> </li> <li> <p>编写配置文件：<code>vim /etc/exports</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/4f9ccac366fca263ab9a4b059fe3c667.jpg" alt="Linux搭建NFS服务器"></p> </li> <li> <p>重启服务：<code>systemctl restart nfs-server</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/1c109138b59eb5ce82500c8c5b775f49.jpg" alt="Linux搭建NFS服务器"></p> </li> <li> <p>客户端访问 NFS 服务器：<code>showmount -e 192.168.32.128</code><br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/cdf77a25e6da9b531b3f3ffd7b1f0391.jpg" alt="Linux搭建NFS服务器"><br /> 客户端测试<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/d8aedb09a19f758e1cda2dc52f1960f1.jpg" alt="Linux搭建NFS服务器"><br /> 服务端查看用户创建文件<br /><img decoding="async" src="http://img.555519.xyz/uploads/20221113/39433aefc39c1417bd7894cee3665be7.jpg" alt="Linux搭建NFS服务器"></p> </li> </ol> </div> 			                <div class="clearfix"></div>
+                <div class="col-md-12 mt-5">
+                                        <p>上一个：<a href="/news/article-89618.htm">【C语言】指针初阶</a></p>
+                                        <p>下一个：<a href="/news/article-90358.htm">多线程详解 创建多线程</a></p>
+                                    </div>
+                                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/free-nodes/2025-3-16-node-share.htm" title="3月16日 | Vmess节点订阅每天更新22.1M/S免费订阅链接地址分享">3月16日 | Vmess节点订阅每天更新22.1M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-82425.htm" title="上海领养宠物的地方在哪（上海领养宠物的地方在哪儿）">上海领养宠物的地方在哪（上海领养宠物的地方在哪儿）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-3-19-latest-vmess-node.htm" title="3月19日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享">3月19日 | Vmess节点订阅每天更新20.9M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-77600.htm" title="Java调用REST接口（get，post请求方法）">Java调用REST接口（get，post请求方法）</a></li>
+                        <li class="py-2"><a href="/news/article-72883.htm" title="宠物粮食加工厂挣钱吗知乎文章 宠物粮食加工厂挣钱吗知乎文章">宠物粮食加工厂挣钱吗知乎文章 宠物粮食加工厂挣钱吗知乎文章</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-3-5-node-share-links.htm" title="3月5日 | Vmess节点订阅每天更新21.7M/S免费订阅链接地址分享">3月5日 | Vmess节点订阅每天更新21.7M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-78279.htm" title="新疆宠物医院（新疆宠物医院电话号码）">新疆宠物医院（新疆宠物医院电话号码）</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-3-25-free-high-speed-nodes.htm" title="3月25日 | Vmess节点订阅每天更新18.2M/S免费订阅链接地址分享">3月25日 | Vmess节点订阅每天更新18.2M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/free-nodes/2025-4-8-free-subscribe-node.htm" title="4月8日 | Vmess节点订阅每天更新21.8M/S免费订阅链接地址分享">4月8日 | Vmess节点订阅每天更新21.8M/S免费订阅链接地址分享</a></li>
+                        <li class="py-2"><a href="/news/article-70236.htm" title="德信宠物医院（德信东望府宠物会所）">德信宠物医院（德信东望府宠物会所）</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">26</span> <a href="/date/2025-04/" title="2025-04 归档">2025-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">90</span> <a href="/date/2025-03/" title="2025-03 归档">2025-03</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+        <style>
+    .video-heading {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .video-heading h3 {
+        font-size: 60px;
+        opacity: 0.8;
+        line-height: 58px;
+        font-weight: 300;
+        text-transform: capitalize;
+        color: #fff;
+    }
+
+    .video-responsive {
+        padding-bottom: 600px;
+        position: relative;
+        width: 100%;
+    }
+
+    .canvas,
+    .video {
+        left: 0;
+        position: absolute;
+        top: 0;
+        background: #000;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    #over_video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        color: #FFF;
+    }
+
+    .bg-mask {
+        background: rgba(0, 0, 0, 0.3);
+        height: inherit;
+        display: grid;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    @media screen and (max-width: 568px) {
+
+        .canvas,
+        .video {
+            height: 400px;
+        }
+
+        .video-responsive {
+            padding-bottom: 400px;
+        }
+
+
+        .video-heading h3 {
+            font-size: 35px;
+            line-height: 48px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
+    <script src="/assets/website/js/frontend/vmess_node/canvas-video-player.js"></script>
+    <script>
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+    if (isIOS) {
+
+        var canvasVideo = new CanvasVideoPlayer({
+            videoSelector: '.video',
+            canvasSelector: '.canvas',
+            timelineSelector: false,
+            autoplay: true,
+            makeLoop: true,
+            pauseOnClick: false,
+            audio: false
+        });
+
+    } else {
+
+        // Use HTML5 video
+        document.querySelectorAll('.canvas')[0].style.display = 'none';
+
+    }
+    </script>
+    <!-- scripts -->
+    <footer>
+        <!-- footer -->
+        <section class="w3l-footer">
+            <div class="w3l-footer-16-main py-5">
+                <div class="container">
+                    <div class="d-flex below-section justify-content-between align-items-center pt-4 mt-5">
+                        <div class="columns text-lg-left text-center">
+                                                <p>
+                                                <a href="/">首页</a> |
+                                                <a href="/free-nodes/">免费节点</a> |
+                                                <a href="/paid-subscribe/">推荐机场</a> |
+                                                <a href="/client.htm">客户端</a> |
+                                                <a href="/news/">新闻资讯</a> |
+                                                <a href="/about-us.htm">关于我们</a> |
+                        <a href="/disclaimer.htm">免责申明</a> |
+                        <a href="/privacy.htm">隐私申明</a> |
+                        <a href="/sitemap.xml">网站地图</a>
+                    </p>
+                            <p>Vmess Node免费节点订阅官网 版权所有 Powered by WordPress
+                            </p>
+                        </div>
+                        <div class="columns-2 mt-lg-0 mt-3">
+                            <ul class="social">
+                                <li><a href="#facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+                                </li>
+                                <li><a href="#github"><span class="fa fa-github" aria-hidden="true"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                <span class="fa fa-angle-up"></span>
+            </button>
+            <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            </script>
+            <!-- //move top -->
+            <script>
+            $(function() {
+                $('.navbar-toggler').click(function() {
+                    $('body').toggleClass('noscroll');
+                })
+            });
+            </script>
+        </section>
+        <!-- //footer -->
+    </footer>
+    <!-- jQuery -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery-3.5.1.min.js"></script>
+    <!-- Template JavaScript -->
+    <!-- stats number counter-->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.waypoints.min.js"></script>
+    <script src="/assets/website/js/frontend/vmess_node/jquery.countup.js"></script>
+    <script>
+    $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="/assets/website/js/frontend/vmess_node/jquery.magnific-popup.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-slide-bottom'
+        });
+    });
+    </script>
+    <script src="/assets/website/js/frontend/vmess_node/owl.carousel.js"></script>
+    <!-- testimonials for owlcarousel -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-one').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsiveClass: true,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                480: {
+                    items: 1,
+                    nav: false
+                },
+                667: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: false
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //testimonials script for owlcarousel -->
+    <!-- for blog carousel slider -->
+    <script>
+    $(document).ready(function() {
+        $('.owl-two').owlCarousel({
+            stagePadding: 20,
+            margin: 15,
+            nav: false,
+            loop: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    })
+    </script>
+    <!-- //for blog carousel slider -->
+    <script>
+    var lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function animate() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+
+        $('.banner-image').css({
+            '-webit-transform': translate,
+            '-moz-transform': translate,
+            'transform': translate
+        });
+
+        window.requestAnimationFrame(animate);
+    }
+
+    $(window).on('mousemove click', function(e) {
+
+        var lMouseX = Math.max(-100, Math.min(100, $(window).width() / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, $(window).height() / 2 - e.clientY));
+        lFollowX = (20 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+
+    });
+
+    animate();
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function() {
+        $('.navbar-toggler').click(function() {
+            $('body').toggleClass('noscroll');
+        })
+    });
+    </script>
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function() {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function() {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function() {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+    </script>
+    <!--//MENU-JS-->
+    <!-- Bootstrap JS -->
+    <script src="/assets/website/js/frontend/vmess_node/bootstrap.min.js"></script>
+    <script src="https://www.freeclashnode.com/assets/js/frontend/invite-url.js"></script>
+    <script src="/assets/website/js/frontend/G.js"></script>
+</body>
+
+</html>
