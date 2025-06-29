@@ -1,4 +1,4 @@
-# 6月23日 | Vmess节点订阅每天更新20.3M/S免费订阅链接地址分享  更新时间 2025-06-23 08:37:13
+# 6月29日 | Vmess节点订阅每天更新22M/S免费订阅链接地址分享  更新时间 2025-06-29 09:38:09
 所有免费clash节点都爬取自网络，请勿用于非法用途 。节点地址：<a href="https://vmess-node.github.io" target="_blank">点击跳转</a>
 
 ## clash使用教程：
@@ -9,23 +9,23 @@
 
 ### Clash订阅链接
 
-- https://vmess-node.github.io/uploads/2025/06/0-20250623.yaml
-- https://vmess-node.github.io/uploads/2025/06/1-20250623.yaml
-- https://vmess-node.github.io/uploads/2025/06/2-20250623.yaml
-- https://vmess-node.github.io/uploads/2025/06/3-20250623.yaml
-- https://vmess-node.github.io/uploads/2025/06/4-20250623.yaml
+- https://vmess-node.github.io/uploads/2025/06/0-20250629.yaml
+- https://vmess-node.github.io/uploads/2025/06/1-20250629.yaml
+- https://vmess-node.github.io/uploads/2025/06/2-20250629.yaml
+- https://vmess-node.github.io/uploads/2025/06/3-20250629.yaml
+- https://vmess-node.github.io/uploads/2025/06/4-20250629.yaml
 
 ### V2ray订阅链接
 
-- https://vmess-node.github.io/uploads/2025/06/0-20250623.txt
-- https://vmess-node.github.io/uploads/2025/06/1-20250623.txt
-- https://vmess-node.github.io/uploads/2025/06/2-20250623.txt
-- https://vmess-node.github.io/uploads/2025/06/3-20250623.txt
-- https://vmess-node.github.io/uploads/2025/06/4-20250623.txt
+- https://vmess-node.github.io/uploads/2025/06/0-20250629.txt
+- https://vmess-node.github.io/uploads/2025/06/1-20250629.txt
+- https://vmess-node.github.io/uploads/2025/06/2-20250629.txt
+- https://vmess-node.github.io/uploads/2025/06/3-20250629.txt
+- https://vmess-node.github.io/uploads/2025/06/4-20250629.txt
 
 ### Sing-box订阅链接
 
-- https://vmess-node.github.io/uploads/2025/06/20250623.json
+- https://vmess-node.github.io/uploads/2025/06/20250629.json
 
 ## 更多clash节点订阅 ：
 
